@@ -1,0 +1,36 @@
+<h2>Account List</h2>
+
+<!-- Display error message if it exists -->
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Admin</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let account of accounts">
+      <td>{{ account.id }}</td>
+      <td>{{ account.name }}</td>
+      <td>{{ account.email }}</td>
+      <td>{{ account.phone }}</td>
+      <td>{{ account.address }}</td>
+      <td>{{ account.admin ? 'Yes' : 'No' }}</td>
+      <td>{{ account.status ? 'Active' : 'Inactive' }}</td>
+      <td>
+        <button (click)="editAccount(account.id)">Edit</button>
+        <button (click)="deleteAccount(account.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button (click)="router.navigate(['/accounts/create'])">Add New Account</button> <!-- This line is now valid -->

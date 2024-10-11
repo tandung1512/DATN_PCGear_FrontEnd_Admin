@@ -1,0 +1,53 @@
+<h2>Edit Account</h2>
+<form *ngIf="account" (ngSubmit)="save()">
+  <div>
+    <label for="id">Custom ID:</label>
+    <input type="text" id="id" [(ngModel)]="account.id" name="id" required readonly />
+  </div>
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="account.name" name="name" required />
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" [(ngModel)]="account.password" name="password" required />
+  </div>
+  <div>
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" [(ngModel)]="account.phone" name="phone" required />
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" [(ngModel)]="account.email" name="email" required />
+  </div>
+  <div>
+    <label for="address">Address:</label>
+    <input type="text" id="address" [(ngModel)]="account.address" name="address" required />
+  </div>
+  <div>
+    <label for="image">Image:</label>
+    <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" />
+  </div>
+  <div *ngIf="account.image">
+    <p>Current Image Preview:</p>
+    <img [src]="account.image" alt="Current Image Preview" width="100" />
+  </div>
+  <div>
+    <label for="admin">Admin:</label>
+    <input type="checkbox" id="admin" [(ngModel)]="account.admin" name="admin" />
+  </div>
+  <div>
+    <label for="status">Status:</label>
+    <input type="checkbox" id="status" [(ngModel)]="account.status" name="status" />
+  </div>
+  <div>
+    <label for="confirm">Confirm:</label>
+    <input type="checkbox" id="confirm" [(ngModel)]="account.confirm" name="confirm" />
+  </div>
+  <button type="submit">Save Changes</button>
+</form>
+
+<!-- Display error message if any -->
+<div *ngIf="errorMessage" style="color: red;">
+  {{ errorMessage }}
+</div>

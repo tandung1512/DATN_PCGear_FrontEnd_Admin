@@ -3,6 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 
+// Account components
+
+import { AccountListComponent } from './account/account-list/account-list.component';
+import { AccountEditComponent } from './account/account-edit/account-edit.component';
+import { AccountCreateComponent } from './account/account-create/account-create.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -11,33 +17,19 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'dashboard',
-        loadComponent: () => import('./demo/dashboard/dashboard.component')
+        loadComponent: () =>
+          import('./demo/dashboard/dashboard.component').then(m => m.default), // Use `m.default` for default export
       },
-      {
-        path: 'basic',
-        loadChildren: () => import('./demo/ui-elements/ui-basic/ui-basic.module').then((m) => m.UiBasicModule)
-      },
-      {
-        path: 'forms',
-        loadChildren: () => import('./demo/pages/form-elements/form-elements.module').then((m) => m.FormElementsModule)
-      },
-      {
-        path: 'tables',
-        loadChildren: () => import('./demo/pages/tables/tables.module').then((m) => m.TablesModule)
-      },
-      {
-        path: 'apexchart',
-        loadComponent: () => import('./demo/chart/apex-chart/apex-chart.component')
-      },
-      {
-        path: 'sample-page',
-        loadComponent: () => import('./demo/extra/sample-page/sample-page.component')
-      }
-    ]
+      { path: 'accounts', component: AccountListComponent },
+      { path: 'accounts/edit/:id', component: AccountEditComponent },
+      { path: 'accounts/create', component: AccountCreateComponent },
+      { path: '', redirectTo: '/accounts', pathMatch: 'full' },
+      { path: '**', redirectTo: '/accounts' } // Handle 404
+    ],
   },
   {
     path: '',
@@ -45,14 +37,17 @@ const routes: Routes = [
     children: [
       {
         path: 'auth',
-        loadChildren: () => import('./demo/pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
-      }
-    ]
-  }
+        loadChildren: () =>
+          import('./demo/pages/authentication/authentication.module').then(
+            m => m.AuthenticationModule
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
