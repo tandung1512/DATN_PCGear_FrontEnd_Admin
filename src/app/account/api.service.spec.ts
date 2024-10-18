@@ -1,16 +1,46 @@
-import { TestBed } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Account } from './account.model';
 
-import { ApiService } from './api.service';
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+  private apiUrl = 'http://localhost:8080/api/accounts'; // Địa chỉ API
 
-describe('ApiService', () => {
-  let service: ApiService;
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      // Thêm token xác thực nếu cần
+      // 'Authorization': `Bearer ${yourToken}`
+    })
+  };
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ApiService);
-  });
+  constructor(private http: HttpClient) {}
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+  // Lấy tất cả tài khoản
+  getAllAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(this.apiUrl, this.httpOptions);
+  }
+
+  // Lấy một tài khoản dựa vào ID
+  getAccountById(id: string): Observable<Account> {
+    return this.http.get<Account>(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
+
+  // Tạo một tài khoản mới
+  createAccount(account: Omit<Account, 'id'>): Observable<Account> {
+    return this.http.post<Account>(this.apiUrl, account, this.httpOptions);
+  }
+
+  // Cập nhật một tài khoản đã có
+  updateAccount(account: Account): Observable<Account> {
+    return this.http.put<Account>(`${this.apiUrl}/${account.id}`, account, this.httpOptions);
+  }
+
+  // Xóa một tài khoản dựa vào ID
+  deleteAccount(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, this.httpOptions);
+  }
+}

@@ -1,120 +1,144 @@
 <style>
-  form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
+  /* Tạo một kiểu dáng cho tiêu đề */
 h2 {
-  text-align: center;
-  color: #333;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-div {
-  margin-bottom: 15px;
+/* Định dạng cho toàn bộ biểu mẫu */
+form {
+    max-width: 600px; /* Giới hạn chiều rộng của biểu mẫu */
+    margin: 0 auto; /* Căn giữa biểu mẫu */
+    padding: 20px; /* Đệm bên trong cho biểu mẫu */
+    border: 1px solid #ccc; /* Đường viền cho biểu mẫu */
+    border-radius: 5px; /* Bo tròn góc */
+    background-color: #f9f9f9; /* Màu nền cho biểu mẫu */
 }
 
+/* Định dạng cho các label */
 label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+    display: block; /* Hiển thị theo hàng */
+    margin-bottom: 5px; /* Khoảng cách dưới mỗi label */
 }
 
+/* Định dạng cho các input */
 input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="file"] {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+    width: 100%; /* Chiều rộng đầy đủ */
+    padding: 10px; /* Đệm bên trong cho input */
+    margin-bottom: 15px; /* Khoảng cách dưới mỗi input */
+    border: 1px solid #ccc; /* Đường viền cho input */
+    border-radius: 4px; /* Bo tròn góc cho input */
 }
 
+/* Định dạng cho các checkbox */
 input[type="checkbox"] {
-  margin-right: 10px;
+    margin-right: 5px; /* Khoảng cách bên phải cho checkbox */
 }
 
+/* Định dạng cho nút gửi */
 button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
+    display: block; /* Hiển thị nút như một khối */
+    width: 100%; /* Chiều rộng đầy đủ */
+    padding: 10px; /* Đệm bên trong cho nút */
+    background-color: #4CAF50; /* Màu nền cho nút */
+    color: white; /* Màu chữ */
+    border: none; /* Bỏ đường viền */
+    border-radius: 5px; /* Bo tròn góc cho nút */
+    font-size: 16px; /* Kích thước chữ cho nút */
+    cursor: pointer; /* Đổi con trỏ khi di chuột qua nút */
 }
 
+/* Định dạng cho nút khi di chuột qua */
 button[type="submit"]:hover {
-  background-color: #45a049;
+    background-color: #45a049; /* Màu nền khi di chuột qua */
 }
 
-img {
-  display: block;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
-#errorMessage {
-  color: red;
-  font-weight: bold;
-  text-align: center;
+/* Định dạng cho thông báo lỗi */
+.error-message {
+    color: red; /* Màu chữ đỏ cho lỗi */
+    text-align: center; /* Căn giữa thông báo lỗi */
+    margin-top: 20px; /* Khoảng cách trên thông báo lỗi */
 }
 
 </style>
 <h2>Create Account</h2>
-<form (ngSubmit)="onSubmit()" [formGroup]="accountForm">
+<form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
   <div>
     <label for="id">Custom ID:</label>
     <input type="text" id="id" formControlName="id" required />
+    <div *ngIf="accountForm.get('id')?.invalid && accountForm.get('id')?.touched">
+      <small style="color: red;">ID is required.</small>
+    </div>
   </div>
+
   <div>
     <label for="name">Name:</label>
     <input type="text" id="name" formControlName="name" required />
+    <div *ngIf="accountForm.get('name')?.invalid && accountForm.get('name')?.touched">
+      <small style="color: red;">Name is required.</small>
+    </div>
   </div>
+
   <div>
     <label for="password">Password:</label>
     <input type="password" id="password" formControlName="password" required />
+    <div *ngIf="accountForm.get('password')?.invalid && accountForm.get('password')?.touched">
+      <small style="color: red;">Password is required.</small>
+    </div>
   </div>
+
   <div>
     <label for="phone">Phone:</label>
     <input type="text" id="phone" formControlName="phone" required />
+    <div *ngIf="accountForm.get('phone')?.invalid && accountForm.get('phone')?.touched">
+      <small style="color: red;">Phone is required.</small>
+    </div>
   </div>
+
   <div>
     <label for="email">Email:</label>
     <input type="email" id="email" formControlName="email" required />
+    <div *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched">
+      <small style="color: red;">A valid email is required.</small>
+    </div>
   </div>
+
   <div>
     <label for="address">Address:</label>
     <input type="text" id="address" formControlName="address" required />
+    <div *ngIf="accountForm.get('address')?.invalid && accountForm.get('address')?.touched">
+      <small style="color: red;">Address is required.</small>
+    </div>
   </div>
+
   <div>
     <label for="image">Image:</label>
-    <input type="file" id="image" (change)="onImageSelected($event)" accept="image/*" required />
+    <input type="file" id="image" (change)="onImageSelected($event)" accept="image/*" />
+    <div *ngIf="imagePreviewUrl">
+      <p>Image Preview:</p>
+      <img [src]="imagePreviewUrl" alt="Image Preview" width="100" />
+    </div>
   </div>
-  <div *ngIf="selectedImage">
-    <p>Image Preview:</p>
-    <img [src]="imagePreviewUrl" alt="Image Preview" width="100" />
-  </div>
+
   <div>
     <label for="admin">Admin:</label>
     <input type="checkbox" id="admin" formControlName="admin" />
   </div>
+
   <div>
     <label for="status">Status:</label>
     <input type="checkbox" id="status" formControlName="status" />
   </div>
+
   <div>
     <label for="confirm">Confirm:</label>
     <input type="checkbox" id="confirm" formControlName="confirm" />
   </div>
-  <button type="submit">Create Account</button>
+
+  <button type="submit" [disabled]="accountForm.invalid">Create Account</button>
 </form>
 
 <!-- Display error message if any -->
