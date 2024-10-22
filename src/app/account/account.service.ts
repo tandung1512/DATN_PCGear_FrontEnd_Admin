@@ -1,3 +1,4 @@
+// src/app/account/account.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Account } from './account.model';
@@ -8,18 +9,18 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AccountService {
-  private apiUrl = 'http://localhost:8080/api/accounts'; // API endpoint
+  private apiUrl = 'http://localhost:8080/api/accounts'; // Base API endpoint
 
   constructor(private http: HttpClient) {}
 
-  // Tạo tài khoản mới và có thể đính kèm file
+  // Tạo tài khoản mới, với khả năng đính kèm file ảnh
   createAccount(formData: FormData): Observable<Account> {
     return this.http.post<Account>(this.apiUrl, formData).pipe(
       catchError(this.handleError<Account>('createAccount'))
     );
   }
 
-  // Lấy tất cả các tài khoản
+  // Lấy tất cả tài khoản
   getAllAccounts(): Observable<Account[]> {
     return this.http.get<Account[]>(this.apiUrl).pipe(
       catchError(this.handleError<Account[]>('getAllAccounts', []))
@@ -48,11 +49,11 @@ export class AccountService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url).pipe(
       catchError(this.handleError<boolean>('deleteAccount', false)),
-      map(() => true) // If successful, return true
+      map(() => true) // Trả về true nếu thành công
     );
   }
 
-  // Helper method to create FormData for account and image file
+  // Helper method to create FormData for account and optional image file
   private createFormData(account: Partial<Account>, imageFile?: File): FormData {
     const formData = new FormData();
     formData.append('id', account.id || '');
@@ -65,17 +66,18 @@ export class AccountService {
     formData.append('status', account.status ? 'true' : 'false');
     formData.append('confirm', account.confirm ? 'true' : 'false');
 
+    // Nếu có ảnh, thêm ảnh vào FormData
     if (imageFile) {
       formData.append('image', imageFile, imageFile.name);
     }
     return formData;
   }
 
-  // Handle HTTP operation failures
+  // Hàm xử lý lỗi chung cho tất cả yêu cầu HTTP
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(`${operation} failed: ${error.message}`);
-      return of(result as T);
+      console.error(`${operation} failed: ${error.message}`); // Log lỗi vào console
+      return of(result as T); // Trả về giá trị an toàn
     };
   }
 }

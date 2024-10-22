@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 })
 export class AccountListComponent implements OnInit {
   accounts: Account[] = [];
-  errorMessage: string | null = null; // For error handling
+  errorMessage: string | null = null;
 
-  constructor(public accountService: AccountService, public router: Router) {} // Change private to public
+  constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadAccounts();
@@ -19,8 +19,14 @@ export class AccountListComponent implements OnInit {
 
   loadAccounts(): void {
     this.accountService.getAllAccounts().subscribe(
-      accounts => this.accounts = accounts,
-      error => this.errorMessage = 'Failed to load accounts: ' + error
+      (accounts) => {
+        this.accounts = accounts;
+        this.errorMessage = null;
+      },
+      (error) => {
+        console.error('Error loading accounts:', error);
+        this.errorMessage = 'Failed to load accounts: ' + error.message;
+      }
     );
   }
 
@@ -29,12 +35,23 @@ export class AccountListComponent implements OnInit {
   }
 
   deleteAccount(id: string): void {
-    const confirmDelete = confirm("Are you sure you want to delete this account?");
+    const confirmDelete = confirm('Are you sure you want to delete this account?');
     if (confirmDelete) {
       this.accountService.deleteAccount(id).subscribe(
-        () => this.loadAccounts(), // Reload accounts after deletion
-        error => this.errorMessage = 'Failed to delete account: ' + error
+        () => {
+          this.loadAccounts();
+          this.errorMessage = null;
+        },
+        (error) => {
+          console.error('Error deleting account:', error);
+          this.errorMessage = 'Failed to delete account: ' + error.message;
+        }
       );
     }
+  }
+
+  // New method for adding an account
+  addNewAccount(): void {
+    this.router.navigate(['/accounts/create']); // Navigate to the create account page
   }
 }
