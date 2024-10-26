@@ -41,6 +41,7 @@ import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 // Services
 import { AccountService } from './account/account.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +70,7 @@ import { AccountService } from './account/account.service';
     ReactiveFormsModule,
     SharedModule,
     BrowserAnimationsModule,
+    
     HttpClientModule,
   ],
   providers: [

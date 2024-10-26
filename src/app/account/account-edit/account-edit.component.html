@@ -1,129 +1,104 @@
-<style>
-  form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header text-center">
+      <h2 class="fw-bold">Edit Account</h2>
+    </div>
+    <div class="card-body">
+      <form *ngIf="account" (ngSubmit)="save()">
+        <!-- Custom ID -->
+        <div class="mb-3 row">
+          <label for="id" class="col-sm-3 col-form-label">Custom ID:</label>
+          <div class="col-sm-9">
+            <input type="text" id="id" class="form-control" [(ngModel)]="account.id" name="id" readonly required />
+          </div>
+        </div>
 
-h2 {
-  text-align: center;
-  color: #333;
-}
+        <!-- Name -->
+        <div class="mb-3 row">
+          <label for="name" class="col-sm-3 col-form-label">Name:</label>
+          <div class="col-sm-9">
+            <input type="text" id="name" class="form-control" [(ngModel)]="account.name" name="name" required />
+          </div>
+        </div>
 
-div {
-  margin-bottom: 15px;
-}
+        <!-- Password -->
+        <div class="mb-3 row">
+          <label for="password" class="col-sm-3 col-form-label">Password:</label>
+          <div class="col-sm-9">
+            <input type="password" id="password" class="form-control" [(ngModel)]="account.password" name="password" required />
+          </div>
+        </div>
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+        <!-- Phone -->
+        <div class="mb-3 row">
+          <label for="phone" class="col-sm-3 col-form-label">Phone:</label>
+          <div class="col-sm-9">
+            <input type="text" id="phone" class="form-control" [(ngModel)]="account.phone" name="phone" required />
+          </div>
+        </div>
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="file"] {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f1f1f1;
-}
+        <!-- Email -->
+        <div class="mb-3 row">
+          <label for="email" class="col-sm-3 col-form-label">Email:</label>
+          <div class="col-sm-9">
+            <input type="email" id="email" class="form-control" [(ngModel)]="account.email" name="email" required />
+          </div>
+        </div>
 
-input[type="text"]:read-only {
-  background-color: #e9ecef;
-  color: #6c757d;
-}
+        <!-- Address -->
+        <div class="mb-3 row">
+          <label for="address" class="col-sm-3 col-form-label">Address:</label>
+          <div class="col-sm-9">
+            <input type="text" id="address" class="form-control" [(ngModel)]="account.address" name="address" required />
+          </div>
+        </div>
 
-input[type="checkbox"] {
-  margin-right: 10px;
-}
+        <!-- Image Upload -->
+        <div class="mb-3 row">
+          <label for="image" class="col-sm-3 col-form-label">Image:</label>
+          <div class="col-sm-9">
+            <input type="file" id="image" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
+          </div>
+        </div>
+        <div *ngIf="account.image" class="mb-3 text-center">
+          <p>Current Image Preview:</p>
+          <img [src]="account.image" alt="Current Image Preview" width="100" />
+        </div>
 
-button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+        <!-- Admin -->
+        <div class="mb-3 row">
+          <label for="admin" class="col-sm-3 col-form-label">Admin:</label>
+          <div class="col-sm-9">
+            <input type="checkbox" id="admin" [(ngModel)]="account.admin" name="admin" />
+          </div>
+        </div>
 
-button[type="submit"]:hover {
-  background-color: #0056b3;
-}
+        <!-- Status -->
+        <div class="mb-3 row">
+          <label for="status" class="col-sm-3 col-form-label">Status:</label>
+          <div class="col-sm-9">
+            <input type="checkbox" id="status" [(ngModel)]="account.status" name="status" />
+          </div>
+        </div>
 
-img {
-  display: block;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
+        <!-- Confirm -->
+        <div class="mb-3 row">
+          <label for="confirm" class="col-sm-3 col-form-label">Confirm:</label>
+          <div class="col-sm-9">
+            <input type="checkbox" id="confirm" [(ngModel)]="account.confirm" name="confirm" />
+          </div>
+        </div>
 
-#errorMessage {
-  color: red;
-  font-weight: bold;
-  text-align: center;
-}
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
 
-</style>
-<h2>Edit Account</h2>
-<form *ngIf="account" (ngSubmit)="save()">
-  <div>
-    <label for="id">Custom ID:</label>
-    <input type="text" id="id" [(ngModel)]="account.id" name="id" required readonly />
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="mt-3 text-center" style="color: red;">
+        {{ errorMessage }}
+      </div>
+    </div>
   </div>
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" [(ngModel)]="account.name" name="name" required />
-  </div>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" [(ngModel)]="account.password" name="password" required />
-  </div>
-  <div>
-    <label for="phone">Phone:</label>
-    <input type="text" id="phone" [(ngModel)]="account.phone" name="phone" required />
-  </div>
-  <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" [(ngModel)]="account.email" name="email" required />
-  </div>
-  <div>
-    <label for="address">Address:</label>
-    <input type="text" id="address" [(ngModel)]="account.address" name="address" required />
-  </div>
-  <div>
-    <label for="image">Image:</label>
-    <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" />
-  </div>
-  <div *ngIf="account.image">
-    <p>Current Image Preview:</p>
-    <img [src]="account.image" alt="Current Image Preview" width="100" />
-  </div>
-  <div>
-    <label for="admin">Admin:</label>
-    <input type="checkbox" id="admin" [(ngModel)]="account.admin" name="admin" />
-  </div>
-  <div>
-    <label for="status">Status:</label>
-    <input type="checkbox" id="status" [(ngModel)]="account.status" name="status" />
-  </div>
-  <div>
-    <label for="confirm">Confirm:</label>
-    <input type="checkbox" id="confirm" [(ngModel)]="account.confirm" name="confirm" />
-  </div>
-  <button type="submit">Save Changes</button>
-</form>
-
-<!-- Display error message if any -->
-<div *ngIf="errorMessage" style="color: red;">
-  {{ errorMessage }}
 </div>

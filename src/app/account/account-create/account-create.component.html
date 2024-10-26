@@ -1,147 +1,121 @@
-<style>
-  /* Tạo một kiểu dáng cho tiêu đề */
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header text-center">
+      <h2 class="fw-bold">Create Account</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+        
+        <!-- ID Field -->
+        <div class="row mb-3">
+          <label for="id" class="col-sm-3 col-form-label">Custom ID:</label>
+          <div class="col-sm-9">
+            <input type="text" id="id" class="form-control" formControlName="id" required />
+            <div *ngIf="accountForm.get('id')?.invalid && accountForm.get('id')?.touched">
+              <small style="color: red;">ID is required.</small>
+            </div>
+          </div>
+        </div>
 
-/* Định dạng cho toàn bộ biểu mẫu */
-form {
-    max-width: 600px; /* Giới hạn chiều rộng của biểu mẫu */
-    margin: 0 auto; /* Căn giữa biểu mẫu */
-    padding: 20px; /* Đệm bên trong cho biểu mẫu */
-    border: 1px solid #ccc; /* Đường viền cho biểu mẫu */
-    border-radius: 5px; /* Bo tròn góc */
-    background-color: #f9f9f9; /* Màu nền cho biểu mẫu */
-}
+        <!-- Name Field -->
+        <div class="row mb-3">
+          <label for="name" class="col-sm-3 col-form-label">Name:</label>
+          <div class="col-sm-9">
+            <input type="text" id="name" class="form-control" formControlName="name" required />
+            <div *ngIf="accountForm.get('name')?.invalid && accountForm.get('name')?.touched">
+              <small style="color: red;">Name is required.</small>
+            </div>
+          </div>
+        </div>
 
-/* Định dạng cho các label */
-label {
-    display: block; /* Hiển thị theo hàng */
-    margin-bottom: 5px; /* Khoảng cách dưới mỗi label */
-}
+        <!-- Password Field -->
+        <div class="row mb-3">
+          <label for="password" class="col-sm-3 col-form-label">Password:</label>
+          <div class="col-sm-9">
+            <input type="password" id="password" class="form-control" formControlName="password" required />
+            <div *ngIf="accountForm.get('password')?.invalid && accountForm.get('password')?.touched">
+              <small style="color: red;">Password is required.</small>
+            </div>
+          </div>
+        </div>
 
-/* Định dạng cho các input */
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="file"] {
-    width: 100%; /* Chiều rộng đầy đủ */
-    padding: 10px; /* Đệm bên trong cho input */
-    margin-bottom: 15px; /* Khoảng cách dưới mỗi input */
-    border: 1px solid #ccc; /* Đường viền cho input */
-    border-radius: 4px; /* Bo tròn góc cho input */
-}
+        <!-- Phone Field -->
+        <div class="row mb-3">
+          <label for="phone" class="col-sm-3 col-form-label">Phone:</label>
+          <div class="col-sm-9">
+            <input type="text" id="phone" class="form-control" formControlName="phone" required />
+            <div *ngIf="accountForm.get('phone')?.invalid && accountForm.get('phone')?.touched">
+              <small style="color: red;">Phone is required.</small>
+            </div>
+          </div>
+        </div>
 
-/* Định dạng cho các checkbox */
-input[type="checkbox"] {
-    margin-right: 5px; /* Khoảng cách bên phải cho checkbox */
-}
+        <!-- Email Field -->
+        <div class="row mb-3">
+          <label for="email" class="col-sm-3 col-form-label">Email:</label>
+          <div class="col-sm-9">
+            <input type="email" id="email" class="form-control" formControlName="email" required />
+            <div *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched">
+              <small style="color: red;">A valid email is required.</small>
+            </div>
+          </div>
+        </div>
 
-/* Định dạng cho nút gửi */
-button[type="submit"] {
-    display: block; /* Hiển thị nút như một khối */
-    width: 100%; /* Chiều rộng đầy đủ */
-    padding: 10px; /* Đệm bên trong cho nút */
-    background-color: #4CAF50; /* Màu nền cho nút */
-    color: white; /* Màu chữ */
-    border: none; /* Bỏ đường viền */
-    border-radius: 5px; /* Bo tròn góc cho nút */
-    font-size: 16px; /* Kích thước chữ cho nút */
-    cursor: pointer; /* Đổi con trỏ khi di chuột qua nút */
-}
+        <!-- Address Field -->
+        <div class="row mb-3">
+          <label for="address" class="col-sm-3 col-form-label">Address:</label>
+          <div class="col-sm-9">
+            <input type="text" id="address" class="form-control" formControlName="address" required />
+            <div *ngIf="accountForm.get('address')?.invalid && accountForm.get('address')?.touched">
+              <small style="color: red;">Address is required.</small>
+            </div>
+          </div>
+        </div>
 
-/* Định dạng cho nút khi di chuột qua */
-button[type="submit"]:hover {
-    background-color: #45a049; /* Màu nền khi di chuột qua */
-}
+        <!-- Image Upload Field -->
+        <div class="row mb-3">
+          <label for="image" class="col-sm-3 col-form-label">Image:</label>
+          <div class="col-sm-9">
+            <input type="file" id="image" class="form-control" (change)="onImageSelected($event)" accept="image/*" />
+            <div *ngIf="imagePreviewUrl" class="mt-2">
+              <p>Image Preview:</p>
+              <img [src]="imagePreviewUrl" alt="Image Preview" width="100" />
+            </div>
+          </div>
+        </div>
 
-/* Định dạng cho thông báo lỗi */
-.error-message {
-    color: red; /* Màu chữ đỏ cho lỗi */
-    text-align: center; /* Căn giữa thông báo lỗi */
-    margin-top: 20px; /* Khoảng cách trên thông báo lỗi */
-}
+        <!-- Admin, Status, Confirm Fields -->
+        <div class="row mb-3">
+          <div class="col-sm-3 col-form-label">Admin:</div>
+          <div class="col-sm-9">
+            <input type="checkbox" id="admin" formControlName="admin" />
+          </div>
+        </div>
 
-</style>
-<h2>Create Account</h2>
-<form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="id">Custom ID:</label>
-    <input type="text" id="id" formControlName="id" required />
-    <div *ngIf="accountForm.get('id')?.invalid && accountForm.get('id')?.touched">
-      <small style="color: red;">ID is required.</small>
+        <div class="row mb-3">
+          <div class="col-sm-3 col-form-label">Status:</div>
+          <div class="col-sm-9">
+            <input type="checkbox" id="status" formControlName="status" />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-sm-3 col-form-label">Confirm:</div>
+          <div class="col-sm-9">
+            <input type="checkbox" id="confirm" formControlName="confirm" />
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" [disabled]="accountForm.invalid" class="btn btn-primary">Create Account</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="text-danger mt-3 text-center">
+      {{ errorMessage }}
     </div>
   </div>
-
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" formControlName="name" required />
-    <div *ngIf="accountForm.get('name')?.invalid && accountForm.get('name')?.touched">
-      <small style="color: red;">Name is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" formControlName="password" required />
-    <div *ngIf="accountForm.get('password')?.invalid && accountForm.get('password')?.touched">
-      <small style="color: red;">Password is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="phone">Phone:</label>
-    <input type="text" id="phone" formControlName="phone" required />
-    <div *ngIf="accountForm.get('phone')?.invalid && accountForm.get('phone')?.touched">
-      <small style="color: red;">Phone is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" formControlName="email" required />
-    <div *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched">
-      <small style="color: red;">A valid email is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="address">Address:</label>
-    <input type="text" id="address" formControlName="address" required />
-    <div *ngIf="accountForm.get('address')?.invalid && accountForm.get('address')?.touched">
-      <small style="color: red;">Address is required.</small>
-    </div>
-  </div>
-
-  <div>
-    <label for="image">Image:</label>
-    <input type="file" id="image" (change)="onImageSelected($event)" accept="image/*" />
-    <div *ngIf="imagePreviewUrl">
-      <p>Image Preview:</p>
-      <img [src]="imagePreviewUrl" alt="Image Preview" width="100" />
-    </div>
-  </div>
-
-  <div>
-    <label for="admin">Admin:</label>
-    <input type="checkbox" id="admin" formControlName="admin" />
-  </div>
-
-  <div>
-    <label for="status">Status:</label>
-    <input type="checkbox" id="status" formControlName="status" />
-  </div>
-
-  <div>
-    <label for="confirm">Confirm:</label>
-    <input type="checkbox" id="confirm" formControlName="confirm" />
-  </div>
-
-  <button type="submit" [disabled]="accountForm.invalid">Create Account</button>
-</form>
-
-<!-- Display error message if any -->
-<div *ngIf="errorMessage" style="color: red;">
-  {{ errorMessage }}
 </div>
