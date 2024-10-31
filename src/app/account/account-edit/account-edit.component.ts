@@ -70,6 +70,6 @@ export class AccountEditComponent implements OnInit {
   // Hàm xử lý lỗi chung
   private handleError(action: string, error: any): void {
     console.error(`${action}:`, error); // Ghi lại lỗi vào console
-    this.errorMessage = `${action}: ${error.message}`; // Thiết lập thông báo lỗi cho người dùng
+    this.errorMessage = `${action}: ${error.message || 'Unknown error'}`; // Thiết lập thông báo lỗi cho người dùng
   }
-}
+}  

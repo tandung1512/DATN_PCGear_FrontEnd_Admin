@@ -1,10 +1,10 @@
 // Angular imports
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; 
 
 // Project imports
 import { AppComponent } from './app.component';
@@ -40,6 +40,7 @@ import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 
 // Services
 import { AccountService } from './account/account.service';
+import { AuthInterceptor } from './auth.interceptor';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { AccountService } from './account/account.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    
     ReactiveFormsModule,
     SharedModule,
     BrowserAnimationsModule,
@@ -74,7 +76,11 @@ import { AccountService } from './account/account.service';
     HttpClientModule,
   ],
   providers: [
-    NavigationItem, AccountService 
+    NavigationItem, AccountService ,{
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

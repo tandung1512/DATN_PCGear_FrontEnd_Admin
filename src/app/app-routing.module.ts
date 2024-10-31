@@ -8,11 +8,13 @@ import { GuestComponent } from './theme/layout/guest/guest.component';
 import { AccountListComponent } from './account/account-list/account-list.component';
 import { AccountEditComponent } from './account/account-edit/account-edit.component';
 import { AccountCreateComponent } from './account/account-create/account-create.component';
+import AuthSigninComponent from './demo/pages/authentication/auth-signin/auth-signin.component';
+import { AuthGuard } from './auth-guard.guard';
 
-const routes: Routes = [
+const routes: Routes = [ {path: 'authentication/login', component:AuthSigninComponent},
   {
     path: '',
-    component: AdminComponent,
+    component: AdminComponent,canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -27,23 +29,26 @@ const routes: Routes = [
       { path: 'accounts', component: AccountListComponent },
       { path: 'accounts/edit/:id', component: AccountEditComponent },
       { path: 'accounts/create', component: AccountCreateComponent },
+     
       { path: '', redirectTo: '/accounts', pathMatch: 'full' },
       { path: '**', redirectTo: '/accounts' } // Handle 404
     ],
+
   },
-  {
-    path: '',
-    component: GuestComponent,
-    children: [
-      {
-        path: 'auth',
-        loadChildren: () =>
-          import('./demo/pages/authentication/authentication.module').then(
-            m => m.AuthenticationModule
-          ),
-      },
-    ],
-  },
+  
+  // {
+  //   path: '',
+  //   component: GuestComponent,
+  //   children: [
+  //     {
+  //       path: 'auth',
+  //       loadChildren: () =>
+  //         import('./demo/pages/authentication/authentication.module').then(
+  //           m => m.AuthenticationModule
+  //         ),
+  //     },
+  //   ],
+  // },
 ];
 
 @NgModule({

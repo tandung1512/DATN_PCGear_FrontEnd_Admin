@@ -36,6 +36,8 @@ export class AccountCreateComponent implements OnInit {
 
   async onSubmit(): Promise<void> {
     this.errorMessage = null; // Reset error message mỗi khi gửi form
+
+    // Kiểm tra tính hợp lệ của form
     if (this.accountForm.invalid) {
       this.errorMessage = 'Vui lòng điền đầy đủ thông tin.'; // Thông báo lỗi cho form không hợp lệ
       return;
@@ -45,7 +47,7 @@ export class AccountCreateComponent implements OnInit {
 
     try {
       // Mã hóa mật khẩu bằng bcrypt trước khi gửi
-      const salt = await bcrypt.genSalt(10); 
+      const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(formValues.password, salt);
 
       // Tạo một đối tượng FormData để chứa thông tin tài khoản và ảnh đã chọn
@@ -63,8 +65,8 @@ export class AccountCreateComponent implements OnInit {
         }
       });
     } catch (error) {
-      this.errorMessage = 'Đã xảy ra lỗi khi mã hóa mật khẩu.';
-      console.error(error);
+      this.errorMessage = 'Đã xảy ra lỗi khi mã hóa mật khẩu: ' + error; // Hiển thị lỗi cụ thể
+      console.error('Hashing error:', error);
     }
   }
 
