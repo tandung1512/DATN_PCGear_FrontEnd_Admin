@@ -33,7 +33,7 @@ export default class AuthSigninComponent implements OnInit {
         // set cookie
         // this.cookieService.set( 'token', data.headers.get('Authorization') );
         const loginResult = data.body as LoginResponse;
-        console.log(loginResult.token);
+        // console.log(loginResult.token);
         this.cookieService.set( 'token', loginResult.token,2,'/' );
         this.cookieService.set( 'userName', this.form.controls['uname'].value,2,'/' );
         this.router.navigate ( [ '/dashboard' ] );
