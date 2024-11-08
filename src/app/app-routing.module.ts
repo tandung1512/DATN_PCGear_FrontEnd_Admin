@@ -23,6 +23,10 @@ import { SupplierEditComponent } from './supplier/edit/supplier-edit.component';
 import { DistinctiveListComponent } from './distinctive/list/distinctive-list.component';
 import { DistinctiveCreateComponent } from './distinctive/create/distinctive-create.component';
 import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.component';
+//Category components
+import { AddCategoryComponent } from './category/add/add-category.component';
+import { EditCategoryComponent } from './category/edit/edit-category.component';
+import { ListCategoryComponent } from './category/list/list-category.component';
 
 const routes: Routes = [{ path: 'authentication/login', component: AuthSigninComponent },
 {
@@ -54,7 +58,10 @@ const routes: Routes = [{ path: 'authentication/login', component: AuthSigninCom
     { path: 'distinctives', component: DistinctiveListComponent },
     { path: 'distinctives/create', component: DistinctiveCreateComponent },
     { path: 'distinctives/edit/:id', component: DistinctiveEditComponent },
-
+    //Categori rotes
+    { path: 'categories/add', component: AddCategoryComponent },
+    { path: 'categories/edit/:id', component: EditCategoryComponent },
+    { path: 'categories', component: ListCategoryComponent },
 
     { path: '', redirectTo: '/accounts', pathMatch: 'full' },
     { path: '**', redirectTo: '/accounts' } // Handle 404

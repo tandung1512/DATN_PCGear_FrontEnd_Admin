@@ -54,7 +54,10 @@ import { SupplierEditComponent } from './supplier/edit/supplier-edit.component';
 import { DistinctiveListComponent } from './distinctive/list/distinctive-list.component';
 import { DistinctiveCreateComponent } from './distinctive/create/distinctive-create.component';
 import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.component';
-
+//Category components
+import { AddCategoryComponent } from './category/add/add-category.component';
+import { EditCategoryComponent } from './category/edit/edit-category.component';
+import { ListCategoryComponent } from './category/list/list-category.component';
 
 
 @NgModule({
@@ -85,7 +88,10 @@ import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.co
     SupplierEditComponent,
     DistinctiveListComponent,
     DistinctiveCreateComponent,
-    DistinctiveEditComponent
+    DistinctiveEditComponent,
+    ListCategoryComponent,
+    EditCategoryComponent,
+    AddCategoryComponent
   ],
   imports: [
     BrowserModule,

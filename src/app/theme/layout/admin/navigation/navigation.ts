@@ -102,22 +102,22 @@ const NavigationItems = [
     ]
   },
   {
-    id: 'category',
+    id: 'categories',
     title: 'Quản lí danh mục',
     type: 'collapse',
     icon: 'feather icon-pie-chart',
     children: [
       {
-        id: 'category-list',
+        id: 'categories-list',
         title: 'Danh sách danh mục',
         type: 'item',
         url: '/categories'
       },
       {
-        id: 'category-create',
+        id: 'categories-add',
         title: 'Thêm danh mục',
         type: 'item',
-        url: '/categories/create'
+        url: '/categories/add'
       }
     ]
   },
