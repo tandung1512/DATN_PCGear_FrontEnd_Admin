@@ -11,6 +11,13 @@ import { AccountEditComponent } from './account/account-edit/account-edit.compon
 import { AccountCreateComponent } from './account/account-create/account-create.component';
 import AuthSigninComponent from './demo/pages/authentication/auth-signin/auth-signin.component';
 import { AuthGuard } from './auth-guard.guard';
+//invoice
+
+import { InvoicePendingComponent } from './invoice/invoice-pending/invoice-pending.component';
+import { InvoiceDeliveryComponent } from './invoice/invoice-delivery/invoice-delivery.component';
+import { InvoiceCompleteComponent } from './invoice/invoice-complete/invoice-complete.component';
+import { InvoiceCancelledComponent } from './invoice/invoice-canceller/invoice-cancelled.component';
+import { InvoiceDetailedComponent } from './invoice/invoice-detailed/invoice-detailed.component';
 
 const routes: Routes = [ {path: 'authentication/login', component:AuthSigninComponent},
   {
@@ -31,8 +38,16 @@ const routes: Routes = [ {path: 'authentication/login', component:AuthSigninComp
       { path: 'accounts/edit/:id', component: AccountEditComponent },
       { path: 'accounts/create', component: AccountCreateComponent },
      
+      { path: 'invoice-pending', component: InvoicePendingComponent },
+      { path: 'invoice-delivery', component: InvoiceDeliveryComponent },
+      { path: 'invoice-complete', component: InvoiceCompleteComponent },
+      { path: 'invoice-cancelled', component: InvoiceCancelledComponent },
+      { path: 'invoice-detailed', component: InvoiceDetailedComponent },
       { path: '', redirectTo: '/accounts', pathMatch: 'full' },
-      { path: '**', redirectTo: '/accounts' } // Handle 404
+      { path: '**', redirectTo: '/accounts' } ,// Handle 404
+      
+  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Trang mặc định
+  { path: '**', redirectTo: '/home' } 
     ],
 
 },

@@ -120,22 +120,22 @@ const NavigationItems = [
     ]
   },
   {
-    id: 'categories',
+    id: 'category',
     title: 'Quản lí danh mục',
     type: 'collapse',
     icon: 'feather icon-pie-chart',
     children: [
       {
-        id: 'categories-list',
+        id: 'category-list',
         title: 'Danh sách danh mục',
         type: 'item',
         url: '/categories'
       },
       {
-        id: 'categories-add',
+        id: 'category-create',
         title: 'Thêm danh mục',
         type: 'item',
-        url: '/categories/add'
+        url: '/categories/create'
       }
     ]
   },
@@ -172,30 +172,30 @@ const NavigationItems = [
         url: '/suppliers'
       },
       {
-        id: 'supplier-add',
+        id: 'supplier-create',
         title: 'Thêm nhà cung cấp',
         type: 'item',
-        url: '/suppliers/add'
+        url: '/suppliers/create'
       }
     ]
   },
   {
-    id: 'distinctives',
+    id: 'feature',
     title: 'Đặc trưng',
     type: 'collapse',
     icon: 'feather icon-sidebar',
     children: [
       {
-        id: 'distinctives-list',
+        id: 'feature-list',
         title: 'Danh sách đặc trưng',
         type: 'item',
-        url: '/distinctives'
+        url: '/features'
       },
       {
-        id: 'distinctives-create',
+        id: 'feature-create',
         title: 'Thêm đặc trưng',
         type: 'item',
-        url: '/distinctives/create'
+        url: '/features/create'
       }
     ]
   }
