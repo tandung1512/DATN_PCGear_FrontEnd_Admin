@@ -59,6 +59,7 @@ export class InvoiceDeliveryComponent implements OnInit {
     return `${day}/${month}/${year}`;
   }
   
+  
 
   loadAll(): void {
     const url = `${this.host}/invoices/delivery`;
