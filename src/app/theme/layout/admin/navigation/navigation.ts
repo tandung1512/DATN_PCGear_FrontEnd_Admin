@@ -47,6 +47,24 @@ const NavigationItems = [
         title: 'Hoá đơn đang vận chuyển',
         type: 'item',
         url: '/invoice-delivery'
+      },
+      {
+        id: 'view-invoice',
+        title: 'Hoá đơn đã hoàn thành ',
+        type: 'item',
+        url: '/invoice-complete'
+      },
+      {
+        id: 'view-invoice',
+        title: 'Hoá đơn đã hủy ',
+        type: 'item',
+        url: '/invoice-cancelled'
+      },
+      {
+        id: 'view-invoice',
+        title: 'Hoá đơn chi tiết ',
+        type: 'item',
+        url: '/invoice-detailed'
       }
     ]
   },

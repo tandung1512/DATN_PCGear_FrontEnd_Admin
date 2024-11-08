@@ -34,6 +34,9 @@ import { NavSearchComponent } from './theme/layout/admin/nav-bar/nav-left/nav-se
 //invoice
 import { InvoicePendingComponent } from './invoice/invoice-pending/invoice-pending.component';
 import { InvoiceDeliveryComponent } from './invoice/invoice-delivery/invoice-delivery.component';
+import { InvoiceCompleteComponent } from './invoice/invoice-complete/invoice-complete.component';
+import { InvoiceCancelledComponent } from './invoice/invoice-canceller/invoice-cancelled.component';
+import { InvoiceDetailedComponent } from './invoice/invoice-detailed/invoice-detailed.component';
 // Shared directives
 import { ToggleFullScreenDirective } from './theme/shared/components/full-screen/toggle-full-screen';
 
@@ -71,6 +74,10 @@ import { AuthInterceptor } from './auth.interceptor';
     AccountEditComponent,
     AccountCreateComponent,
     InvoicePendingComponent,
+    InvoiceDeliveryComponent,
+    InvoiceCompleteComponent,
+    InvoiceCancelledComponent,
+    InvoiceDetailedComponent ,
     
   ],
   imports: [

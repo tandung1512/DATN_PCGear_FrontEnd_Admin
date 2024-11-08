@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
 
+
 // Account components
 
 import { AccountListComponent } from './account/account-list/account-list.component';
@@ -12,7 +13,11 @@ import AuthSigninComponent from './demo/pages/authentication/auth-signin/auth-si
 import { AuthGuard } from './auth-guard.guard';
 import { InvoicePendingComponent } from './invoice/invoice-pending/invoice-pending.component';
 import { InvoiceDeliveryComponent } from './invoice/invoice-delivery/invoice-delivery.component';
+import { InvoiceCompleteComponent } from './invoice/invoice-complete/invoice-complete.component';
+import { InvoiceCancelledComponent } from './invoice/invoice-canceller/invoice-cancelled.component';
+import { InvoiceDetailedComponent } from './invoice/invoice-detailed/invoice-detailed.component';
 const routes: Routes = [ {path: 'authentication/login', component:AuthSigninComponent},
+  
   {
     path: '',
     component: AdminComponent,canActivate: [AuthGuard],
@@ -33,8 +38,14 @@ const routes: Routes = [ {path: 'authentication/login', component:AuthSigninComp
       
       { path: 'invoice-pending', component: InvoicePendingComponent },
       { path: 'invoice-delivery', component: InvoiceDeliveryComponent },
+      { path: 'invoice-complete', component: InvoiceCompleteComponent },
+      { path: 'invoice-cancelled', component: InvoiceCancelledComponent },
+      { path: 'invoice-detailed', component: InvoiceDetailedComponent },
       { path: '', redirectTo: '/accounts', pathMatch: 'full' },
-      { path: '**', redirectTo: '/accounts' } // Handle 404
+      { path: '**', redirectTo: '/accounts' } ,// Handle 404
+      { path: 'detailedInvoices/:id', component: InvoiceDetailedComponent },
+      { path: '', redirectTo: '/home', pathMatch: 'full' }, // Trang mặc định
+      { path: '**', redirectTo: '/home' }
 
     ],
 

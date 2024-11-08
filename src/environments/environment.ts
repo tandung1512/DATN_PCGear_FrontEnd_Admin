@@ -6,7 +6,8 @@ import packageInfo from '../../package.json';
 
 export const environment = {
   appVersion: packageInfo.version,
-  production: true
+  production: false,
+  host: 'http://localhost:8080/api'
 };
 
 

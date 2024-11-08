@@ -1,151 +1,122 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { DatePipe } from '@angular/common';
-
-
-interface Invoice {
-  id: string;
-  orderDate: string;
-  status: string;
-  user: { id: string; name: string };
-}
-
-interface User {
-  id: string;
-  name: string;
-}
-
-interface History {
-  note: string;
-  historyDate: string;
-  historyTime: string;
-  user: User;
-}
+import { ToastrService } from 'ngx-toastr'; // Import ToastrService
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-invoice-delivery',
   templateUrl: './invoice-delivery.component.html',
+
 })
 export class InvoiceDeliveryComponent implements OnInit {
-  items: Invoice[] = [];
-  filteredItems: Invoice[] = [];
-  invoice: Invoice | null = null;
-  pageCount = 1;
-  currentPage = 1;
-  pageSize = 5;
-  begin = 0;
-  prop = '';
-  host = 'http://localhost:8080/api';
-  userInfo: User | null = null;
+  items: any[] = [];
+  pageCount: number = 1;
+  currentPage: number = 1;
+  begin: number = 0;
+  prop: string = 'id';
+  invoice: any;
+  userInfo: any;
+  host: string = environment.host;  // Sử dụng giá trị host từ environment
 
-  constructor(
-    private http: HttpClient,
-    private toastr: ToastrService,
-    private router: Router,
-    private datePipe: DatePipe
-  ) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {} // Inject ToastrService
 
   ngOnInit(): void {
     this.loadAll();
-    this.loadUserInfo();
   }
-  getFormattedDate(orderDate: string): string {
-    const date = new Date(orderDate);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Thêm 1 vì tháng bắt đầu từ 0
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
-  
-  
 
   loadAll(): void {
     const url = `${this.host}/invoices/delivery`;
-    this.http.get<Invoice[]>(url).subscribe({
-      next: (resp) => {
+    this.http.get<any[]>(url).subscribe(
+      resp => {
         this.items = resp;
-        this.filteredItems = [...this.items];
-        this.pageCount = Math.ceil(this.items.length / this.pageSize);
-        console.log('Loaded invoices:', this.items);
+        this.pageCount = Math.ceil(this.items.length / 5);
+        console.log(this.pageCount);
       },
-      error: (error) => {
-        console.error('Error loading invoices:', error);
-        this.toastr.error('Không thể tải danh sách hóa đơn. Vui lòng thử lại sau.');
-      },
-    });
+      error => {
+        this.showErrorMessage('Lỗi khi tải dữ liệu');
+        console.error('Error loading data', error);
+      }
+    );
   }
 
-  edit(id: string): void {
-    this.router.navigate([`/pcgearhub/admin/table-invoice-detailed/${id}`]);
-  }
-
-  sortBy(prop: string): void {
-    this.prop = prop;
-    this.filteredItems.sort((a: any, b: any) => {
-      const valA = a[prop];
-      const valB = b[prop];
-      if (valA < valB) return -1;
-      if (valA > valB) return 1;
+  sortBy(property: string): void {
+    this.prop = property;
+    this.items.sort((a, b) => {
+      if (a[property] < b[property]) return -1;
+      if (a[property] > b[property]) return 1;
       return 0;
     });
   }
 
-  update(id: string): void {
+  edit(id: string): void {
+    window.location.href = `/pcgearhub/admin/table-invoice-detailed/${id}`;
+  }
+
+  update(id: string, event: Event): void {
+    event.preventDefault();  // Ngừng điều hướng trang khi click vào thẻ <a>
+    
     const urlID = `${this.host}/invoice/${id}`;
-    this.http.get<Invoice>(urlID).subscribe({
-      next: (resp) => {
+    this.http.get(urlID).subscribe(
+      (resp: any) => {
         this.invoice = resp;
-        if (this.invoice) {
-          this.invoice.status = 'complete';
-          this.http.put(`${this.host}/invoice/${id}`, this.invoice).subscribe({
-            next: () => {
-              this.items = this.items.filter((item) => item.id !== id);
-              this.filteredItems = [...this.items];
-              this.pageCount = Math.ceil(this.filteredItems.length / this.pageSize);
-              this.logHistory(`Đã chuyển trạng thái của đơn hàng ${id} sang đã giao hàng`);
-              this.toastr.success('Chuyển trạng thái đơn hàng thành công', 'Thành công');
-            },
-            error: (error) => console.error('Error updating invoice:', error),
-          });
-        }
+        this.invoice.status = 'complete';
+  
+        this.http.put(`${this.host}/invoice/${id}`, this.invoice).subscribe(
+          updateResp => {
+            const index = this.items.findIndex(item => item.id === this.invoice.id);
+            if (index !== -1) {
+              this.items.splice(index, 1); // Remove the item
+            }
+            console.log('Success', updateResp);
+            this.history(`Đã chuyển trạng thái của đơn hàng ${id} sang đã giao hàng`);
+            this.showSuccessMessage('Chuyển trạng thái sang đã hoàn thành đơn hàng thành công');
+          },
+          error => {
+            this.showErrorMessage('Lỗi khi cập nhật trạng thái đơn hàng');
+            console.error('Error updating invoice', error);
+          }
+        );
       },
-      error: (error) => console.error('Error fetching invoice:', error),
+      error => {
+        this.showErrorMessage('Lỗi khi tải thông tin đơn hàng');
+        console.error('Error loading invoice', error);
+      }
+    );
+  }
+  
+
+  // Method to show success toast message
+  showSuccessMessage(message: string): void {
+    this.toastr.success(message, 'Thông báo', {
+      timeOut: 3000,  // Thời gian hiện thông báo (3 giây)
+      positionClass: 'toast-top-right'  // Vị trí thông báo
     });
   }
 
-  loadUserInfo(): void {
-    const urlUser = `http://localhost:8088/pcgearhub/api/user`;
-    this.http.get<User>(urlUser).subscribe({
-      next: (resp) => {
-        this.userInfo = resp;
-        console.log('User Info:', this.userInfo);
-      },
-      error: (error) => console.error('Error fetching user info:', error),
+  // Method to show error toast message
+  showErrorMessage(message: string): void {
+    this.toastr.error(message, 'Lỗi', {
+      timeOut: 3000,
+      positionClass: 'toast-top-right'
     });
   }
 
-  logHistory(title: string): void {
-    const formattedDate = new Date().toISOString().split('T')[0];
-    const timeString = new Date().toTimeString().split(' ')[0];
-
-    if (this.userInfo) {
-      const history: History = {
-        note: `${this.userInfo.name} ${title}`,
-        historyDate: formattedDate,
-        historyTime: timeString,
-        user: this.userInfo,
-      };
-      const urlHistory = `http://localhost:8088/pcgearhub/rest/UserHistory`;
-      this.http.post(urlHistory, history).subscribe({
-        next: (resp) => console.log('History logged:', resp),
-        error: (error) => console.error('Error logging history:', error),
-      });
-    }
+  // Method to show info toast message
+  showInfoMessage(message: string): void {
+    this.toastr.info(message, 'Thông tin', {
+      timeOut: 3000,
+      positionClass: 'toast-top-right'
+    });
   }
 
-  // Pagination Methods
+  // Method to show warning toast message
+  showWarningMessage(message: string): void {
+    this.toastr.warning(message, 'Cảnh báo', {
+      timeOut: 3000,
+      positionClass: 'toast-top-right'
+    });
+  }
+
   first(): void {
     this.begin = 0;
     this.currentPage = 1;
@@ -153,20 +124,52 @@ export class InvoiceDeliveryComponent implements OnInit {
 
   prev(): void {
     if (this.begin > 0) {
-      this.begin -= this.pageSize;
+      this.begin -= 5;
       this.currentPage--;
     }
   }
 
   next(): void {
-    if (this.begin < (this.pageCount - 1) * this.pageSize) {
-      this.begin += this.pageSize;
+    if (this.begin < (this.pageCount - 1) * 5) {
+      this.begin += 5;
       this.currentPage++;
     }
   }
 
   last(): void {
-    this.begin = (this.pageCount - 1) * this.pageSize;
+    this.begin = (this.pageCount - 1) * 5;
     this.currentPage = this.pageCount;
+  }
+
+  history(title: string): void {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0];
+    const timeString = currentDate.toTimeString().split(' ')[0];
+
+    const urlUser = `${this.host}/api/user`;
+    this.http.get(urlUser).subscribe(
+      userResp => {
+        this.userInfo = userResp;
+        const urlHistory = `${this.host}/rest/UserHistory`;
+        const history = {
+          note: `${this.userInfo.name} ${title}`,
+          historyDate: formattedDate,
+          historyTime: timeString,
+          user: this.userInfo
+        };
+
+        this.http.post(urlHistory, history).subscribe(
+          historyResp => {
+            console.log('History saved', historyResp);
+          },
+          error => {
+            console.error('Error saving history', error);
+          }
+        );
+      },
+      error => {
+        console.error('Error loading user info', error);
+      }
+    );
   }
 }

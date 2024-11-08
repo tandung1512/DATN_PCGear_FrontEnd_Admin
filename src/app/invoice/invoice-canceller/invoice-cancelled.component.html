@@ -1,0 +1,64 @@
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">Bảng Hóa Đơn Chưa giải quyết</h3>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Quản lý hóa đơn</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chưa giải quyết</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Bảng Dữ Liệu</h4>
+              <p class="card-description">Hóa đơn <code>Chờ xác nhận</code></p>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th (click)="sortBy('id')">Mã hóa đơn</th>
+                      <th (click)="sortBy('orderDate')">Ngày Đặt Hàng</th>
+                      <th (click)="sortBy('status')">Trạng thái</th>
+                      <th (click)="sortBy('name')">Tên người đặt</th>
+                      <th>Lý do hủy đơn</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of items | slice:begin:begin+itemsPerPage; let i = index">
+                      <td>{{ begin + i + 1 }}</td>
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.orderDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
+                      <td class="text-danger">
+                        <span *ngIf="item.status === 'cancelled'">Đã hủy</span>
+                      </td>
+                      <td>{{ item.user.name }}</td>
+                      <td>{{ item.node }}</td>
+                      <td>
+                        <button (click)="edit(item.id)" class="btn btn-info">Xem chi tiết</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- Pagination -->
+              <div class="row">
+                <ul class="pagination">
+                  <li class="btn"><a>{{ currentPage }} of {{ pageCount }}</a></li>
+                  <li class="btn" (click)="first()"><i class="fas fa-angle-double-left"></i></li>
+                  <li class="btn" (click)="prev()"><i class="fas fa-angle-left"></i></li>
+                  <li class="btn" (click)="next()"><i class="fas fa-angle-right"></i></li>
+                  <li class="btn" (click)="last()"><i class="fas fa-angle-double-right"></i></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

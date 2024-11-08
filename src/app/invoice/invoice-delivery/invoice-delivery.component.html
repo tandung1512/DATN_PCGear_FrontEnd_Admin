@@ -1,41 +1,79 @@
-<div class="content-wrapper">
+<div class="main-panel">
+  <div class="content-wrapper">
     <div class="page-header">
       <h3 class="page-title">Bảng Hóa Đơn Đang Giao Hàng</h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Quản lý hóa đơn</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Đang giao hàng</li>
+        </ol>
+      </nav>
     </div>
-    <div class="table-responsive">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th (click)="sortBy('id')">Mã hóa đơn</th>
-            <th (click)="sortBy('orderDate')">Ngày Đặt Hàng</th>
-            <th (click)="sortBy('status')">Trạng thái</th>
-            <th>Tên người đặt</th>
-            <th>Thao tác</th>
-            <th>Xác nhận</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of filteredItems | slice: begin : begin + pageSize; let i = index">
-            <td>{{ i + 1 + begin }}</td>
-            <td>{{ item.id }}</td>
-            <td>{{ getFormattedDate(item.orderDate) }}</td>
-
-            <td>{{ item.status }}</td>
-            <td>{{ item.user?.name }}</td>
-            <td><button class="btn btn-info" (click)="edit(item.id)">Xem</button></td>
-            <td><button class="btn btn-success" (click)="update(item.id)">Hoàn thành</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- Pagination -->
-    <div class="mt-3">
-      <button (click)="first()">First</button>
-      <button (click)="prev()">Prev</button>
-      <span>{{ currentPage }} of {{ pageCount }}</span>
-      <button (click)="next()">Next</button>
-      <button (click)="last()">Last</button>
+    <div class="row">
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Bảng Dữ Liệu</h4>
+            <p class="card-description">
+              Hóa đơn <code>Đang giao hàng</code>
+            </p>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th (click)="sortBy('id')">Mã hóa đơn</th>
+                    <th (click)="sortBy('orderDate')">Ngày Đặt Hàng</th>
+                    <th (click)="sortBy('status')">Status</th>
+                    <th (click)="sortBy('user.name')">Tên người đặt</th>
+                    <th>Thao tác</th>
+                    <th>Xác nhận</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of items | slice:begin:begin + 5">
+                    <td>{{ items.indexOf(item) + 1 }}</td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.orderDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
+                    <td class="text-info">
+                      <span *ngIf="item.status === 'delivery'">Đang giao hàng</span>
+                    </td>
+                    <td>{{ item.user.name }}</td>
+                    <td (click)="edit(item.id)">
+                      <a class="btn btn-info" href="#">Xem chi tiết</a>
+                    </td>
+                    <td (click)="update(item.id, $event)">
+                      <button class="btn btn-success" type="button">Hoàn thành đơn hàng</button>
+                    </td>
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <div class="col-sm-4"></div>
+              <ul class="pagination col-sm-4">
+                <li class="btn">
+                  <a href="#">{{currentPage}} of {{pageCount}}</a>
+                </li>
+                <li class="btn">
+                  <a href="#" (click)="first()"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li class="btn">
+                  <a href="#" (click)="prev()"><i class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="btn">
+                  <a href="#" (click)="next()"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="btn">
+                  <a href="#" (click)="last()"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+              </ul>
+              <div class="col-sm-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  
+</div>

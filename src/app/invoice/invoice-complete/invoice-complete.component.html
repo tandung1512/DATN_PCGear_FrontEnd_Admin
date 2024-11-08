@@ -1,0 +1,65 @@
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title">Bảng Hóa Đơn Đã Hoàn Thành</h3>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Quản lý hóa đơn</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Đã hoàn thành</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Bảng Dữ Liệu</h4>
+              <p class="card-description">
+                Hóa đơn <code>Đã hoàn thành</code>
+              </p>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th (click)="sortBy('id')">Mã hóa đơn</th>
+                      <th (click)="sortBy('orderDate')">Ngày Đặt Hàng</th>
+                      <th (click)="sortBy('status')">Status</th>
+                      <th (click)="sortBy('name')">Tên người đặt</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of items | slice:begin:begin + 5">
+                      <td>{{ items.indexOf(item) + 1 }}</td>
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.orderDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
+                      <td class="text-success">
+                        <span *ngIf="item.status === 'complete'">Đã hoàn thành</span>
+                      </td>
+                      <td>{{ item.user.name }}</td>
+                      <td (click)="edit(item.id)">
+                        <button class="btn btn-info">Xem chi tiết</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row">
+                <div class="col-sm-4"></div>
+                <ul class="pagination col-sm-4">
+                  <li class="btn"><a href="#">{{currentPage}} of {{pageCount}}</a></li>
+                  <li class="btn"><a href="#" (click)="first()"><i class="fas fa-angle-double-left"></i></a></li>
+                  <li class="btn"><a href="#" (click)="prev()"><i class="fas fa-angle-left"></i></a></li>
+                  <li class="btn"><a href="#" (click)="next()"><i class="fas fa-angle-right"></i></a></li>
+                  <li class="btn"><a href="#" (click)="last()"><i class="fas fa-angle-double-right"></i></a></li>
+                </ul>
+                <div class="col-sm-4"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
