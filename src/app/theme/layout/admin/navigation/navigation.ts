@@ -38,15 +38,15 @@ const NavigationItems = [
     children: [
       {
         id: 'invoice',
-        title: 'Hóa đơn',
+        title: 'Hóa đơn chưa giải quyết',
         type: 'item',
-        url: '/invoices'
+        url: '/invoice-pending'
       },
       {
         id: 'view-invoice',
-        title: 'Xem hóa đơn',
+        title: 'Hoá đơn đang vận chuyển',
         type: 'item',
-        url: '/invoices/view'
+        url: '/invoice-delivery'
       }
     ]
   },

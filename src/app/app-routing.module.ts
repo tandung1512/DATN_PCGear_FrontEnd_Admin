@@ -10,7 +10,8 @@ import { AccountEditComponent } from './account/account-edit/account-edit.compon
 import { AccountCreateComponent } from './account/account-create/account-create.component';
 import AuthSigninComponent from './demo/pages/authentication/auth-signin/auth-signin.component';
 import { AuthGuard } from './auth-guard.guard';
-
+import { InvoicePendingComponent } from './invoice/invoice-pending/invoice-pending.component';
+import { InvoiceDeliveryComponent } from './invoice/invoice-delivery/invoice-delivery.component';
 const routes: Routes = [ {path: 'authentication/login', component:AuthSigninComponent},
   {
     path: '',
@@ -29,9 +30,12 @@ const routes: Routes = [ {path: 'authentication/login', component:AuthSigninComp
       { path: 'accounts', component: AccountListComponent },
       { path: 'accounts/edit/:id', component: AccountEditComponent },
       { path: 'accounts/create', component: AccountCreateComponent },
-     
+      
+      { path: 'invoice-pending', component: InvoicePendingComponent },
+      { path: 'invoice-delivery', component: InvoiceDeliveryComponent },
       { path: '', redirectTo: '/accounts', pathMatch: 'full' },
       { path: '**', redirectTo: '/accounts' } // Handle 404
+
     ],
 
   },

@@ -1,0 +1,81 @@
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title">Bảng Hóa Đơn Chưa Giải Quyết</h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Quản lý hóa đơn</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Chưa giải quyết</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Bảng Dữ Liệu</h4>
+            <p class="card-description">Hóa đơn chờ xác nhận</p>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th (click)="sortBy('id')">Mã hóa đơn</th>
+                    <th (click)="sortBy('orderDate')">Ngày Đặt Hàng</th>
+                    <th (click)="sortBy('status')">Trạng thái</th>
+                    <th (click)="sortBy('user.name')">Tên người đặt</th>
+                    <th>Thao tác</th>
+                    <th>Xác nhận</th>
+                    <th>Hủy đơn</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of items | slice: begin : begin + 5; let i = index">
+                    <td>{{ begin + i + 1 }}</td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.orderDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
+                    <td [ngClass]="{'text-warning': item.status === 'pending'}">
+                      <span *ngIf="item.status === 'pending'">Còn hoạt động</span>
+                    </td>
+                    <td>{{ item.user.name }}</td>
+                    <td><button (click)="edit(item.id)" class="btn btn-info">Xem chi tiết</button></td>
+                    <td><button (click)="update(item.id)" class="btn btn-success">Giao hàng</button></td>
+                    <td><button (click)="openCancelModal(item.id)" class="btn btn-danger">Hủy đơn</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#" (click)="first()">Đầu</a></li>
+                <li class="page-item"><a class="page-link" href="#" (click)="prev()">Trước</a></li>
+                <li class="page-item"><a class="page-link" href="#" (click)="next()">Tiếp theo</a></li>
+                <li class="page-item"><a class="page-link" href="#" (click)="last()">Cuối</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Hủy Đơn -->
+    <div *ngIf="showCancelModal" class="modal fade show d-block" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Bạn có chắc?</h5>
+            <button type="button" class="close" aria-label="Close" (click)="closeCancelModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Bạn thật sự muốn hủy đơn này?</p>
+            <input type="text" class="form-control" [(ngModel)]="cancellationReason" placeholder="Nhập lý do">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeCancelModal()">Quay lại</button>
+            <button type="button" class="btn btn-danger" (click)="cancelledOrder(currentCancelId)">Hủy đơn</button>
+          </div>
+        </div>
+      </div>
+    </div>

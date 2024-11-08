@@ -5,6 +5,10 @@ import { FormsModule,FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; 
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
+
 
 // Project imports
 import { AppComponent } from './app.component';
@@ -27,6 +31,9 @@ import { NavGroupComponent } from './theme/layout/admin/navigation/nav-content/n
 import { NavItemComponent } from './theme/layout/admin/navigation/nav-content/nav-item/nav-item.component';
 import { NavSearchComponent } from './theme/layout/admin/nav-bar/nav-left/nav-search/nav-search.component';
 
+//invoice
+import { InvoicePendingComponent } from './invoice/invoice-pending/invoice-pending.component';
+import { InvoiceDeliveryComponent } from './invoice/invoice-delivery/invoice-delivery.component';
 // Shared directives
 import { ToggleFullScreenDirective } from './theme/shared/components/full-screen/toggle-full-screen';
 
@@ -63,23 +70,27 @@ import { AuthInterceptor } from './auth.interceptor';
     AccountListComponent,
     AccountEditComponent,
     AccountCreateComponent,
+    InvoicePendingComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    
+    ToastrModule.forRoot(),
     ReactiveFormsModule,
     SharedModule,
     BrowserAnimationsModule,
-    
+    CommonModule,
     HttpClientModule,
   ],
   providers: [
-    NavigationItem, AccountService ,{
+    
+    NavigationItem, AccountService ,DatePipe,{
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+      
     }
   ],
   bootstrap: [AppComponent]
