@@ -4,14 +4,14 @@
       <h2 class="fw-bold">Create Account</h2>
     </div>
     <div class="card-body">
-      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmit()">
         
         <!-- ID Field -->
         <div class="row mb-3">
           <label for="id" class="col-sm-3 col-form-label">Custom ID:</label>
           <div class="col-sm-9">
-            <input type="text" id="id" class="form-control" formControlName="id" required />
-            <div *ngIf="accountForm.get('id')?.invalid && accountForm.get('id')?.touched">
+            <input type="text" id="id" class="form-control" [(ngModel)]="id" name="id" required />
+            <div *ngIf="!id && (id !== '' || id !== undefined)">
               <small style="color: red;">ID is required.</small>
             </div>
           </div>
@@ -21,8 +21,8 @@
         <div class="row mb-3">
           <label for="name" class="col-sm-3 col-form-label">Name:</label>
           <div class="col-sm-9">
-            <input type="text" id="name" class="form-control" formControlName="name" required />
-            <div *ngIf="accountForm.get('name')?.invalid && accountForm.get('name')?.touched">
+            <input type="text" id="name" class="form-control" [(ngModel)]="name" name="name" required />
+            <div *ngIf="!name && (name !== '' || name !== undefined)">
               <small style="color: red;">Name is required.</small>
             </div>
           </div>
@@ -32,8 +32,8 @@
         <div class="row mb-3">
           <label for="password" class="col-sm-3 col-form-label">Password:</label>
           <div class="col-sm-9">
-            <input type="password" id="password" class="form-control" formControlName="password" required />
-            <div *ngIf="accountForm.get('password')?.invalid && accountForm.get('password')?.touched">
+            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required />
+            <div *ngIf="!password && (password !== '' || password !== undefined)">
               <small style="color: red;">Password is required.</small>
             </div>
           </div>
@@ -43,8 +43,8 @@
         <div class="row mb-3">
           <label for="phone" class="col-sm-3 col-form-label">Phone:</label>
           <div class="col-sm-9">
-            <input type="text" id="phone" class="form-control" formControlName="phone" required />
-            <div *ngIf="accountForm.get('phone')?.invalid && accountForm.get('phone')?.touched">
+            <input type="text" id="phone" class="form-control" [(ngModel)]="phone" name="phone" required />
+            <div *ngIf="!phone && (phone !== '' || phone !== undefined)">
               <small style="color: red;">Phone is required.</small>
             </div>
           </div>
@@ -54,8 +54,8 @@
         <div class="row mb-3">
           <label for="email" class="col-sm-3 col-form-label">Email:</label>
           <div class="col-sm-9">
-            <input type="email" id="email" class="form-control" formControlName="email" required />
-            <div *ngIf="accountForm.get('email')?.invalid && accountForm.get('email')?.touched">
+            <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" required />
+            <div *ngIf="!email && (email !== '' || email !== undefined)">
               <small style="color: red;">A valid email is required.</small>
             </div>
           </div>
@@ -65,8 +65,8 @@
         <div class="row mb-3">
           <label for="address" class="col-sm-3 col-form-label">Address:</label>
           <div class="col-sm-9">
-            <input type="text" id="address" class="form-control" formControlName="address" required />
-            <div *ngIf="accountForm.get('address')?.invalid && accountForm.get('address')?.touched">
+            <input type="text" id="address" class="form-control" [(ngModel)]="address" name="address" required />
+            <div *ngIf="!address && (address !== '' || address !== undefined)">
               <small style="color: red;">Address is required.</small>
             </div>
           </div>
@@ -88,34 +88,36 @@
         <div class="row mb-3">
           <div class="col-sm-3 col-form-label">Admin:</div>
           <div class="col-sm-9">
-            <input type="checkbox" id="admin" formControlName="admin" />
+            <input type="checkbox" id="admin" [(ngModel)]="admin" name="admin" />
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-sm-3 col-form-label">Status:</div>
           <div class="col-sm-9">
-            <input type="checkbox" id="status" formControlName="status" />
+            <input type="checkbox" id="status" [(ngModel)]="status" name="status" />
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-sm-3 col-form-label">Confirm:</div>
           <div class="col-sm-9">
-            <input type="checkbox" id="confirm" formControlName="confirm" />
+            <input type="checkbox" id="confirm" [(ngModel)]="confirm" name="confirm" />
           </div>
         </div>
 
         <!-- Submit Button -->
-        <div class="text-center">
-          <button type="submit" [disabled]="accountForm.invalid" class="btn btn-primary">Create Account</button>
+        <div class="row mb-3 text-center">
+          <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary">Create Account</button>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="text-danger text-center">
+          <p>{{ errorMessage }}</p>
         </div>
       </form>
-    </div>
-
-    <!-- Error Message -->
-    <div *ngIf="errorMessage" class="text-danger mt-3 text-center">
-      {{ errorMessage }}
     </div>
   </div>
 </div>

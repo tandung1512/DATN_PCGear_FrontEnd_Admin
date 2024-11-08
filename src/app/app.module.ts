@@ -44,13 +44,30 @@ import { ToggleFullScreenDirective } from './theme/shared/components/full-screen
 import { AccountListComponent } from './account/account-list/account-list.component';
 import { AccountEditComponent } from './account/account-edit/account-edit.component';
 import { AccountCreateComponent } from './account/account-create/account-create.component';
+// Brand components
+import { BrandEditComponent} from './brand/brand-edit/brand-edit.component'
+import { AuthInterceptor } from './auth.interceptor';
+import { BrandListComponent } from './brand/brand-list/brand-list.component';
+import { BrandAddComponent } from './brand/brand-create/brand-add.component';
 
 // Navigation item provider
 import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 
 // Services
 import { AccountService } from './account/account.service';
-import { AuthInterceptor } from './auth.interceptor';
+
+// Supplier component
+import { SupplierListComponent } from './supplier/list/supplier-list.component';
+import { SupplierAddComponent } from './supplier/add/supplier-add.component';
+import { SupplierEditComponent } from './supplier/edit/supplier-edit.component';
+//Distinctive component
+import { DistinctiveListComponent } from './distinctive/list/distinctive-list.component';
+import { DistinctiveCreateComponent } from './distinctive/create/distinctive-create.component';
+import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.component';
+//Category components
+import { AddCategoryComponent } from './category/add/add-category.component';
+import { EditCategoryComponent } from './category/edit/edit-category.component';
+import { ListCategoryComponent } from './category/list/list-category.component';
 
 
 @NgModule({
@@ -78,6 +95,20 @@ import { AuthInterceptor } from './auth.interceptor';
     InvoiceCompleteComponent,
     InvoiceCancelledComponent,
     InvoiceDetailedComponent ,
+    BrandEditComponent,
+    BrandAddComponent,
+    BrandListComponent,
+    SupplierListComponent,
+    SupplierAddComponent,
+    SupplierEditComponent,
+    DistinctiveListComponent,
+    DistinctiveCreateComponent,
+    DistinctiveEditComponent,
+    ListCategoryComponent,
+    EditCategoryComponent,
+    AddCategoryComponent
+    
+
     
   ],
   imports: [

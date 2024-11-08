@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>Distinctive List</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let distinctive of distinctives">
+          <td>{{ distinctive.id }}</td>
+          <td>{{ distinctive.name }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="editDistinctive(distinctive.id)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteDistinctive(distinctive.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,0 +1,18 @@
+<div class="container">
+    <h2>Thêm mới đặc điểm</h2>
+  
+    <form (ngSubmit)="createDistinctive()">
+      <div class="form-group">
+        <label for="id">ID</label>
+        <input type="text" id="id" class="form-control" [(ngModel)]="distinctive.id" name="id" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="name">Tên đặc điểm</label>
+        <input type="text" id="name" class="form-control" [(ngModel)]="distinctive.name" name="name" required />
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Tạo đặc điểm</button>
+    </form>
+  </div>
+  

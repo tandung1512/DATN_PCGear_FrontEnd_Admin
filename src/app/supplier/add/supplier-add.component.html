@@ -1,0 +1,33 @@
+<div class="container">
+    <h2>Thêm mới nhà cung cấp</h2>
+    
+    <form (ngSubmit)="createSupplier()">
+      <div class="form-group">
+        <label for="id">ID</label>
+        <input type="text" id="id" class="form-control" [(ngModel)]="supplier.id" name="id" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="name">Tên nhà cung cấp</label>
+        <input type="text" id="name" class="form-control" [(ngModel)]="supplier.name" name="name" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="phoneNumber">Số điện thoại</label>
+        <input type="text" id="phoneNumber" class="form-control" [(ngModel)]="supplier.phoneNumber" name="phoneNumber" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" [(ngModel)]="supplier.email" name="email" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="address">Địa chỉ</label>
+        <input type="text" id="address" class="form-control" [(ngModel)]="supplier.address" name="address" required />
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Tạo nhà cung cấp</button>
+    </form>
+  </div>
+  

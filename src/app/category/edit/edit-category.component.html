@@ -1,0 +1,16 @@
+<h2>Edit Category</h2>
+<form *ngIf="category" (ngSubmit)="updateCategory()">
+  <label>
+    ID:
+    <input [(ngModel)]="category.id" name="id" [readonly]="true" />
+  </label>
+  <label>
+    Name:
+    <input [(ngModel)]="category.name" name="name" required />
+  </label>
+  <label>
+    Description:
+    <input [(ngModel)]="category.description" name="description" />
+  </label>
+  <button type="submit">Update Category</button>
+</form>
