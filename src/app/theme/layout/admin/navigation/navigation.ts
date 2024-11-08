@@ -154,10 +154,10 @@ const NavigationItems = [
         url: '/suppliers'
       },
       {
-        id: 'supplier-create',
+        id: 'supplier-add',
         title: 'Thêm nhà cung cấp',
         type: 'item',
-        url: '/suppliers/create'
+        url: '/suppliers/add'
       }
     ]
   },

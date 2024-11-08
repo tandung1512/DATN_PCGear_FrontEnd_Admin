@@ -45,6 +45,9 @@ import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 
 // Services
 import { AccountService } from './account/account.service';
+import { SupplierListComponent } from './supplier/list/supplier-list.component';
+import { SupplierAddComponent } from './supplier/add/supplier-add.component';
+import { SupplierEditComponent } from './supplier/edit/supplier-edit.component';
 
 
 
@@ -70,7 +73,10 @@ import { AccountService } from './account/account.service';
     AccountCreateComponent,
     BrandEditComponent,
     BrandAddComponent,
-    BrandListComponent
+    BrandListComponent,
+    SupplierListComponent,
+    SupplierAddComponent,
+    SupplierEditComponent
   ],
   imports: [
     BrowserModule,

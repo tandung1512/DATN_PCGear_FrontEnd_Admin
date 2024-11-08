@@ -15,6 +15,10 @@ import { AuthGuard } from './auth-guard.guard';
 import { BrandListComponent } from './brand/brand-list/brand-list.component';
 import { BrandAddComponent } from './brand/brand-create/brand-add.component';
 import { BrandEditComponent } from './brand/brand-edit/brand-edit.component';
+//Suppliers components
+import { SupplierListComponent } from './supplier/list/supplier-list.component';
+import { SupplierAddComponent } from './supplier/add/supplier-add.component';
+import { SupplierEditComponent } from './supplier/edit/supplier-edit.component';
 
 const routes: Routes = [{ path: 'authentication/login', component: AuthSigninComponent },
 {
@@ -38,6 +42,10 @@ const routes: Routes = [{ path: 'authentication/login', component: AuthSigninCom
     { path: 'brands', component: BrandListComponent },
     { path: 'brands/create', component: BrandAddComponent },
     { path: 'brands/edit/:id', component: BrandEditComponent },
+    //Suppeliers routes
+    { path: 'suppliers', component: SupplierListComponent },
+    { path: 'suppliers/add', component: SupplierAddComponent },
+    { path: 'suppliers/edit/:id', component: SupplierEditComponent },
 
 
     { path: '', redirectTo: '/accounts', pathMatch: 'full' },
