@@ -34,13 +34,18 @@ import { ToggleFullScreenDirective } from './theme/shared/components/full-screen
 import { AccountListComponent } from './account/account-list/account-list.component';
 import { AccountEditComponent } from './account/account-edit/account-edit.component';
 import { AccountCreateComponent } from './account/account-create/account-create.component';
+// Brand components
+import { BrandEditComponent} from './brand/brand-edit/brand-edit.component'
+import { AuthInterceptor } from './auth.interceptor';
+import { BrandListComponent } from './brand/brand-list/brand-list.component';
+import { BrandAddComponent } from './brand/brand-create/brand-add.component';
 
 // Navigation item provider
 import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 
 // Services
 import { AccountService } from './account/account.service';
-import { AuthInterceptor } from './auth.interceptor';
+
 
 
 @NgModule({
@@ -63,6 +68,9 @@ import { AuthInterceptor } from './auth.interceptor';
     AccountListComponent,
     AccountEditComponent,
     AccountCreateComponent,
+    BrandEditComponent,
+    BrandAddComponent,
+    BrandListComponent
   ],
   imports: [
     BrowserModule,

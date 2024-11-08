@@ -11,31 +11,41 @@ import { AccountCreateComponent } from './account/account-create/account-create.
 import AuthSigninComponent from './demo/pages/authentication/auth-signin/auth-signin.component';
 import { AuthGuard } from './auth-guard.guard';
 
-const routes: Routes = [ {path: 'authentication/login', component:AuthSigninComponent},
-  {
-    path: '',
-    component: AdminComponent,canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },
-      {
-        path: 'dashboard',
-        loadComponent: () =>
-          import('./demo/dashboard/dashboard.component').then(m => m.default), // Use `m.default` for default export
-      },
-      { path: 'accounts', component: AccountListComponent },
-      { path: 'accounts/edit/:id', component: AccountEditComponent },
-      { path: 'accounts/create', component: AccountCreateComponent },
-     
-      { path: '', redirectTo: '/accounts', pathMatch: 'full' },
-      { path: '**', redirectTo: '/accounts' } // Handle 404
-    ],
+// Brand components
+import { BrandListComponent } from './brand/brand-list/brand-list.component';
+import { BrandAddComponent } from './brand/brand-create/brand-add.component';
+import { BrandEditComponent } from './brand/brand-edit/brand-edit.component';
 
-  },
-  
+const routes: Routes = [{ path: 'authentication/login', component: AuthSigninComponent },
+{
+  path: '',
+  component: AdminComponent, canActivate: [AuthGuard],
+  children: [
+    {
+      path: '',
+      redirectTo: 'dashboard',
+      pathMatch: 'full',
+    },
+    {
+      path: 'dashboard',
+      loadComponent: () =>
+        import('./demo/dashboard/dashboard.component').then(m => m.default), // Use `m.default` for default export
+    },
+    { path: 'accounts', component: AccountListComponent },
+    { path: 'accounts/edit/:id', component: AccountEditComponent },
+    { path: 'accounts/create', component: AccountCreateComponent },
+    // Brand routes
+    { path: 'brands', component: BrandListComponent },
+    { path: 'brands/create', component: BrandAddComponent },
+    { path: 'brands/edit/:id', component: BrandEditComponent },
+
+
+    { path: '', redirectTo: '/accounts', pathMatch: 'full' },
+    { path: '**', redirectTo: '/accounts' } // Handle 404
+  ],
+
+},
+
   // {
   //   path: '',
   //   component: GuestComponent,
