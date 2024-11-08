@@ -19,6 +19,10 @@ import { BrandEditComponent } from './brand/brand-edit/brand-edit.component';
 import { SupplierListComponent } from './supplier/list/supplier-list.component';
 import { SupplierAddComponent } from './supplier/add/supplier-add.component';
 import { SupplierEditComponent } from './supplier/edit/supplier-edit.component';
+//Distinctive components
+import { DistinctiveListComponent } from './distinctive/list/distinctive-list.component';
+import { DistinctiveCreateComponent } from './distinctive/create/distinctive-create.component';
+import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.component';
 
 const routes: Routes = [{ path: 'authentication/login', component: AuthSigninComponent },
 {
@@ -46,6 +50,10 @@ const routes: Routes = [{ path: 'authentication/login', component: AuthSigninCom
     { path: 'suppliers', component: SupplierListComponent },
     { path: 'suppliers/add', component: SupplierAddComponent },
     { path: 'suppliers/edit/:id', component: SupplierEditComponent },
+    //Distinctive rotes
+    { path: 'distinctives', component: DistinctiveListComponent },
+    { path: 'distinctives/create', component: DistinctiveCreateComponent },
+    { path: 'distinctives/edit/:id', component: DistinctiveEditComponent },
 
 
     { path: '', redirectTo: '/accounts', pathMatch: 'full' },

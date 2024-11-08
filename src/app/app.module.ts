@@ -45,9 +45,15 @@ import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 
 // Services
 import { AccountService } from './account/account.service';
+
+// Supplier component
 import { SupplierListComponent } from './supplier/list/supplier-list.component';
 import { SupplierAddComponent } from './supplier/add/supplier-add.component';
 import { SupplierEditComponent } from './supplier/edit/supplier-edit.component';
+//Distinctive component
+import { DistinctiveListComponent } from './distinctive/list/distinctive-list.component';
+import { DistinctiveCreateComponent } from './distinctive/create/distinctive-create.component';
+import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.component';
 
 
 
@@ -76,7 +82,10 @@ import { SupplierEditComponent } from './supplier/edit/supplier-edit.component';
     BrandListComponent,
     SupplierListComponent,
     SupplierAddComponent,
-    SupplierEditComponent
+    SupplierEditComponent,
+    DistinctiveListComponent,
+    DistinctiveCreateComponent,
+    DistinctiveEditComponent
   ],
   imports: [
     BrowserModule,
