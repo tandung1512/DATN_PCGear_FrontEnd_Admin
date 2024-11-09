@@ -180,22 +180,22 @@ const NavigationItems = [
     ]
   },
   {
-    id: 'feature',
+    id: 'distinctives',
     title: 'Đặc trưng',
     type: 'collapse',
     icon: 'feather icon-sidebar',
     children: [
       {
-        id: 'feature-list',
+        id: 'distinctives-list',
         title: 'Danh sách đặc trưng',
         type: 'item',
-        url: '/features'
+        url: '/distinctives'
       },
       {
-        id: 'feature-create',
+        id: 'distinctives-create',
         title: 'Thêm đặc trưng',
         type: 'item',
-        url: '/features/create'
+        url: '/distinctives/create'
       }
     ]
   }
