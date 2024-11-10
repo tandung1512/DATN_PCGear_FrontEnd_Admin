@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from '../product.model';
+import { Router } from '@angular/router'; // Import Router
 
 @Component({
   selector: 'app-product-list',
@@ -10,7 +11,8 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   loading: boolean = true;
 
-  constructor(private productService: ProductService) {}
+  // Tiêm Router vào constructor
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -28,6 +30,11 @@ export class ProductListComponent implements OnInit {
         alert('Có lỗi xảy ra khi tải dữ liệu sản phẩm!');
       }
     });
+  }
+
+  // Điều hướng đến trang chỉnh sửa sản phẩm với ID trong URL
+  editProduct(id: string): void {
+    this.router.navigate(['/products/edit', id]); // Sử dụng router để điều hướng
   }
 
   // Xóa sản phẩm

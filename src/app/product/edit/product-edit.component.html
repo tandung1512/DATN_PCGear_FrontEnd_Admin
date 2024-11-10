@@ -1,42 +1,47 @@
 <form>
-    <div>
-      <label for="id">ID:</label>
-      <input id="id" [(ngModel)]="product.id" name="id" required disabled />
-    </div>
-    
-    <div>
-      <label for="name">Name:</label>
-      <input id="name" [(ngModel)]="product.name" name="name" required />
-    </div>
-    
-    <div>
-      <label for="quantity">Quantity:</label>
-      <input id="quantity" [(ngModel)]="product.quantity" name="quantity" type="number" required />
-    </div>
-    
-    <div>
-      <label for="price">Price:</label>
-      <input id="price" [(ngModel)]="product.price" name="price" type="number" required />
-    </div>
-    
-    <div>
-      <label for="description">Description:</label>
-      <textarea id="description" [(ngModel)]="product.description" name="description"></textarea>
-    </div>
-    
-    <div>
-      <label for="status">Status:</label>
-      <input id="status" [(ngModel)]="product.status" name="status" />
-    </div>
-    
-    <div>
-      <label for="image1">Image 1:</label>
-      <input id="image1" [(ngModel)]="product.image1" name="image1" type="file" />
-    </div>
-    
-    <div>
-      <label for="image2">Image 2:</label>
-      <input id="image2" [(ngModel)]="product.image2" name="image2" type="file" />
-    </div>
-  </form>
-  
+  <h2>Chỉnh sửa sản phẩm</h2>
+
+  <div class="mb-3">
+    <label for="id" class="form-label">ID:</label>
+    <input id="id" [(ngModel)]="product.id" name="id" class="form-control" required disabled />
+  </div>
+
+  <div class="mb-3">
+    <label for="name" class="form-label">Tên sản phẩm:</label>
+    <input id="name" [(ngModel)]="product.name" name="name" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="quantity" class="form-label">Số lượng:</label>
+    <input id="quantity" [(ngModel)]="product.quantity" name="quantity" type="number" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="price" class="form-label">Giá:</label>
+    <input id="price" [(ngModel)]="product.price" name="price" type="number" class="form-control" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Mô tả:</label>
+    <textarea id="description" [(ngModel)]="product.description" name="description" class="form-control"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="status" class="form-label">Trạng thái:</label>
+    <input id="status" [(ngModel)]="product.status" name="status" class="form-control" />
+  </div>
+
+  <div class="mb-3">
+    <label for="image1" class="form-label">Hình ảnh 1:</label>
+    <input id="image1" [(ngModel)]="product.image1" name="image1" type="file" class="form-control" />
+  </div>
+
+  <div class="mb-3">
+    <label for="image2" class="form-label">Hình ảnh 2:</label>
+    <input id="image2" [(ngModel)]="product.image2" name="image2" type="file" class="form-control" />
+  </div>
+
+  <div class="mb-3">
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+  </div>
+</form>

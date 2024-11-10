@@ -8,6 +8,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 
 // Project imports
@@ -68,7 +69,10 @@ import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.co
 import { AddCategoryComponent } from './category/add/add-category.component';
 import { EditCategoryComponent } from './category/edit/edit-category.component';
 import { ListCategoryComponent } from './category/list/list-category.component';
-
+// Product components
+import { ProductListComponent } from './product/list/product-list.component';
+import { ProductAddComponent } from './product/add/product-add.component';
+import { ProductEditComponent } from './product/edit/product-edit.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +110,10 @@ import { ListCategoryComponent } from './category/list/list-category.component';
     DistinctiveEditComponent,
     ListCategoryComponent,
     EditCategoryComponent,
-    AddCategoryComponent
+    AddCategoryComponent,
+    ProductEditComponent,
+    ProductAddComponent,
+    ProductListComponent
     
 
     
@@ -115,6 +122,7 @@ import { ListCategoryComponent } from './category/list/list-category.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    RouterModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
     SharedModule,

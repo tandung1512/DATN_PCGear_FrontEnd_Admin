@@ -1,6 +1,12 @@
-<div *ngIf="loading">Đang tải dữ liệu...</div>
-<div *ngIf="!loading && products.length === 0">Không có sản phẩm nào!</div>
-<table *ngIf="!loading && products.length > 0">
+<div *ngIf="loading" class="alert alert-info" role="alert">
+  Đang tải dữ liệu...
+</div>
+
+<div *ngIf="!loading && products.length === 0" class="alert alert-warning" role="alert">
+  Không có sản phẩm nào!
+</div>
+
+<table *ngIf="!loading && products.length > 0" class="table table-striped">
   <thead>
     <tr>
       <th>ID</th>
@@ -17,21 +23,15 @@
       <td>{{ product.name }}</td>
       <td>{{ product.quantity }}</td>
       <td>{{ product.price | currency }}</td>
-      <td>{{ product.status }}<table>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price</th>
-        </tr>
-        <tr *ngFor="let product of products">
-          <td>{{ product.id }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.price | currency }}</td>  <!-- Sử dụng pipe currency -->
-        </tr>
-      </table>
+      <td>
+        {{ product.status }}
       </td>
       <td>
-        <button (click)="deleteProduct(product.id)">Xóa</button>
+        <!-- Nút Xóa -->
+        <button (click)="deleteProduct(product.id)" class="btn btn-danger">Xóa</button>
+        
+        <!-- Nút Sửa -->
+        <button (click)="editProduct(product.id)" class="btn btn-warning ml-2">Sửa</button>
       </td>
     </tr>
   </tbody>
