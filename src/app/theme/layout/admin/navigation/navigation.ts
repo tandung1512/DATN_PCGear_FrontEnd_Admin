@@ -79,7 +79,7 @@ const NavigationItems = [
         id: 'account-list',
         title: 'Danh sách người dùng',
         type: 'item',
-        url: '/accounts/list',
+        url: '/accounts',
         breadcrumbs: true
       },
       {

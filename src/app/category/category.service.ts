@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Category } from './category.model';
 import { ApiService } from '../service/api.service';
 
+
 @Injectable({
   providedIn: 'root',
 })
