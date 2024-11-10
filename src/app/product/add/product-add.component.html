@@ -1,0 +1,28 @@
+<h2>Thêm sản phẩm mới</h2>
+<form (ngSubmit)="addProduct()">
+  <label for="id">ID:</label>
+  <input id="id" [(ngModel)]="newProduct.id" name="id" required />
+
+  <label for="name">Tên sản phẩm:</label>
+  <input id="name" [(ngModel)]="newProduct.name" name="name" required />
+
+  <label for="quantity">Số lượng:</label>
+  <input id="quantity" [(ngModel)]="newProduct.quantity" name="quantity" type="number" required />
+
+  <label for="price">Giá:</label>
+  <input id="price" [(ngModel)]="newProduct.price" name="price" type="number" required />
+
+  <label for="description">Mô tả:</label>
+  <textarea id="description" [(ngModel)]="newProduct.description" name="description"></textarea>
+
+  <label for="status">Trạng thái:</label>
+  <input id="status" [(ngModel)]="newProduct.status" name="status" />
+
+  <label for="image1">Ảnh 1:</label>
+  <input id="image1" [(ngModel)]="newProduct.image1" name="image1" type="file" />
+
+  <label for="image2">Ảnh 2:</label>
+  <input id="image2" [(ngModel)]="newProduct.image2" name="image2" type="file" />
+
+  <button type="submit">Thêm sản phẩm</button>
+</form>

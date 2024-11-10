@@ -1,0 +1,28 @@
+<h2>Chỉnh sửa sản phẩm</h2>
+<form *ngIf="product" (ngSubmit)="updateProduct()">
+  <label for="id">ID:</label>
+  <input id="id" [(ngModel)]="product.id" name="id" required disabled />
+
+  <label for="name">Tên sản phẩm:</label>
+  <input id="name" [(ngModel)]="product.name" name="name" required />
+
+  <label for="quantity">Số lượng:</label>
+  <input id="quantity" [(ngModel)]="product.quantity" name="quantity" type="number" required />
+
+  <label for="price">Giá:</label>
+  <input id="price" [(ngModel)]="product.price" name="price" type="number" required />
+
+  <label for="description">Mô tả:</label>
+  <textarea id="description" [(ngModel)]="product.description" name="description"></textarea>
+
+  <label for="status">Trạng thái:</label>
+  <input id="status" [(ngModel)]="product.status" name="status" />
+
+  <label for="image1">Ảnh 1:</label>
+  <input id="image1" [(ngModel)]="product.image1" name="image1" type="file" />
+
+  <label for="image2">Ảnh 2:</label>
+  <input id="image2" [(ngModel)]="product.image2" name="image2" type="file" />
+
+  <button type="submit">Cập nhật sản phẩm</button>
+</form>

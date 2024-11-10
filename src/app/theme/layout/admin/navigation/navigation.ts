@@ -100,7 +100,7 @@ const NavigationItems = [
     ]
   },
   {
-    id: 'tables',
+    id: 'product-management',
     title: 'Quản lí sản phẩm',
     type: 'collapse',
     icon: 'feather icon-server',
@@ -116,6 +116,13 @@ const NavigationItems = [
         title: 'Thêm sản phẩm',
         type: 'item',
         url: '/products/create'
+      },
+      {
+        id: 'product-edit',
+        title: 'Chỉnh sửa sản phẩm',
+        type: 'item',
+        url: '/products/edit/:id',
+        hidden: true
       }
     ]
   },

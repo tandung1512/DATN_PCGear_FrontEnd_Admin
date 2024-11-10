@@ -1,0 +1,26 @@
+<div *ngIf="loading">Đang tải dữ liệu...</div>
+<div *ngIf="!loading && products.length === 0">Không có sản phẩm nào!</div>
+<table *ngIf="!loading && products.length > 0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên</th>
+      <th>Số lượng</th>
+      <th>Giá</th>
+      <th>Trạng thái</th>
+      <th>Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.quantity }}</td>
+      <td>{{ product.price | currency }}</td>
+      <td>{{ product.status }}</td>
+      <td>
+        <button (click)="deleteProduct(product.id)">Xóa</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

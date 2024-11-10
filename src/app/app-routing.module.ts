@@ -35,8 +35,9 @@ import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.co
 import { AddCategoryComponent } from './category/add/add-category.component';
 import { EditCategoryComponent } from './category/edit/edit-category.component';
 import { ListCategoryComponent } from './category/list/list-category.component';
-
-
+import { ProductListComponent } from './product/list/product-list.component';
+import { ProductAddComponent } from './product/add/product-add.component';
+import { ProductEditComponent } from './product/edit/product-edit.component';
 
 // Product components
 
@@ -87,26 +88,16 @@ const routes: Routes = [
       { path: 'categories/edit/:id', component: EditCategoryComponent },
 
       // Product routes
-     
+      { path: 'products', component: ProductListComponent },  // Product list route
+      { path: 'products/create', component: ProductAddComponent },  // Product create route
+      { path: 'products/edit/:id', component: ProductEditComponent }, // Product edit route
+
       // Default and wildcard redirects
       { path: '', redirectTo: '/accounts', pathMatch: 'full' },
       { path: '**', redirectTo: '/accounts' },
     ],
   },
 
-  // {
-  //   path: '',
-  //   component: GuestComponent,
-  //   children: [
-  //     {
-  //       path: 'auth',
-  //       loadChildren: () =>
-  //         import('./demo/pages/authentication/authentication.module').then(
-  //           m => m.AuthenticationModule
-  //         ),
-  //     },
-  //   ],
-  // },
 ];
 
 @NgModule({
