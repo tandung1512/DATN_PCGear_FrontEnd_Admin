@@ -3,7 +3,7 @@
 
   <div class="mb-3">
     <label for="id" class="form-label">ID:</label>
-    <input id="id" [(ngModel)]="product.id" name="id" class="form-control" required disabled />
+    <input id="id" [(ngModel)]="product.id" name="id" class="form-control" required readonly />
   </div>
 
   <div class="mb-3">
@@ -32,16 +32,36 @@
   </div>
 
   <div class="mb-3">
+    <label for="category" class="form-label">Danh mục:</label>
+    <select id="category" [(ngModel)]="product.category" name="category" class="form-control" required>
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="distinctives" class="form-label">Distinctives:</label>
+    <select id="distinctives" [(ngModel)]="product.distinctiveIds" name="distinctiveId" class="form-control">
+      <option *ngFor="let distinctive of distinctives" [value]="distinctive.id">{{ distinctive.name }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
     <label for="image1" class="form-label">Hình ảnh 1:</label>
-    <input id="image1" [(ngModel)]="product.image1" name="image1" type="file" class="form-control" />
+    <input id="image1" type="file" class="form-control" (change)="onFileChange($event, 'image1')" />
+    <div *ngIf="product.image1">
+      <img [src]="product.image1" alt="Image 1" width="100" />
+    </div>
   </div>
 
   <div class="mb-3">
     <label for="image2" class="form-label">Hình ảnh 2:</label>
-    <input id="image2" [(ngModel)]="product.image2" name="image2" type="file" class="form-control" />
+    <input id="image2" type="file" class="form-control" (change)="onFileChange($event, 'image2')" />
+    <div *ngIf="product.image2">
+      <img [src]="product.image2" alt="Image 2" width="100" />
+    </div>
   </div>
 
   <div class="mb-3">
-    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    <button type="button" class="btn btn-primary" (click)="updateProduct()">Cập nhật sản phẩm</button>
   </div>
 </form>

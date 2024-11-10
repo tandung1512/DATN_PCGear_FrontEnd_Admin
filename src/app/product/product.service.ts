@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Product } from './product.model';
 import { ApiService } from '../service/api.service';
+import { Product } from './product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +14,10 @@ export class ProductService {
   constructor(private http: HttpClient, private apiService: ApiService) {}
 
   // Tạo một sản phẩm mới
-  createProduct(product: Product): Observable<Product> {
+  createProduct(formData: FormData): Observable<any> {
     const url = this.apiService.apiUrl(this.endpoint + '/add'); // Đảm bảo URL chính xác
-    return this.http.post<Product>(url, product).pipe(
-      catchError(this.handleError<Product>('createProduct'))
+    return this.http.post(url, formData).pipe(
+      catchError(this.handleError('createProduct'))
     );
   }
 
@@ -38,13 +38,12 @@ export class ProductService {
   }
 
   // Cập nhật sản phẩm theo ID
-  updateProduct(id: string, updatedProduct: Partial<Product>): Observable<Product> {
+  updateProduct(id: string, formData: FormData): Observable<Product> {
     const url = `${this.apiService.apiUrl(this.endpoint)}/${id}`; // Đảm bảo URL chính xác
-    return this.http.put<Product>(url, updatedProduct).pipe(
+    return this.http.put<Product>(url, formData).pipe(
       catchError(this.handleError<Product>('updateProduct'))
     );
   }
-
   // Xóa sản phẩm theo ID
   deleteProduct(id: string): Observable<boolean> {
     const url = `${this.apiService.apiUrl(this.endpoint)}/${id}`; // Đảm bảo URL chính xác
