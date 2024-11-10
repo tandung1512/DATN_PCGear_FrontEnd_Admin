@@ -6,7 +6,7 @@ import { AdminComponent } from './theme/layout/admin/admin.component';
 import { AccountListComponent } from './account/account-list/account-list.component';
 import { AccountEditComponent } from './account/account-edit/account-edit.component';
 import { AccountCreateComponent } from './account/account-create/account-create.component';
-import AuthSigninComponent from './demo/pages/authentication/auth-signin/auth-signin.component';
+
 import { AuthGuard } from './auth-guard.guard';
 
 // Invoice components
@@ -35,19 +35,21 @@ import { DistinctiveEditComponent } from './distinctive/edit/distinctive-edit.co
 import { AddCategoryComponent } from './category/add/add-category.component';
 import { EditCategoryComponent } from './category/edit/edit-category.component';
 import { ListCategoryComponent } from './category/list/list-category.component';
+// Product components
 import { ProductListComponent } from './product/list/product-list.component';
 import { ProductAddComponent } from './product/add/product-add.component';
 import { ProductEditComponent } from './product/edit/product-edit.component';
+import AuthSigninComponent from './demo/pages/authentication/auth-signin/auth-signin.component';
 
-// Product components
 
 
 const routes: Routes = [
   { path: 'authentication/login', component: AuthSigninComponent },
+
   {
     path: '',
     component: AdminComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard],  // Đảm bảo AuthGuard bảo vệ tất cả các tuyến đường con
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
@@ -88,16 +90,17 @@ const routes: Routes = [
       { path: 'categories/edit/:id', component: EditCategoryComponent },
 
       // Product routes
-      { path: 'products', component: ProductListComponent },  // Product list route
-      { path: 'products/create', component: ProductAddComponent },  // Product create route
-      { path: 'products/edit/:id', component: ProductEditComponent }, // Product edit route
+      { path: 'products', component: ProductListComponent },
+      { path: 'products/create', component: ProductAddComponent },
+      { path: 'products/edit/:id', component: ProductEditComponent },
 
-      // Default and wildcard redirects
-      { path: '', redirectTo: '/accounts', pathMatch: 'full' },
-      { path: '**', redirectTo: '/accounts' },
+      // Default redirect (sửa lại vì bạn đã có redirectTo ở đầu route)
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ],
   },
 
+  // Wildcard route to redirect to login if the user navigates to an invalid path
+  { path: '**', redirectTo: '/authentication/login' },
 ];
 
 @NgModule({

@@ -17,7 +17,19 @@
       <td>{{ product.name }}</td>
       <td>{{ product.quantity }}</td>
       <td>{{ product.price | currency }}</td>
-      <td>{{ product.status }}</td>
+      <td>{{ product.status }}<table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+        <tr *ngFor="let product of products">
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price | currency }}</td>  <!-- Sử dụng pipe currency -->
+        </tr>
+      </table>
+      </td>
       <td>
         <button (click)="deleteProduct(product.id)">Xóa</button>
       </td>
