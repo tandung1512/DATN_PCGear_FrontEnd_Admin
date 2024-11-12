@@ -26,10 +26,6 @@
     <textarea id="description" [(ngModel)]="product.description" name="description" class="form-control"></textarea>
   </div>
 
-  <div class="mb-3">
-    <label for="status" class="form-label">Trạng thái:</label>
-    <input id="status" [(ngModel)]="product.status" name="status" class="form-control" />
-  </div>
 
   <div class="mb-3">
     <label for="category" class="form-label">Danh mục:</label>
@@ -42,6 +38,14 @@
     <label for="distinctives" class="form-label">Distinctives:</label>
     <select id="distinctives" [(ngModel)]="product.distinctiveIds" name="distinctiveId" class="form-control">
       <option *ngFor="let distinctive of distinctives" [value]="distinctive.id">{{ distinctive.name }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="status" class="form-label">Trạng thái:</label>
+    <select id="status" [(ngModel)]="product.status" name="status" class="form-control" required>
+      <option [value]="1">Còn hàng</option>
+      <option [value]="0">Hết hàng</option>
     </select>
   </div>
 

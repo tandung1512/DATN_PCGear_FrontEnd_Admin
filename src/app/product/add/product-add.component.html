@@ -6,19 +6,7 @@
     <input id="id" [(ngModel)]="newProduct.id" name="id" class="form-control" required />
   </div>
 
-  <div class="mb-3">
-    <label for="category" class="form-label">Danh mục:</label>
-    <select id="category" [(ngModel)]="newProduct.category" name="category" class="form-control" required>
-      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-    </select>
-  </div>
-
-  <div class="mb-3">
-    <label for="distinctives" class="form-label">Distinctives:</label>
-    <select id="distinctives" [(ngModel)]="newProduct.distinctiveIds" name="distinctiveId" class="form-control" required>
-      <option *ngFor="let distinctive of distinctives" [value]="distinctive.id">{{ distinctive.name }}</option>
-    </select>
-  </div>
+ 
 
   <div class="mb-3">
     <label for="name" class="form-label">Tên sản phẩm:</label>
@@ -39,11 +27,28 @@
     <label for="description" class="form-label">Mô tả:</label>
     <textarea id="description" [(ngModel)]="newProduct.description" name="description" class="form-control"></textarea>
   </div>
+  <div class="mb-3">
+    <label for="category" class="form-label">Danh mục:</label>
+    <select id="category" [(ngModel)]="newProduct.category" name="category" class="form-control" required>
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="distinctives" class="form-label">Distinctives:</label>
+    <select id="distinctives" [(ngModel)]="newProduct.distinctiveIds" name="distinctiveId" class="form-control" required>
+      <option *ngFor="let distinctive of distinctives" [value]="distinctive.id">{{ distinctive.name }}</option>
+    </select>
+  </div>
 
   <div class="mb-3">
     <label for="status" class="form-label">Trạng thái:</label>
-    <input id="status" [(ngModel)]="newProduct.status" name="status" class="form-control" />
+    <select id="status" [(ngModel)]="newProduct.status" name="status" class="form-control" required>
+      <option [value]="1">Còn hàng</option>
+      <option [value]="0">Hết hàng</option>
+    </select>
   </div>
+
 
   <div class="mb-3">
     <label for="image1" class="form-label">Hình ảnh 1:</label>

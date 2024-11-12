@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
 import { Router } from '@angular/router';
 import * as bcrypt from 'bcryptjs'; // Import bcryptjs để mã hóa mật khẩu
+import { isEmpty } from 'rxjs';
 
 @Component({
   selector: 'app-account-create',
@@ -33,11 +34,19 @@ export class AccountCreateComponent implements OnInit {
     this.errorMessage = null; // Reset error message mỗi khi gửi form
 
     // Kiểm tra tính hợp lệ của form
-    if (!this.id || !this.name || !this.password || !this.phone || !this.email || !this.address) {
-      this.errorMessage = 'Vui lòng điền đầy đủ thông tin.'; // Thông báo lỗi cho form không hợp lệ
+    if (
+      !this.id || this.id === "" ||
+      !this.name || this.name === "" ||
+      !this.password || this.password === "" ||
+      !this.phone || this.phone === "" ||
+      !this.email || this.email === "" ||
+      !this.address || this.address === ""
+    ) {
+      this.errorMessage = 'Vui lòng điền đầy đủ thông tin.'; // Thông báo lỗi khi form không hợp lệ
       return;
     }
-
+    
+    
     try {
       // Mã hóa mật khẩu bằng bcrypt trước khi gửi
       const salt = await bcrypt.genSalt(10);
