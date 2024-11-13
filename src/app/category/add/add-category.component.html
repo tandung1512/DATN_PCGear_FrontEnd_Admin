@@ -1,21 +1,45 @@
 <div class="container mt-4">
   <h2>Add Category</h2>
-  <form (ngSubmit)="addCategory()">
+  <form (ngSubmit)="addCategory()" #categoryForm="ngForm">
     <div class="form-group">
       <label for="id">ID:</label>
-      <input id="id" [(ngModel)]="newCategory.id" name="id" required class="form-control" />
+      <input 
+        id="id" 
+        [(ngModel)]="newCategory.id" 
+        name="id" 
+        required 
+        class="form-control" 
+        #id="ngModel" />
+      <div *ngIf="id.invalid && id.touched" class="text-danger">
+        ID là bắt buộc.
+      </div>
     </div>
 
     <div class="form-group">
       <label for="name">Name:</label>
-      <input id="name" [(ngModel)]="newCategory.name" name="name" required class="form-control" />
+      <input 
+        id="name" 
+        [(ngModel)]="newCategory.name" 
+        name="name" 
+        required 
+        minlength="3" 
+        class="form-control" 
+        #name="ngModel" />
+      <div *ngIf="name.invalid && name.touched" class="text-danger">
+        <div *ngIf="name.errors?.['required']">Name là bắt buộc.</div>
+        <div *ngIf="name.errors?.['minlength']">Name phải có ít nhất 3 ký tự.</div>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="description">Description:</label>
-      <input id="description" [(ngModel)]="newCategory.description" name="description" class="form-control" />
+      <input 
+        id="description" 
+        [(ngModel)]="newCategory.description" 
+        name="description" 
+        class="form-control" />
     </div>
 
-    <button type="submit" class="btn btn-primary">Add Category</button>
+    <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">Add Category</button>
   </form>
 </div>

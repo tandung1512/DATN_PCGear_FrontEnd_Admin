@@ -4,51 +4,73 @@
   <div class="mb-3">
     <label for="id" class="form-label">ID:</label>
     <input id="id" [(ngModel)]="newProduct.id" name="id" class="form-control" required />
+    <div *ngIf="isSubmitted && (!newProduct.id || newProduct.id.trim().length === 0)" class="text-danger">
+      ID là bắt buộc.
+    </div>
   </div>
-
- 
 
   <div class="mb-3">
     <label for="name" class="form-label">Tên sản phẩm:</label>
     <input id="name" [(ngModel)]="newProduct.name" name="name" class="form-control" required />
+    <div *ngIf="isSubmitted && (newProduct.name?.length < 3)" class="text-danger">
+      Tên sản phẩm phải có ít nhất 3 ký tự.
+    </div>
   </div>
 
   <div class="mb-3">
     <label for="quantity" class="form-label">Số lượng:</label>
-    <input id="quantity" [(ngModel)]="newProduct.quantity" name="quantity" type="number" class="form-control" required />
+    <input id="quantity" [(ngModel)]="newProduct.quantity" name="quantity" type="number" class="form-control" required min="1" />
+    <div *ngIf="isSubmitted && newProduct.quantity <= 0" class="text-danger">
+      Số lượng phải lớn hơn 0.
+    </div>
   </div>
 
   <div class="mb-3">
     <label for="price" class="form-label">Giá:</label>
-    <input id="price" [(ngModel)]="newProduct.price" name="price" type="number" class="form-control" required />
+    <input id="price" [(ngModel)]="newProduct.price" name="price" type="number" class="form-control" required min="1" />
+    <div *ngIf="isSubmitted && newProduct.price <= 0" class="text-danger">
+      Giá phải lớn hơn 0.
+    </div>
   </div>
 
   <div class="mb-3">
     <label for="description" class="form-label">Mô tả:</label>
     <textarea id="description" [(ngModel)]="newProduct.description" name="description" class="form-control"></textarea>
   </div>
+
   <div class="mb-3">
     <label for="category" class="form-label">Danh mục:</label>
     <select id="category" [(ngModel)]="newProduct.category" name="category" class="form-control" required>
+      <option value="" disabled>Chọn danh mục</option>
       <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
     </select>
+    <div *ngIf="isSubmitted && !newProduct.category" class="text-danger">
+      Danh mục là bắt buộc.
+    </div>
   </div>
 
   <div class="mb-3">
-    <label for="distinctives" class="form-label">Distinctives:</label>
+    <label for="distinctives" class="form-label">Đặc Trưng:</label>
     <select id="distinctives" [(ngModel)]="newProduct.distinctiveIds" name="distinctiveId" class="form-control" required>
+      <option value="" disabled>Chọn đặc trưng</option>
       <option *ngFor="let distinctive of distinctives" [value]="distinctive.id">{{ distinctive.name }}</option>
     </select>
+    <div *ngIf="isSubmitted && !newProduct.distinctiveIds" class="text-danger">
+      Đặc trưng là bắt buộc.
+    </div>
   </div>
 
   <div class="mb-3">
     <label for="status" class="form-label">Trạng thái:</label>
     <select id="status" [(ngModel)]="newProduct.status" name="status" class="form-control" required>
-      <option [value]="1">Còn hàng</option>
-      <option [value]="0">Hết hàng</option>
+      <option value="" disabled>Chọn trạng thái</option>
+      <option [value]="'1'">Còn hàng</option>
+      <option [value]="'0'">Hết hàng</option>
     </select>
+    <div *ngIf="isSubmitted && !newProduct.status" class="text-danger">
+      Trạng thái là bắt buộc.
+    </div>
   </div>
-
 
   <div class="mb-3">
     <label for="image1" class="form-label">Hình ảnh 1:</label>

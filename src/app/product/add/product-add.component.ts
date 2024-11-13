@@ -25,6 +25,7 @@ export class ProductAddComponent implements OnInit {
 
   categories: { id: string, name: string }[] = [];
   distinctives: { id: string, name: string }[] = [];
+  isSubmitted: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -62,6 +63,7 @@ export class ProductAddComponent implements OnInit {
 
   // Add product using FormData and handle asynchronous operations
   async addProduct(): Promise<void> {
+    this.isSubmitted = true; 
     if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.quantity || !this.newProduct.category || !this.newProduct.id) {
       alert('Please fill in all required fields, including category and ID!');
       return;
@@ -103,6 +105,31 @@ export class ProductAddComponent implements OnInit {
       console.error(error);
     }
   }
+
+    // Validation method
+    validateProduct(): boolean {
+      if (!this.newProduct.id || this.newProduct.id.trim().length === 0) {
+        alert('Product ID is required.');
+        return false;
+      }
+      if (!this.newProduct.name || this.newProduct.name.trim().length < 3) {
+        alert('Product name must be at least 3 characters long.');
+        return false;
+      }
+      if (this.newProduct.quantity <= 0) {
+        alert('Quantity must be greater than 0.');
+        return false;
+      }
+      if (this.newProduct.price <= 0) {
+        alert('Price must be greater than 0.');
+        return false;
+      }
+      if (!this.newProduct.category) {
+        alert('Category is required.');
+        return false;
+      }
+      return true;
+    }
 
   // Handle file change event for image1 and image2
   onFileChange(event: any, imageField: 'image1' | 'image2'): void {
