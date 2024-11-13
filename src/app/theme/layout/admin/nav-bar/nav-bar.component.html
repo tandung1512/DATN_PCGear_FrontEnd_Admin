@@ -5,16 +5,12 @@
 			[routerLink]="['/dashboard']" class="b-brand">
 			<div class="b-bg">
 				<i class="feather icon-trending-up"></i>
-			</div> <span class="b-title">hi</span>
+			</div> <span class="b-title">Hi! Admin</span>
 		</a>
 	</div>
 	<a class="mobile-menu" [ngClass]="{ on: this.menuClass }"
-		id="mobile-header" href="javascript:" (click)="toggleMobOption()">
-		<i class="feather icon-more-horizontal"></i>
+		id="mobile-header" href="javascript:" (click)="logout()">
+		<i class="feather icon-log-out"></i>
 	</a>
-	<div class="collapse navbar-collapse"
-		[style.display]="this.collapseStyle">
-		<app-nav-left class="me-auto" [style.display]="this.headerStyle"></app-nav-left>
-		<app-nav-right class="ms-auto"></app-nav-right>
-	</div>
+	
 </header>

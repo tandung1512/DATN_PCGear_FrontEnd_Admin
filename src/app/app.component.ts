@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'datta-able';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private titleService: Title) {}
 
   ngOnInit() {
     this.router.events.subscribe((evt) => {
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
       
       window.scrollTo(0, 0);
     });
+    
   }
 }
 

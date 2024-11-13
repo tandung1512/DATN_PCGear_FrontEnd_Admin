@@ -1,5 +1,6 @@
 // project import
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,6 +14,12 @@ export class NavBarComponent {
   headerStyle: string = '';
   menuClass: boolean = false;
   collapseStyle: string = 'none';
+  constructor(private cookieService: CookieService){}
+  logout() {
+    localStorage.clear();
+    this.cookieService.deleteAll();
+    window.location.reload();
+  }
 
   // public method
   toggleMobOption() {
