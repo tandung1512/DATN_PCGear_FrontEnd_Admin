@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class NavRightComponent {
   constructor(private cookieService: CookieService){}
-  logout() {
+  logouts() {
     localStorage.clear();
     this.cookieService.deleteAll();
     window.location.reload();
