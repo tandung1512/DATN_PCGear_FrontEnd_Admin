@@ -10,9 +10,8 @@
         <div class="row mb-3">
           <label for="id" class="col-sm-3 col-form-label">Custom ID:</label>
           <div class="col-sm-9">
-            <input type="text" id="id" class="form-control" [(ngModel)]="id" name="id" required />
-            <div *ngIf="!id && (id !== '' || id !== undefined)">
-              <small style="color: red;">ID is required.</small>
+            <input type="text" id="id" class="form-control" [(ngModel)]="id" name="id" (blur)="onIdBlur()" required />            <div *ngIf="!id && idTouched" class="text-danger">
+              <small>ID is required.</small>
             </div>
           </div>
         </div>
@@ -21,9 +20,9 @@
         <div class="row mb-3">
           <label for="name" class="col-sm-3 col-form-label">Name:</label>
           <div class="col-sm-9">
-            <input type="text" id="name" class="form-control" [(ngModel)]="name" name="name" required />
-            <div *ngIf="!name && (name !== '' || name !== undefined)">
-              <small style="color: red;">Name is required.</small>
+            <input type="text" id="name" class="form-control" [(ngModel)]="name" name="name" (blur)="onNameBlur()" required />
+            <div *ngIf="!name && nameTouched" class="text-danger">
+              <small>Name is required.</small>
             </div>
           </div>
         </div>
@@ -32,9 +31,9 @@
         <div class="row mb-3">
           <label for="password" class="col-sm-3 col-form-label">Password:</label>
           <div class="col-sm-9">
-            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" required />
-            <div *ngIf="!password && (password !== '' || password !== undefined)">
-              <small style="color: red;">Password is required.</small>
+            <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" (blur)="onPasswordBlur()" required />
+            <div *ngIf="(!password || password.length < 6) && passwordTouched" class="text-danger">
+              <small>Password is required and must be at least 6 characters long.</small>
             </div>
           </div>
         </div>
@@ -43,9 +42,9 @@
         <div class="row mb-3">
           <label for="phone" class="col-sm-3 col-form-label">Phone:</label>
           <div class="col-sm-9">
-            <input type="text" id="phone" class="form-control" [(ngModel)]="phone" name="phone" required />
-            <div *ngIf="!phone && (phone !== '' || phone !== undefined)">
-              <small style="color: red;">Phone is required.</small>
+            <input type="text" id="phone" class="form-control" [(ngModel)]="phone" name="phone" (blur)="onPhoneBlur()" required />
+            <div *ngIf="(!phone || !validatePhone(phone)) && phoneTouched" class="text-danger">
+              <small>Phone is required and must be a valid number with at least 10 digits.</small>
             </div>
           </div>
         </div>
@@ -54,9 +53,9 @@
         <div class="row mb-3">
           <label for="email" class="col-sm-3 col-form-label">Email:</label>
           <div class="col-sm-9">
-            <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" required />
-            <div *ngIf="!email && (email !== '' || email !== undefined)">
-              <small style="color: red;">A valid email is required.</small>
+            <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" (blur)="onEmailBlur()" required />
+            <div *ngIf="(!email || !validateEmail(email)) && emailTouched" class="text-danger">
+              <small>A valid email is required.</small>
             </div>
           </div>
         </div>
@@ -65,9 +64,9 @@
         <div class="row mb-3">
           <label for="address" class="col-sm-3 col-form-label">Address:</label>
           <div class="col-sm-9">
-            <input type="text" id="address" class="form-control" [(ngModel)]="address" name="address" required />
-            <div *ngIf="!address && (address !== '' || address !== undefined)">
-              <small style="color: red;">Address is required.</small>
+            <input type="text" id="address" class="form-control" [(ngModel)]="address" name="address" (blur)="onAddressBlur()" required />
+            <div *ngIf="!address && addressTouched" class="text-danger">
+              <small>Address is required.</small>
             </div>
           </div>
         </div>
