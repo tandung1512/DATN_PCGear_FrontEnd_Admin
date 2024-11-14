@@ -38,7 +38,7 @@ export class EditCategoryComponent implements OnInit {
 
   updateCategory(): void {
     if (this.isValidCategory(this.category)) {
-      this.categoryService.updateCategory(this.category.id, this.category).subscribe({
+      this.categoryService.updateCategory(this.category).subscribe({
         next: () => {
           console.log('Cập nhật danh mục thành công');
           this.router.navigate(['/categories']); // Điều hướng về trang danh sách categories sau khi cập nhật thành công
