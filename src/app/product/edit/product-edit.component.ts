@@ -17,10 +17,10 @@ export class ProductEditComponent implements OnInit {
     price: 0,
     description: '',
     status: '',
-    image1: '',
-    image2: '',
+    image1: null, // Dùng null để chỉ ra khi không có file
+    image2: null,
     category: '',
-    distinctiveIds: '' // Changed to hold a single distinctive ID
+    distinctiveIds: '' ,
   };
 
   categories: { id: string, name: string }[] = [];
@@ -40,10 +40,8 @@ export class ProductEditComponent implements OnInit {
       this.productService.getProductById(productId).subscribe({
         next: (data) => {
           this.product = data;
-          // Ensure that the distinctiveId is set correctly from the response
-          if (this.product.distinctiveIds) {
-            this.product.distinctiveIds = this.product.distinctiveIds; // If using a single ID
-          }
+          // Đảm bảo distinctiveIds là mảng
+          this.product.distinctiveIds = this.product.distinctiveIds;
         },
         error: () => {
           alert('Không tìm thấy sản phẩm với ID này!');
@@ -55,7 +53,7 @@ export class ProductEditComponent implements OnInit {
       this.router.navigate(['/products']);
     }
 
-    // Fetch the list of categories
+    // Fetch categories
     this.categoryService.getAllCategories().subscribe({
       next: (data) => {
         this.categories = data;
@@ -65,7 +63,7 @@ export class ProductEditComponent implements OnInit {
       }
     });
 
-    // Fetch the list of distinctives
+    // Fetch distinctives
     this.distinctiveService.getAllDistinctives().subscribe({
       next: (data) => {
         this.distinctives = data;
@@ -80,24 +78,8 @@ export class ProductEditComponent implements OnInit {
   onFileChange(event: any, imageField: 'image1' | 'image2'): void {
     const file = event.target.files[0];
     if (file) {
-      this.convertFileToBase64(file).then((base64) => {
-        this.product[imageField] = base64;
-      }).catch((error) => {
-        console.error('Có lỗi xảy ra khi chuyển đổi ảnh', error);
-      });
+      this.product[imageField] = file;
     }
-  }
-
-  // Convert a file to base64
-  private convertFileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        resolve(reader.result as string); // Return base64 string
-      };
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file); // Read file as Data URL
-    });
   }
 
   // Update product information
@@ -107,19 +89,18 @@ export class ProductEditComponent implements OnInit {
       return;
     }
 
-    // If there's no selected distinctiveId, alert the user
-    if (!this.product.distinctiveIds) {
-      alert('Vui lòng chọn một distinctive!');
+    // Validate distinctive and category selections
+    if (!this.product.distinctiveIds.length) {
+      alert('Vui lòng chọn ít nhất một distinctive!');
       return;
     }
 
-    // Ensure categoryId is selected
     if (!this.product.category) {
       alert('Vui lòng chọn một danh mục!');
       return;
     }
 
-    // Prepare the FormData to send in the update request
+    // Prepare FormData for sending
     const formData = new FormData();
     formData.append('id', this.product.id);
     formData.append('name', this.product.name);
@@ -127,19 +108,19 @@ export class ProductEditComponent implements OnInit {
     formData.append('price', this.product.price.toString());
     formData.append('description', this.product.description);
     formData.append('status', this.product.status);
-    formData.append('categoryId', this.product.category); // Make sure categoryId is appended
+    formData.append('categoryId', this.product.category);
     formData.append('distinctiveIds', this.product.distinctiveIds); // Use distinctiveIds (single ID)
 
-    // Append images if available
+
+    // Append images if they exist
     if (this.product.image1) {
-      formData.append('image1', this.product.image1); // If you have a new image
+      formData.append('image1', this.product.image1);
     }
 
     if (this.product.image2) {
-      formData.append('image2', this.product.image2); // If you have a new image
+      formData.append('image2', this.product.image2);
     }
 
-    // Send the update request with FormData
     this.productService.updateProduct(this.product.id, formData).subscribe({
       next: () => {
         alert('Cập nhật sản phẩm thành công!');
@@ -150,6 +131,7 @@ export class ProductEditComponent implements OnInit {
       }
     });
   }
+
 
   // Handle distinctive selection change
   onDistinctiveChange(event: any): void {
