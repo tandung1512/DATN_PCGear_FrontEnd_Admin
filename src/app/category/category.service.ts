@@ -13,9 +13,9 @@ export class CategoryService {
 
   constructor(private http: HttpClient, private apiService: ApiService) {}
 
-  // Thêm category mới
   createCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(this.apiService.apiUrl(this.endpoint), category).pipe(
+    const url = this.apiService.apiUrl(this.endpoint + '/add');
+    return this.http.post<Category>(url, category).pipe(
       catchError(this.handleError<Category>('createCategory'))
     );
   }
@@ -52,8 +52,8 @@ export class CategoryService {
     );
   }
 
-  // Xử lý lỗi cho tất cả các yêu cầu HTTP
-  private handleError<T>(operation = 'operation', result?: T) {
+   // Hàm xử lý lỗi chung
+   private handleError<T>(operation = 'operation', result?: T): (error: any) => Observable<T> {
     return (error: any): Observable<T> => {
       console.error(`${operation} failed: ${error.message}`);
       return of(result as T);
