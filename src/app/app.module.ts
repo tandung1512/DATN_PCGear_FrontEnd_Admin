@@ -73,6 +73,7 @@ import { ListCategoryComponent } from './category/list/list-category.component';
 import { ProductListComponent } from './product/list/product-list.component';
 import { ProductAddComponent } from './product/add/product-add.component';
 import { ProductEditComponent } from './product/edit/product-edit.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -129,6 +130,7 @@ import { ProductEditComponent } from './product/edit/product-edit.component';
     BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
+    CKEditorModule
   ],
   providers: [
     

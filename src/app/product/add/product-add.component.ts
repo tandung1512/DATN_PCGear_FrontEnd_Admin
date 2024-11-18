@@ -4,12 +4,58 @@ import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { CategoryService } from 'src/app/category/category.service';
 import { DistinctiveService } from 'src/app/distinctive/distinctive.service';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-product-add',
   templateUrl: './product-add.component.html',
 })
 export class ProductAddComponent implements OnInit {
+  // Khai báo CKEditor với các tính năng mở rộng
+  public Editor = ClassicEditor;
+  
+  // Cấu hình CKEditor
+  public editorConfig = {
+    toolbar: [
+      'bold',              // In đậm
+      'italic',            // In nghiêng
+      'underline',         // Gạch chân
+      'strikethrough',     // Gạch bỏ
+      'link',              // Thêm liên kết
+      'bulletedList',      // Danh sách có dấu chấm
+      'numberedList',      // Danh sách có số
+      'blockQuote',        // Trích dẫn
+      'imageUpload',       // Tải lên hình ảnh
+      'insertTable',       // Chèn bảng
+      'mediaEmbed',        // Nhúng video (YouTube, Vimeo, ...)
+      'code',              // Chèn mã nguồn
+      'fontSize',          // Kích thước chữ
+      'fontColor',         // Màu chữ
+      'fontBackgroundColor', // Màu nền chữ
+      'alignment',         // Căn chỉnh (trái, phải, giữa)
+      'indent',            // Thụt lề
+      'outdent'            // Giảm thụt lề
+    ],
+    // Cấu hình các đặc điểm khác cho CKEditor (nếu cần)
+    language: 'en',      // Ngôn ngữ mặc định
+    image: {
+      toolbar: [
+        'imageTextAlternative', // Chỉnh sửa mô tả alt của hình ảnh
+        'imageStyle:full',      // Kiểu hình ảnh đầy đủ
+        'imageStyle:side',      // Hình ảnh ở bên cạnh
+        'linkImage'             // Chèn liên kết cho hình ảnh
+      ]
+    },
+    table: {
+      contentToolbar: [
+        'tableColumn',  // Chỉnh sửa cột
+        'tableRow',     // Chỉnh sửa dòng
+        'mergeTableCells' // Hợp nhất các ô trong bảng
+      ]
+    },
+    removePlugins: ['ImageResize', 'EasyImage'], // Loại bỏ một số plugin không cần thiết (nếu muốn)
+  };
+
   newProduct: Product = {
     id: '',
     name: '',

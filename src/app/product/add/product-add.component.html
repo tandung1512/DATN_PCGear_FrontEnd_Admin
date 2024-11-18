@@ -33,10 +33,17 @@
     </div>
   </div>
 
-  <div class="mb-3">
-    <label for="description" class="form-label">Mô tả:</label>
-    <textarea id="description" [(ngModel)]="newProduct.description" name="description" class="form-control"></textarea>
-  </div>
+    <!-- Description Field (CKEditor) -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Mô tả:</label>
+      <ckeditor
+        [(ngModel)]="newProduct.description"
+        name="description"
+        class="form-control"
+        [editor]="Editor"
+        [config]="editorConfig">
+      </ckeditor>
+    </div>
 
   <div class="mb-3">
     <label for="category" class="form-label">Danh mục:</label>

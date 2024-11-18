@@ -21,10 +21,17 @@
     <input id="price" [(ngModel)]="product.price" name="price" type="number" class="form-control" required />
   </div>
 
-  <div class="mb-3">
-    <label for="description" class="form-label">Mô tả:</label>
-    <textarea id="description" [(ngModel)]="product.description" name="description" class="form-control"></textarea>
-  </div>
+     <!-- Description Field (CKEditor) -->
+     <div class="mb-3">
+      <label for="description" class="form-label">Mô tả:</label>
+      <ckeditor
+        [(ngModel)]="product.description"
+        name="description"
+        class="form-control"
+        [editor]="Editor"
+        [config]="editorConfig">
+      </ckeditor>
+    </div>
 
 
   <div class="mb-3">
