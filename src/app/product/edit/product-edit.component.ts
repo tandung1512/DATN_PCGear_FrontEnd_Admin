@@ -13,7 +13,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export class ProductEditComponent implements OnInit {
   // Khai báo CKEditor với các tính năng mở rộng
   public Editor = ClassicEditor;
-  
+
   // Cấu hình CKEditor
   public editorConfig = {
     toolbar: [
@@ -62,10 +62,11 @@ export class ProductEditComponent implements OnInit {
     price: 0,
     description: '',
     status: '',
+    isHot: false,
     image1: null, // Dùng null để chỉ ra khi không có file
     image2: null,
     category: '',
-    distinctiveIds: '' ,
+    distinctiveIds: '',
   };
 
   categories: { id: string, name: string }[] = [];
@@ -77,7 +78,7 @@ export class ProductEditComponent implements OnInit {
     private distinctiveService: DistinctiveService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const productId = this.route.snapshot.paramMap.get('id');
@@ -153,6 +154,8 @@ export class ProductEditComponent implements OnInit {
     formData.append('price', this.product.price.toString());
     formData.append('description', this.product.description);
     formData.append('status', this.product.status);
+    // Convert boolean to string for FormData
+    formData.append('isHot', this.product.isHot ? 'true' : 'false');
     formData.append('categoryId', this.product.category);
     formData.append('distinctiveIds', this.product.distinctiveIds); // Use distinctiveIds (single ID)
 

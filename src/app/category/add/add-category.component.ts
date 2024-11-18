@@ -9,8 +9,7 @@ import { Category } from '../category.model';
 })
 export class AddCategoryComponent {
   // Khai báo newCategory và gán kiểu dữ liệu
-  newCategory: Category = { id: '', name: '', description: '' };
-
+  newCategory: Category = { id: '', name: '', description: '', isHot: false };
   constructor(
     private categoryService: CategoryService,
     private router: Router

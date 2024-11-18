@@ -1,11 +1,21 @@
-<!-- <div *ngIf="loading" class="alert alert-info" role="alert">
+<h2>Quản Lí Sản Phẩm</h2>
+
+<!-- Thông báo khi đang tải dữ liệu -->
+<div *ngIf="loading" class="alert alert-info" role="alert">
   Đang tải dữ liệu...
 </div>
 
+<!-- Thông báo lỗi khi không tải được dữ liệu -->
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>
+
+<!-- Thông báo khi không có sản phẩm nào -->
 <div *ngIf="!loading && products.length === 0" class="alert alert-warning" role="alert">
   Không có sản phẩm nào!
-</div> -->
+</div>
 
+<!-- Hiển thị bảng khi có sản phẩm -->
 <table *ngIf="!loading && products.length > 0" class="table table-striped">
   <thead>
     <tr>
@@ -14,6 +24,7 @@
       <th>Số lượng</th>
       <th>Giá</th>
       <th>Trạng thái</th>
+      <th>Nổi bật</th>
       <th>Hành động</th>
     </tr>
   </thead>
@@ -24,14 +35,28 @@
       <td>{{ product.quantity }}</td>
       <td>{{ product.price | currency }}</td>
       <td>
-        {{ product.status }}
+        <!-- Hiển thị trạng thái Còn hàng (1) hoặc Hết hàng (0) -->
+        <span [ngClass]="product.status === '1' ? 'badge bg-success' : 'badge bg-danger'">
+          {{ product.status === '1' ? 'Còn hàng' : 'Hết hàng' }}
+        </span>
       </td>
+    
+      
+      <td>
+        <!-- Hiển thị trạng thái 'Nổi bật' hoặc 'Không nổi bật' -->
+        <span [ngClass]="product.isHot ? 'badge bg-danger' : 'badge bg-secondary'">
+          {{ product.isHot ? 'Nổi bật' : 'Không nổi bật' }}
+        </span>
+      </td>
+      
+      
+      
       <td>
         <!-- Nút Xóa -->
-        <button (click)="deleteProduct(product.id)" class="btn btn-danger">Xóa</button>
+        <button (click)="deleteProduct(product.id)" class="btn btn-danger btn-sm">Xóa</button>
         
         <!-- Nút Sửa -->
-        <button (click)="editProduct(product.id)" class="btn btn-warning ml-2">Sửa</button>
+        <button (click)="editProduct(product.id)" class="btn btn-warning btn-sm ml-2">Sửa</button>
       </td>
     </tr>
   </tbody>

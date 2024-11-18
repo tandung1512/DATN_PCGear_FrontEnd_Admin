@@ -21,12 +21,12 @@ export class ListCategoryComponent implements OnInit {
     this.categoryService.getAllCategories().subscribe(
       (categories) => {
         this.categories = categories;
-        console.log(categories)
+        console.log(categories);  // Kiểm tra dữ liệu category trong console
         this.errorMessage = null;
       },
       (error) => {
-        console.error('Error loading products:', error);
-        this.errorMessage = 'Failed to load products: ' + error.message;
+        console.error('Error loading categories:', error);
+        this.errorMessage = 'Failed to load categories: ' + error.message;
       }
     );
   }
@@ -44,14 +44,14 @@ export class ListCategoryComponent implements OnInit {
           this.errorMessage = null;
         },
         (error) => {
-          console.error('Error deleting product:', error);
-          this.errorMessage = 'Failed to delete product: ' + error.message;
+          console.error('Error deleting category:', error);
+          this.errorMessage = 'Failed to delete category: ' + error.message;
         }
       );
     }
   }
 
   addNewCategory(): void {
-    this.router.navigate(['/categories/create']); // Chuyển hướng tới trang tạo sản phẩm
+    this.router.navigate(['/categories/create']); // Chuyển hướng tới trang tạo category
   }
 }
