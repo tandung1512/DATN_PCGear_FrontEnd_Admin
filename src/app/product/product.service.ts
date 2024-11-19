@@ -31,7 +31,7 @@ export class ProductService {
 
   // Lấy sản phẩm theo ID
   getProductById(id: string): Observable<Product> {
-    const url = `${this.apiService.apiUrl(this.endpoint)}/${id}`; // Đảm bảo URL chính xác
+    const url = `${this.apiService.apiUrl(this.endpoint)}/get/${id}`; // Đảm bảo URL chính xác
     return this.http.get<Product>(url).pipe(
       catchError(this.handleError<Product>(`getProductById id=${id}`))
     );
