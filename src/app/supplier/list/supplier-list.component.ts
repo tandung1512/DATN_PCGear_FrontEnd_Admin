@@ -71,7 +71,12 @@ export class SupplierListComponent implements OnInit {
       this.supplierService.deleteSupplier(id).subscribe(
         () => {
           console.log('Xoá thành công nhà cung cấp');
-          this.getSuppliers(); // Refresh list after deletion
+          this.getSuppliers();
+           // Refresh list after deletion
+           this.router.navigate(['/suppliers']).then(() => {
+            // Tải lại trang sau khi điều hướng (reload)
+            window.location.reload();
+        });
         },
         (error) => {
           console.error('Lỗi khi xoá nhà cung cấp:', error);

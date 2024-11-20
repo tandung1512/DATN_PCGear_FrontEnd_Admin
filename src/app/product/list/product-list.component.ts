@@ -90,6 +90,10 @@ export class ProductListComponent implements OnInit {
         next: () => {
           // Xóa sản phẩm trong danh sách mà không cần tải lại dữ liệu
           this.products = this.products.filter(product => product.id !== id);
+          this.router.navigate(['/products']).then(() => {
+            // Tải lại trang sau khi điều hướng (reload)
+            window.location.reload();
+        });
           alert('Sản phẩm đã được xóa thành công!');
         },
         error: (error) => {
