@@ -1,30 +1,64 @@
-<div class="container">
-    <h2>Danh sách nhà cung cấp</h2>
-    
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Tên nhà cung cấp</th>
-          <th>Số điện thoại</th>
-          <th>Email</th>
-          <th>Địa chỉ</th>
-          <th>Hành động</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let supplier of suppliers">
-          <td>{{ supplier.id }}</td>
-          <td>{{ supplier.name }}</td>
-          <td>{{ supplier.phoneNumber }}</td>
-          <td>{{ supplier.email }}</td>
-          <td>{{ supplier.address }}</td>
-          <td>
-            <button class="btn btn-primary" (click)="editSupplier(supplier.id)">Sửa</button>
-            <button class="btn btn-danger" (click)="deleteSupplier(supplier.id)">Xóa</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Danh Sách Nhà Cung Cấp</h2>
+
+<!-- Hiển thị thông báo lỗi nếu có -->
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>
+
+<!-- Hiển thị thông báo khi không có nhà cung cấp nào -->
+<div *ngIf="!errorMessage && displayedSuppliers.length === 0" class="alert alert-warning" role="alert">
+  Không có nhà cung cấp nào!
+</div>
+
+<!-- Hiển thị danh sách nhà cung cấp -->
+<table *ngIf="!errorMessage && displayedSuppliers.length > 0" class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên Nhà Cung Cấp</th>
+      <th>Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let supplier of displayedSuppliers">
+      <td>{{ supplier.id }}</td>
+      <td>{{ supplier.name }}</td>
+      <td>
+        <!-- Nút Xóa -->
+        <button (click)="deleteSupplier(supplier.id)" class="btn btn-danger btn-sm">Xóa</button>
+        
+        <!-- Nút Sửa -->
+        <button (click)="editSupplier(supplier.id)" class="btn btn-success btn-sm">Sửa</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Phân trang -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+  <div>
+    Hiển thị {{ startDisplay }} - {{ endDisplay }} trên tổng số {{ totalSuppliers }} nhà cung cấp
   </div>
-  
+
+  <nav>
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+          Trước
+        </button>
+      </li>
+
+      <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+        <button class="page-link" (click)="changePage(page)">
+          {{ page }}
+        </button>
+      </li>
+
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <button class="page-link" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          Sau
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>

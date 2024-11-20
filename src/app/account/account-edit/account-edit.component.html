@@ -1,13 +1,13 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-header text-center">
-      <h2 class="fw-bold">Edit Account</h2>
+      <h2 class="fw-bold">Cập nhật tài khoản</h2>
     </div>
     <div class="card-body">
       <form *ngIf="account" (ngSubmit)="save()">
         <!-- Custom ID -->
         <div class="mb-3 row">
-          <label for="id" class="col-sm-3 col-form-label">Custom ID:</label>
+          <label for="id" class="col-sm-3 col-form-label">ID:</label>
           <div class="col-sm-9">
             <input type="text" id="id" class="form-control" [(ngModel)]="account.id" name="id" readonly required />
           </div>
@@ -15,7 +15,7 @@
 
         <!-- Name -->
         <div class="mb-3 row">
-          <label for="name" class="col-sm-3 col-form-label">Name:</label>
+          <label for="name" class="col-sm-3 col-form-label">Họ và Tên:</label>
           <div class="col-sm-9">
             <input type="text" id="name" class="form-control" [(ngModel)]="account.name" name="name" required />
           </div>
@@ -23,7 +23,7 @@
 
         <!-- Password -->
         <div class="mb-3 row">
-          <label for="password" class="col-sm-3 col-form-label">Password:</label>
+          <label for="password" class="col-sm-3 col-form-label">Mật khẩu:</label>
           <div class="col-sm-9">
             <input type="password" id="password" class="form-control" [(ngModel)]="account.password" name="password" required />
           </div>
@@ -31,7 +31,7 @@
 
         <!-- Phone -->
         <div class="mb-3 row">
-          <label for="phone" class="col-sm-3 col-form-label">Phone:</label>
+          <label for="phone" class="col-sm-3 col-form-label">Số Điện Thoại:</label>
           <div class="col-sm-9">
             <input type="text" id="phone" class="form-control" [(ngModel)]="account.phone" name="phone" required />
           </div>
@@ -47,7 +47,7 @@
 
         <!-- Address -->
         <div class="mb-3 row">
-          <label for="address" class="col-sm-3 col-form-label">Address:</label>
+          <label for="address" class="col-sm-3 col-form-label">Địa chỉ:</label>
           <div class="col-sm-9">
             <input type="text" id="address" class="form-control" [(ngModel)]="account.address" name="address" required />
           </div>
@@ -55,14 +55,14 @@
 
         <!-- Image Upload -->
         <div class="mb-3 row">
-          <label for="image" class="col-sm-3 col-form-label">Image:</label>
+          <label for="image" class="col-sm-3 col-form-label">Hình Ảnh:</label>
           <div class="col-sm-9">
             <input type="file" id="image" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
           </div>
         </div>
         <div *ngIf="account.image" class="mb-3 text-center">
-          <p>Current Image Preview:</p>
-          <img [src]="account.image" alt="Current Image Preview" width="100" />
+          <p>Xem trước ảnh:</p>
+          <img [src]="account.image" alt="Image" width="100" />
         </div>
 
         <!-- Admin -->
@@ -75,7 +75,7 @@
 
         <!-- Status -->
         <div class="mb-3 row">
-          <label for="status" class="col-sm-3 col-form-label">Status:</label>
+          <label for="status" class="col-sm-3 col-form-label">Trạng thái:</label>
           <div class="col-sm-9">
             <input type="checkbox" id="status" [(ngModel)]="account.status" name="status" />
           </div>
@@ -83,7 +83,7 @@
 
         <!-- Confirm -->
         <div class="mb-3 row">
-          <label for="confirm" class="col-sm-3 col-form-label">Confirm:</label>
+          <label for="confirm" class="col-sm-3 col-form-label">Xác thực:</label>
           <div class="col-sm-9">
             <input type="checkbox" id="confirm" [(ngModel)]="account.confirm" name="confirm" />
           </div>
@@ -91,7 +91,7 @@
 
         <!-- Submit Button -->
         <div class="text-center">
-          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
         </div>
       </form>
 
