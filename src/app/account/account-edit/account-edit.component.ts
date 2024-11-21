@@ -32,7 +32,7 @@ export class AccountEditComponent implements OnInit {
         this.errorMessage = null; // Đặt lại thông báo lỗi nếu thành công
       },
       (error) => {
-        this.handleError('Failed to load account', error); // Xử lý lỗi
+        this.handleError('Lỗi khi tải tài khoản', error); // Xử lý lỗi
       }
     );
   }
@@ -45,7 +45,7 @@ export class AccountEditComponent implements OnInit {
           this.errorMessage = null; // Đặt lại thông báo lỗi nếu thành công
         },
         (error) => {
-          this.handleError('Failed to save account', error); // Xử lý lỗi khi lưu
+          this.handleError('Lỗi khi lưu tài khoản', error); // Xử lý lỗi khi lưu
         }
       );
     }
@@ -70,6 +70,6 @@ export class AccountEditComponent implements OnInit {
   // Hàm xử lý lỗi chung
   private handleError(action: string, error: any): void {
     console.error(`${action}:`, error); // Ghi lại lỗi vào console
-    this.errorMessage = `${action}: ${error.message || 'Unknown error'}`; // Thiết lập thông báo lỗi cho người dùng
+    this.errorMessage = `${action}: ${error.message || 'Lỗi không rõ!'}`; // Thiết lập thông báo lỗi cho người dùng
   }
 }  

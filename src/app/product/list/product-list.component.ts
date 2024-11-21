@@ -3,14 +3,27 @@ import { ProductService } from '../product.service';
 import { Product } from '../product.model';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
+  
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
   loading: boolean = true;
   errorMessage: string | null = null;
+
+  displayedProducts: Product[] = [];
+
+  totalProducts: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 1;
+  totalPages: number = 1;
+  pages: number[] = [];
+
+  startDisplay: number = 0;
+  endDisplay: number = 0;
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -32,6 +45,9 @@ export class ProductListComponent implements OnInit {
           
           return product;
         });
+        this.totalProducts = this.products.length;
+        this.totalPages = Math.ceil(this.totalProducts / this.pageSize);
+        this.updateDisplayedProducts();
         this.loading = false;
       },
       error: (error) => {
@@ -41,7 +57,24 @@ export class ProductListComponent implements OnInit {
     });
   }
   
-  
+  updateDisplayedProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = Math.min(startIndex + this.pageSize, this.totalProducts);
+    this.displayedProducts = this.products.slice(startIndex, endIndex);
+
+    // Tạo danh sách số trang
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+
+    // Cập nhật start và end để hiển thị đúng số lượng
+    this.startDisplay = startIndex + 1;
+    this.endDisplay = endIndex;
+  }
+
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updateDisplayedProducts();
+  }
   
   
 
@@ -57,6 +90,10 @@ export class ProductListComponent implements OnInit {
         next: () => {
           // Xóa sản phẩm trong danh sách mà không cần tải lại dữ liệu
           this.products = this.products.filter(product => product.id !== id);
+          this.router.navigate(['/products']).then(() => {
+            // Tải lại trang sau khi điều hướng (reload)
+            window.location.reload();
+        });
           alert('Sản phẩm đã được xóa thành công!');
         },
         error: (error) => {

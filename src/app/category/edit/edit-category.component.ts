@@ -22,7 +22,7 @@ export class EditCategoryComponent implements OnInit {
     if (categoryId) {
       this.loadCategory(categoryId);
     } else {
-      this.errorMessage = 'Category ID không tồn tại';
+      this.errorMessage = 'ID không tồn tại';
     }
   }
 

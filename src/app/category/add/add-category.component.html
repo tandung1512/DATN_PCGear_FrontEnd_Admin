@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <h2>Add Category</h2>
+  <h2>Thêm danh mục</h2>
   <form (ngSubmit)="addCategory()" #categoryForm="ngForm">
     <div class="form-group">
       <label for="id">ID:</label>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="form-group">
-      <label for="name">Name:</label>
+      <label for="name">Tên danh mục:</label>
       <input 
         id="name" 
         [(ngModel)]="newCategory.name" 
@@ -26,13 +26,13 @@
         class="form-control" 
         #name="ngModel" />
       <div *ngIf="name.invalid && name.touched" class="text-danger">
-        <div *ngIf="name.errors?.['required']">Name là bắt buộc.</div>
-        <div *ngIf="name.errors?.['minlength']">Name phải có ít nhất 3 ký tự.</div>
+        <div *ngIf="name.errors?.['required']">Tên danh mục là bắt buộc.</div>
+        <div *ngIf="name.errors?.['minlength']">Tên danh mục phải có ít nhất 3 ký tự.</div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="description">Description:</label>
+      <label for="description">Mô tả:</label>
       <input 
         id="description" 
         [(ngModel)]="newCategory.description" 
@@ -40,10 +40,10 @@
         class="form-control" />
     </div>
     <div class="form-group">
-      <label for="isHot">Is Hot?</label>
+      <label for="isHot">Nổi Bật? </label>
       <input id="isHot" type="checkbox" [(ngModel)]="newCategory.isHot" name="isHot" class="form-check-input" />
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">Add Category</button>
+    <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">Thêm danh mục</button>
   </form>
 </div>

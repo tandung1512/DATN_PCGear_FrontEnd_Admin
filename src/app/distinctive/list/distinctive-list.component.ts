@@ -9,6 +9,17 @@ import { Router } from '@angular/router';  // Import Router for navigation
 })
 export class DistinctiveListComponent implements OnInit {
   distinctives: Distinctive[] = [];  // Store the list of distinctives
+  displayedDistinctives: Distinctive[] = [];  // Store the distinctives to display in pagination
+  errorMessage: string | null = null;
+
+  totalDistinctives: number = 0;  // Total number of distinctives
+  pageSize: number = 10;  // Number of items to show per page
+  currentPage: number = 1;  // Current page
+  totalPages: number = 1;  // Total number of pages
+  pages: number[] = [];  // List of page numbers
+
+  startDisplay: number = 0;  // Starting index of displayed items
+  endDisplay: number = 0; 
 
   constructor(
     private distinctiveService: DistinctiveService,  // Inject the distinctive service
@@ -24,13 +35,36 @@ export class DistinctiveListComponent implements OnInit {
     this.distinctiveService.getAllDistinctives().subscribe(
       (distinctives) => {
         this.distinctives = distinctives;  // Set the distinctives to the list
+        this.totalDistinctives = this.distinctives.length;
+        this.totalPages = Math.ceil(this.totalDistinctives / this.pageSize);
+        this.updateDisplayedDistinctives();
+        this.errorMessage = null;
       },
       (error) => {
         console.error('Error fetching distinctives:', error);  // Handle errors
       }
     );
   }
+   // Update the list of distinctives to display based on the current page
+   updateDisplayedDistinctives(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = Math.min(startIndex + this.pageSize, this.totalDistinctives);
+    this.displayedDistinctives = this.distinctives.slice(startIndex, endIndex);
 
+    // Create the pagination pages array
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+
+    // Update the start and end display values
+    this.startDisplay = startIndex + 1;
+    this.endDisplay = endIndex;
+  }
+
+  // Change page and update the list of displayed distinctives
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updateDisplayedDistinctives();
+  }
   // Delete a distinctive by its ID
   deleteDistinctive(id: string): void {
     if (confirm('Are you sure you want to delete this distinctive?')) {  // Ask for confirmation before deletion

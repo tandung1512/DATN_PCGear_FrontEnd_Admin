@@ -14,7 +14,17 @@ import { ApiService } from 'src/app/service/api.service';
 })
 export class BrandListComponent implements OnInit {
   brands: Brand[] = [];
+  displayedBrands: Brand[] = [];
   errorMessage: string | null = null;
+
+  totalBrands: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 1;
+  totalPages: number = 1;
+  pages: number[] = [];
+
+  startDisplay: number = 0;
+  endDisplay: number = 0;
 
   constructor(private brandService: BrandService, private router: Router,  private apiService: ApiService, private http: HttpClient) {}
   private endpoint = 'brands';
@@ -39,13 +49,34 @@ export class BrandListComponent implements OnInit {
       (brands) => {
         this.brands = brands;
         console.log(brands)
+        this.totalBrands = this.brands.length;
+        this.totalPages = Math.ceil(this.totalBrands / this.pageSize);
+        this.updateDisplayedBrands();
         this.errorMessage = null;
       },
       (error) => {
         console.error('Error loading brands:', error);
-        this.errorMessage = 'Failed to load brands: ' + error.message;
+        this.errorMessage = 'Lỗi khi tải thương hiệu: ' + error.message;
       }
     );
+  }
+  updateDisplayedBrands(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = Math.min(startIndex + this.pageSize, this.totalBrands);
+    this.displayedBrands = this.brands.slice(startIndex, endIndex);
+
+    // Tạo danh sách số trang
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+
+    // Cập nhật start và end để hiển thị đúng số lượng
+    this.startDisplay = startIndex + 1;
+    this.endDisplay = endIndex;
+  }
+
+  changePage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updateDisplayedBrands();
   }
 
 

@@ -75,6 +75,10 @@ import { ProductAddComponent } from './product/add/product-add.component';
 import { ProductEditComponent } from './product/edit/product-edit.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { CustomCurrencyPipe } from './product/custom-currency.pipe';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,12 +118,14 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     AddCategoryComponent,
     ProductEditComponent,
     ProductAddComponent,
-    ProductListComponent
+    ProductListComponent,
+    CustomCurrencyPipe,
     
 
     
   ],
   imports: [
+    
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -130,7 +136,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
-    CKEditorModule
+    CKEditorModule,
+    MatPaginatorModule
   ],
   providers: [
     

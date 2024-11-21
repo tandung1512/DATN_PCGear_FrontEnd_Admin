@@ -63,7 +63,7 @@ export class ProductAddComponent implements OnInit {
         this.categories = data;
       },
       error: () => {
-        alert('Failed to load categories.');
+        alert('Lỗi khi tải danh mục.');
       }
     });
 
@@ -73,7 +73,7 @@ export class ProductAddComponent implements OnInit {
         this.distinctives = data;
       },
       error: () => {
-        alert('Failed to load distinctives.');
+        alert('Lỗi khi tải đặc trưng.');
       }
     });
   }
@@ -118,10 +118,10 @@ export class ProductAddComponent implements OnInit {
 
       // Send the FormData to create the product
       await this.productService.createProduct(formData).toPromise();
-      alert('Product added successfully!');
+      alert('Thêm sản phẩm thành công!');
       this.router.navigate(['/products']);
     } catch (error) {
-      alert('An error occurred while adding the product.');
+      alert('Đã xảy ra lỗi khi thêm sản phẩm.');
       console.error(error);
     }
   }
@@ -129,23 +129,23 @@ export class ProductAddComponent implements OnInit {
   // Validation method for product fields
   validateProduct(): boolean {
     if (!this.newProduct.id || this.newProduct.id.trim().length === 0) {
-      alert('Product ID is required.');
+      alert('ID không được để trống.');
       return false;
     }
     if (!this.newProduct.name || this.newProduct.name.trim().length < 3) {
-      alert('Product name must be at least 3 characters long.');
+      alert('Tên sản phẩm không được để trống và phải trên 3 kí tự.');
       return false;
     }
     if (this.newProduct.quantity <= 0) {
-      alert('Quantity must be greater than 0.');
+      alert('Số lượng phải lớn hơn 0.');
       return false;
     }
     if (this.newProduct.price <= 0) {
-      alert('Price must be greater than 0.');
+      alert('Giá phải lớn hơn 0.');
       return false;
     }
     if (!this.newProduct.category) {
-      alert('Category is required.');
+      alert('Danh mục không được để trống.');
       return false;
     }
     return true;
