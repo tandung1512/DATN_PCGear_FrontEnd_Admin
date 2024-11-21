@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-complete',
@@ -17,7 +18,7 @@ export class InvoiceCompleteComponent implements OnInit {
   begin: number = 0;
   host: string = environment.host;
 
-  constructor( private http: HttpClient, private toastr: ToastrService) {}
+  constructor( private http: HttpClient, private toastr: ToastrService,private router: Router) {}
 
   ngOnInit(): void {
     this.loadAll();
@@ -43,9 +44,8 @@ export class InvoiceCompleteComponent implements OnInit {
     this.prop = property; // Cập nhật thuộc tính sắp xếp
   }
 
-  edit(id: string) {
-    // Chuyển hướng tới trang chi tiết hóa đơn
-    // Có thể sử dụng Router
+  edit(id: string): void {
+    this.router.navigate([`/detail/${id}`]);
   }
 
   first() {

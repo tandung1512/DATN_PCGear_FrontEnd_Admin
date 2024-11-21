@@ -39,7 +39,7 @@
                     </td>
                     <td>{{ item.user.name }}</td>
                     <td><button (click)="edit(item.id)" class="btn btn-info">Xem chi tiết</button></td>
-                    <td><button (click)="update(item.id)" class="btn btn-success">Giao hàng</button></td>
+                    <td><button (click)="update(item.id,$event)" class="btn btn-success">Giao hàng</button></td>
                     <td><button (click)="openCancelModal(item.id)" class="btn btn-danger">Hủy đơn</button></td>
                   </tr>
                 </tbody>
