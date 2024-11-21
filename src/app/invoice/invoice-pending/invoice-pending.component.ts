@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Invoice } from '../invoice.model'; 
 import { User } from '../invoice.model';
 import { Observable } from 'rxjs';
-import { Modal } from 'bootstrap';
 import { Router } from '@angular/router';
 
 @Component({
@@ -58,7 +58,7 @@ export class InvoicePendingComponent implements OnInit {
   }
 
   edit(id: string): void {
-    window.location.href = `/invoices/admin/table-invoice-detailed/${id}`;
+    this.router.navigate([`/detail/${id}`]);
   }
 
   sortBy(prop: string): void {
@@ -99,16 +99,16 @@ export class InvoicePendingComponent implements OnInit {
     }
   }
 
-  update(id: string): void {
+  update(id: string, event: Event): void {
+   
+    
     // Lấy thông tin hóa đơn từ server
     this.http.get<Invoice>(`${this.host}/invoice/${id}`).subscribe({
       next: (resp) => {
         this.invoice = resp;
-  
+
         // Cập nhật trạng thái của hóa đơn
         let updatedInvoice = { ...this.invoice, status: "delivery" };
-  
-        // Thực hiện PUT request để cập nhật trạng thái
         this.http.put<Invoice>(`${this.host}/invoice/${id}`, updatedInvoice).subscribe({
           next: () => {
             // Cập nhật mảng items bằng cách xóa hóa đơn đã cập nhật
@@ -116,12 +116,8 @@ export class InvoicePendingComponent implements OnInit {
             if (index !== -1) {
               this.items.splice(index, 1); // Xóa hóa đơn khỏi mảng items
             }
-  
-            // Thông báo thành công
+
             this.message(true, "Chuyển trạng thái sang giao hàng thành công", "success");
-  
-            // Ghi lại lịch sử thay đổi trạng thái
-            this.history(`Đã chuyển trạng thái của đơn hàng ${id} sang đang giao hàng`);
           },
           error: (error) => {
             console.error("Error updating invoice", error);
@@ -132,10 +128,7 @@ export class InvoicePendingComponent implements OnInit {
         console.error("Error fetching invoice", error);
       }
     });
-  
-  
-    
-  }
+}
   openCancelModal(id: number): void {
     this.currentCancelId = id;
     this.showCancelModal = true;
@@ -204,28 +197,5 @@ export class InvoicePendingComponent implements OnInit {
     });
   }
 
-  history(title: string): void {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
-    const timeString = `${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}`;
-    const urlUser = `${this.host}/user`;
   
-    this.http.get<User>(urlUser).subscribe(resp => {
-      const user = resp;
-      const history = {
-        note: `${user.name} ${title}`,
-        historyDate: formattedDate,
-        historyTime: timeString,
-        user
-      };
-      const urlHistory = `${this.host}/UserHistory`;
-      this.http.post(urlHistory, history).subscribe(() => {
-        console.log("History saved successfully");
-      }, error => {
-        console.error("Error saving history", error);
-      });
-    }, error => {
-      console.error("Error loading user", error);
-    });
-  }
 }

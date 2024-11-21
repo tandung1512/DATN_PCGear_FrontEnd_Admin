@@ -41,8 +41,8 @@ export class InvoiceCancelledComponent implements OnInit {
     );
   }
 
-  edit(id: number) {
-    this.router.navigate(['/invoice-detailed', id]);
+  edit(id: string): void {
+    this.router.navigate([`/detail/${id}`]);
   }
 
   sortBy(prop: string) {
