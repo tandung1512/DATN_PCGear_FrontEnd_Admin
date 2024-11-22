@@ -14,7 +14,7 @@
           <div class="card">
             <div class="card-body">
               <h4 class="card-title">Bảng Dữ Liệu</h4>
-              <p class="card-description">Hóa đơn <code>Chờ xác nhận</code></p>
+              <p class="card-description">Hóa đơn <code> đã hủy</code></p>
               <div class="table-responsive">
                 <table class="table table-hover">
                   <thead>
@@ -45,16 +45,24 @@
                   </tbody>
                 </table>
               </div>
-              <!-- Pagination -->
-              <div class="row">
-                <ul class="pagination">
-                  <li class="btn"><a>{{ currentPage }} of {{ pageCount }}</a></li>
-                  <li class="btn" (click)="first()"><i class="fas fa-angle-double-left"></i></li>
-                  <li class="btn" (click)="prev()"><i class="fas fa-angle-left"></i></li>
-                  <li class="btn" (click)="next()"><i class="fas fa-angle-right"></i></li>
-                  <li class="btn" (click)="last()"><i class="fas fa-angle-double-right"></i></li>
-                </ul>
-              </div>
+              <ul class="pagination justify-content-center">
+                <li class="btn">
+                  <a >{{currentPage}} of {{pageCount}}</a>
+                </li>
+                <li class="btn">
+                  <a (click)="first()"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li class="btn">
+                  <a (click)="prev()"><i class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="btn">
+                  <a (click)="next()"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="btn">
+                  <a (click)="last()"><i class="fas fa-angle-double-right"></i></a>
+                </li>
+              </ul>
+             
             </div>
           </div>
         </div>

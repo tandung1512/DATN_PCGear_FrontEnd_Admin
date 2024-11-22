@@ -14,8 +14,8 @@ export class InvoiceDetailedComponent implements OnInit {
   items: any[] = [];
   prop: string = '';
   currentPage: number = 1;
-  pageCount: number = 1;
-  itemsPerPage: number = 5;
+  pageCount: number;
+  itemsPerPage: number = 10;
   begin: number = 0;
   host: string = environment.host;
 
@@ -26,30 +26,26 @@ export class InvoiceDetailedComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];  // ID được lấy từ route
+    console.log('ID của hóa đơn:', id); 
     this.loadInvoiceDetails(id);
   }
 
-  loadInvoiceDetails(id: string) {
-    const url = `${this.host}/ordered-list/details/${id}`;
+  loadInvoiceDetails(id: string): void {
+    const url = `http://localhost:8080/api/ordered-list/details/${id}`;
     this.http.get<any>(url).subscribe(
       (data) => {
-        console.log('Dữ liệu trả về từ API:', data);  // In dữ liệu ra console để kiểm tra
-        const order = data.order;
+        console.log('Dữ liệu trả về từ API:', data);
   
-        // Kiểm tra chi tiết sản phẩm trong hóa đơn
-        if (order.detailedInvoices && order.detailedInvoices.length > 0) {
-          console.log('Chi tiết sản phẩm:', order.detailedInvoices);
+        // Kiểm tra xem data và data.detailedInvoices có tồn tại không
+        if (data && data.detailedInvoices) {
+          this.invoiceID = data.orderId; // Dùng orderId trực tiếp từ data
+          this.userName = data.user?.name || 'Không có tên người đặt';  // Nếu không có tên, hiển thị mặc định
+          this.orderDate = data.orderDate;
+          this.items = data.detailedInvoices || [];  // Lấy chi tiết hóa đơn từ detailedInvoices
+          this.pageCount = Math.ceil(this.items.length / this.itemsPerPage);
         } else {
-          console.log('Không có chi tiết sản phẩm trong hóa đơn.');
+          console.error('Không tìm thấy chi tiết hóa đơn trong dữ liệu trả về!');
         }
-  
-        // Cập nhật các biến trong component
-        this.invoiceID = order.id;
-        this.userName = order.user.name;
-        this.orderDate = order.orderDate;
-  
-        this.items = order.detailedInvoices || [];  // Nếu không có chi tiết, gán mảng rỗng
-        this.pageCount = Math.ceil(this.items.length / this.itemsPerPage);
       },
       (error) => {
         console.error('Lỗi khi lấy chi tiết hóa đơn:', error);
@@ -58,32 +54,46 @@ export class InvoiceDetailedComponent implements OnInit {
   }
   
   
+  getProductPrice(item: any): string {
+    return item.product?.price ? item.product.price : 'Không có giá';
+  }
 
+  getProductName(item: any): string {
+    return item.product?.name ? item.product.name : 'Không có tên sản phẩm';
+  }
+
+  getProductImage(item: any): string {
+    return item.product?.image1 ? item.product.image1 : 'Không có hình ảnh';
+  }
+
+  getTotalPrice(item: any): string {
+    return (item.product?.price * item.quantity) ? (item.product.price * item.quantity).toFixed(2) : 'Không có tổng tiền';
+  }
   sortBy(prop: string) {
     this.prop = prop;
   }
 
-  first() {
-    this.begin = 0;
-    this.currentPage = 1;
+  first(): void {
+    this.paginate(1);
   }
 
-  prev() {
-    if (this.begin > 0) {
-      this.begin -= this.itemsPerPage;
-      this.currentPage--;
+  prev(): void {
+    if (this.currentPage > 1) {
+      this.paginate(this.currentPage - 1);
     }
   }
 
-  next() {
-    if (this.begin < (this.pageCount - 1) * this.itemsPerPage) {
-      this.begin += this.itemsPerPage;
-      this.currentPage++;
+  next(): void {
+    if (this.currentPage < this.pageCount) {
+      this.paginate(this.currentPage + 1);
     }
   }
 
-  last() {
-    this.begin = (this.pageCount - 1) * this.itemsPerPage;
-    this.currentPage = this.pageCount;
+  last(): void {
+    this.paginate(this.pageCount);
+  }
+  paginate(page: number): void {
+    this.currentPage = page;
+    this.begin = (page - 1) * this.itemsPerPage;
   }
 }

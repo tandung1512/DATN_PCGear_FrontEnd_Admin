@@ -22,7 +22,8 @@ export class InvoicePendingComponent implements OnInit {
   cancellationReason = '';
   selectedItemId: string | null = null;
   showCancelModal = false;
-  currentCancelId: number | null = null;
+  currentCancelId: String | null = null;
+  itemsPerPage: number = 5;
  
   host: string = 'http://localhost:8080/api';
 
@@ -63,31 +64,59 @@ export class InvoicePendingComponent implements OnInit {
 
   sortBy(prop: string): void {
     this.prop = prop;
-  }
-
-  first(): void {
-    this.begin = 0;
-    this.currentPage = 1;
-  }
-
-  prev(): void {
-    if (this.begin > 0) {
-      this.begin -= 5;
-      this.currentPage--;
+    
+    // Kiểm tra nếu prop là 'orderDate' thì sắp xếp theo ngày
+    if (this.prop === 'orderDate') {
+        this.items = this.items.sort((a, b) => {
+            const dateA = new Date(a.orderDate);
+            const dateB = new Date(b.orderDate);
+            return dateA.getTime() - dateB.getTime(); // Sắp xếp theo thứ tự tăng dần
+        });
     }
-  }
 
-  next(): void {
-    if (this.begin < (this.pageCount - 1) * 5) {
-      this.begin += 5;
-      this.currentPage++;
-    }
-  }
+    // Sau khi sắp xếp, quay lại trang đầu
+    this.paginate(1); // Quay lại trang đầu tiên sau khi sắp xếp
+}
 
-  last(): void {
-    this.begin = (this.pageCount - 1) * 5;
-    this.currentPage = this.pageCount;
+
+first(): void {
+  // Chuyển đến trang đầu tiên (trang 1)
+  this.paginate(1);
+}
+
+// Phương thức chuyển đến trang trước
+prev(): void {
+  if (this.currentPage > 1) {
+    // Chuyển đến trang trước nếu không phải trang đầu
+    this.paginate(this.currentPage - 1);
   }
+}
+
+// Phương thức chuyển đến trang tiếp theo
+next(): void {
+  if (this.currentPage < this.pageCount) {
+    // Chuyển đến trang tiếp theo nếu chưa đến trang cuối cùng
+    this.paginate(this.currentPage + 1);
+  }
+}
+
+// Phương thức chuyển đến trang cuối
+last(): void {
+  // Chuyển đến trang cuối cùng
+  this.paginate(this.pageCount);
+}
+
+// Phương thức phân trang
+paginate(page: number): void {
+  if (page < 1 || page > this.pageCount) return; // Kiểm tra để đảm bảo trang hợp lệ
+
+  this.currentPage = page; // Cập nhật trang hiện tại
+  this.begin = (page - 1) * this.itemsPerPage; // Tính chỉ mục bắt đầu của trang mới
+
+ 
+}
+
+
 
   message(animation: boolean, title: string, icon: string): void {
     if (icon === 'success') {
@@ -129,7 +158,7 @@ export class InvoicePendingComponent implements OnInit {
       }
     });
 }
-  openCancelModal(id: number): void {
+  openCancelModal(id: String): void {
     this.currentCancelId = id;
     this.showCancelModal = true;
   }
@@ -141,9 +170,10 @@ export class InvoicePendingComponent implements OnInit {
  
   
 
-  cancelledOrder(id: number): void {
+  cancelledOrder(id: String): void {
+    const url = `http://localhost:8080/api/invoice/${id}`;
     if (this.currentCancelId !== null && this.cancellationReason.trim()) {
-      const url = `http://localhost:8080/invoice/${this.currentCancelId}`;
+      
       
       // Lấy thông tin hóa đơn hiện tại
       this.http.get<any>(url).subscribe({
@@ -178,24 +208,7 @@ export class InvoicePendingComponent implements OnInit {
       alert('Vui lòng nhập lý do hủy đơn.');
     }
   }
-  updateQuantityProduct(invoiceID: string): void {
-    const detailedInvoicesUrl = `${this.host}/detailedInvoices`;
-    this.http.get(detailedInvoicesUrl).subscribe(resp => {
-      const detailedInvoices = resp as any[];
-      const detailedInvoiceByInvoice = detailedInvoices.filter(d => d.invoice.id === invoiceID);
-      for (const detailedInvoice of detailedInvoiceByInvoice) {
-        const urlProduct = `${this.host}/product/${detailedInvoice.product.id}`;
-        let updatedProduct = { ...detailedInvoice.product, quantity: detailedInvoice.product.quantity + detailedInvoice.quantity };
-        this.http.put(urlProduct, updatedProduct).subscribe(() => {
-          console.log("Quantity updated successfully");
-        }, error => {
-          console.error("Error updating quantity", error);
-        });
-      }
-    }, error => {
-      console.error("Error loading detailed invoices", error);
-    });
-  }
+ 
 
   
 }

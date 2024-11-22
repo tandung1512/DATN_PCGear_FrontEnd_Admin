@@ -1,65 +1,75 @@
 <div class="main-panel">
-    <div class="content-wrapper">
-      <div class="page-header">
-        <h3 class="page-title">Bảng Hóa Đơn Chi Tiết</h3>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Quản lý hóa đơn</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
-          </ol>
-        </nav>
-      </div>
-      <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Chi Tiết Hóa Đơn</h4>
-              <p class="card-description">Mã hóa đơn: <code>{{ invoiceID }}</code></p>
-              <p class="card-description">Tên người đặt: <code>{{ userName }}</code></p>
-              <p class="card-description">Ngày đặt: <code>{{ orderDate | date: 'dd-MM-yyyy HH:mm:ss' }}</code></p>
-        
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>STT</th>
-                      <th (click)="sortBy('product.id')">Mã sản phẩm</th>
-                      <th (click)="sortBy('product.name')">Tên sản phẩm</th>
-                      <th>Hình ảnh</th>
-                      <th (click)="sortBy('price')">Giá</th>
-                      <th (click)="sortBy('quantity')">Số lượng</th>
-                      <th (click)="sortBy('totalPrice')">Tổng tiền</th>
-                      <th (click)="sortBy('paymentMethod')">Phương thức thanh toán</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of items.slice(begin, begin + itemsPerPage); let i = index">
-                      <td>{{ begin + i + 1 }}</td>
-                      <td>{{ item.product.id }}</td>
-                      <td>{{ item.product.name.length > 28 ? item.product.name.substring(0, 28) + '...' : item.product.name }}</td>
-                      <td><img [src]="item.product.image1" style="width: 100px; height: 100px" alt="product image"></td>
-                      <td>{{ item.product.price | currency }}</td>
-                      <td>{{ item.quantity }}</td>
-                      <td>{{ item.product.price * item.quantity | currency }}</td>
-                      <td>{{ item.paymentMethod }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-        
-              <div class="row">
-                <ul class="pagination">
-                  <li class="btn"><a>{{ currentPage }} of {{ pageCount }}</a></li>
-                  <li class="btn" (click)="first()"><i class="fas fa-angle-double-left"></i></li>
-                  <li class="btn" (click)="prev()"><i class="fas fa-angle-left"></i></li>
-                  <li class="btn" (click)="next()"><i class="fas fa-angle-right"></i></li>
-                  <li class="btn" (click)="last()"><i class="fas fa-angle-double-right"></i></li>
-                </ul>
-              </div>
-        
+  <div class="content-wrapper">
+    <div class="page-header">
+      <h3 class="page-title">Bảng Hóa Đơn Chi Tiết</h3>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Quản lý hóa đơn</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Chi Tiết Hóa Đơn</h4>
+            <p class="card-description">Mã hóa đơn: <code>{{ invoiceID }}</code></p>
+            <p class="card-description">Tên người đặt: <code>{{ userName }}</code></p>
+            <p class="card-description">Ngày đặt: <code>{{ orderDate | date: 'dd-MM-yyyy HH:mm:ss' }}</code></p>
+
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th (click)="sortBy('product_id')">Mã sản phẩm</th>
+                    <th (click)="sortBy('product_name')">Tên sản phẩm</th>
+                    <th></th>
+                    <th (click)="sortBy('price')">Giá</th>
+                    <th class="text-center"(click)="sortBy('quantity')">Số lượng</th>
+                    <th (click)="sortBy('totalPrice')">Tổng tiền</th>
+                    <th (click)="sortBy('payment_method')">Phương thức thanh toán</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of items.slice(begin, begin + itemsPerPage); let i = index">
+                    <td>{{ begin + i + 1 }}</td>
+                    <td>{{ item.product_id || 'Không có mã sản phẩm' }}</td>
+                    <td>{{ item.product_name.length > 28 ? item.product_name.substring(0, 28) + '...' : item.product_name || 'Không có tên sản phẩm' }}</td>
+                    <td><img *ngIf="item.image" [src]="item.image" style="width: 100px; height: 100px" alt="product image"></td>
+                    <td>{{ item.price | currency }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price * item.quantity | currency }}</td>
+                    <td>{{ item.payment_method || 'Chưa có phương thức thanh toán' }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            
+
+            <ul class="pagination justify-content-center">
+              <li class="btn">
+                <a >{{currentPage}} of {{pageCount}}</a>
+              </li>
+              <li class="btn">
+                <a (click)="first()"><i class="fas fa-angle-double-left"></i></a>
+              </li>
+              <li class="btn">
+                <a (click)="prev()"><i class="fas fa-angle-left"></i></a>
+              </li>
+              <li class="btn">
+                <a (click)="next()"><i class="fas fa-angle-right"></i></a>
+              </li>
+              <li class="btn">
+                <a (click)="last()"><i class="fas fa-angle-double-right"></i></a>
+              </li>
+            </ul>
+           
+
           </div>
         </div>
-        
+      </div>
+    </div>
   </div>
-  
+</div>
