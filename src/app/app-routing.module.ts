@@ -41,7 +41,10 @@ import { ProductAddComponent } from './product/add/product-add.component';
 import { ProductEditComponent } from './product/edit/product-edit.component';
 import AuthSigninComponent from './demo/pages/authentication/auth-signin/auth-signin.component';
 
-
+// Banner components
+import { BannerListComponent } from './banner/list/banner-list.component';
+import { BannerCreateComponent } from './banner/create/banner-create.component';
+import { BannerEditComponent } from './banner/edit/banner-edit.component';
 
 const routes: Routes = [
   { path: 'authentication/login', component: AuthSigninComponent },
@@ -89,11 +92,19 @@ const routes: Routes = [
       { path: 'categories/create', component: AddCategoryComponent },
       { path: 'categories/edit/:id', component: EditCategoryComponent },
 
+      // Banners routes
+      { path: 'banners', component: BannerListComponent },
+      { path: 'banners/create', component: BannerCreateComponent },
+      { path: 'banners/edit/:id', component: BannerEditComponent },
+      
       // Product routes
       { path: 'products', component: ProductListComponent },
       { path: 'products/create', component: ProductAddComponent },
       { path: 'products/edit/:id', component: ProductEditComponent },
 
+      
+      // { path: 'products/create', component: ProductAddComponent },
+      // { path: 'products/edit/:id', component: ProductEditComponent },
       // Default redirect (sửa lại vì bạn đã có redirectTo ở đầu route)
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ],

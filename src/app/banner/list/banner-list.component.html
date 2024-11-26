@@ -1,0 +1,40 @@
+<div class="container">
+  <h2>Danh sách banners</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Chọn</th>
+        <th>STT</th>
+        <th>IMG</th>
+        <th>Link</th>
+        <th>IsBlank</th>
+        <th>Hiển thị</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let b of banners; let i = index">
+        <td>
+          <input type="checkbox" [checked]="selectedBanners.includes(b)" (change)="toggleSelection(b)" />
+        </td>
+        <td>{{ i + 1 }}</td>
+        <td>
+          <img [src]="b.img" alt="Banner Image" width="100">
+        </td>
+        <td>{{ b.link }}</td>
+        <td>{{ b.blank ? 'Available' : 'Unavailable' }}</td>
+        <td>
+          <input type="checkbox" [checked]="b.active" />
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="editBanner(b.stt)">Sửa</button>
+          <button class="btn btn-danger" (click)="deleteBanner(b.stt)">Xóa</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-success" (click)="updateIsActiveStatus(); goToHomepage()" [disabled]="!hasSelectedBanners()">
+    Hiển thị trên trang chủ
+  </button>
+</div>

@@ -205,6 +205,26 @@ const NavigationItems = [
         url: '/distinctives/create'
       }
     ]
+  },
+  {
+    id: 'banner',
+    title: 'Banner',
+    type: 'collapse',
+    icon: 'feather icon-sidebar',
+    children: [
+      {
+        id: 'banner-list',
+        title: 'Quản lý banner',
+        type: 'item',
+        url: '/banners'
+      },
+      {
+        id: 'banner-create',
+        title: 'Thêm banner',
+        type: 'item',
+        url: '/banners/create'
+      }
+    ]
   }
 ];
 

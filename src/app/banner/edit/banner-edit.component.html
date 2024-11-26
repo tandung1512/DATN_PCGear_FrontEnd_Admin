@@ -1,0 +1,32 @@
+<div class="container">
+    <h2>Cập nhật banner</h2>
+    
+    <form *ngIf="banner" (ngSubmit)="save()">
+  
+      <div class="form-group">
+        <label for="stt" class="col-sm-3 col-form-label">STT</label>
+        <div class="col-sm-9">
+            <input type="text" id="stt" [(ngModel)]="banner.stt" class="form-control" name="stt" required readonly/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="img">Hình ảnh</label>
+        <input id="img" type="file" class="form-control" (change)="onImageSelected($event)" name="img" accept="image/*"/>
+      </div>
+
+      <div class="form-group">
+        <label for="link">Link</label>
+        <input type="text" id="link" class="form-control" [(ngModel)]="banner.link" name="link" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="isBlank" class="col-sm-3 col-form-label">Blank</label>
+        <div class="col-sm-9">
+            <input type="checkbox" id="isBlank" [(ngModel)]="banner.blank" name="blank" required />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Cập nhật Banner</button>
+    </form>
+  </div>
+  

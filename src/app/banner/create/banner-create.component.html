@@ -1,0 +1,32 @@
+<div class="container">
+    <h2>Thêm mới thương hiệu</h2>
+    
+    <form [formGroup]="bannerForm" (ngSubmit)="onSubmit()">
+  
+      <div class="form-group">
+        <label for="img">Hình ảnh</label>
+        <input id="img" type="file" class="form-control" (change)="onImageSelected($event, 'img')" name="img"/>
+      </div>
+  
+      <div class="form-group">
+        <label for="isActive" class="col-sm-3 col-form-label">Hiển thị</label>
+        <div class="col-sm-9">
+            <input type="checkbox" id="isActive" formControlName="isActive" name="isActive" required />
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="link">Link</label>
+        <input type="text" id="link" class="form-control" formControlName="link" name="link" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="isBlank" class="col-sm-3 col-form-label">Blank</label>
+        <div class="col-sm-9">
+            <input type="checkbox" id="isBlank" formControlName="isBlank" name="isBlank" required />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Tạo Banner</button>
+    </form>
+  </div>
+  
