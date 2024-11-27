@@ -73,6 +73,16 @@ import { ListCategoryComponent } from './category/list/list-category.component';
 import { ProductListComponent } from './product/list/product-list.component';
 import { ProductAddComponent } from './product/add/product-add.component';
 import { ProductEditComponent } from './product/edit/product-edit.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { CustomCurrencyPipe } from './product/custom-currency.pipe';
+
+
+// Banner components
+import { BannerListComponent } from './banner/list/banner-list.component';
+import { BannerCreateComponent } from './banner/create/banner-create.component';
+import { BannerEditComponent } from './banner/edit/banner-edit.component';
 
 @NgModule({
   declarations: [
@@ -113,13 +123,14 @@ import { ProductEditComponent } from './product/edit/product-edit.component';
     AddCategoryComponent,
     ProductEditComponent,
     ProductAddComponent,
-    ProductListComponent
-    
-
-    
-  ],
+    ProductListComponent,
+    BannerListComponent,
+    BannerCreateComponent,
+    BannerEditComponent,
+    CustomCurrencyPipe
+  
+     ],
   imports: [
-    
     BrowserModule,
     AppRoutingModule,
     FormsModule,
