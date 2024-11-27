@@ -40,7 +40,7 @@
                     </td>
                     <td>{{ item.user.name }}</td>
                     <td (click)="edit(item.id)">
-                      <a class="btn btn-info" href="#">Xem chi tiết</a>
+                      <a class="btn btn-info">Xem chi tiết</a>
                     </td>
                     <td (click)="update(item.id, $event)">
                       <button class="btn btn-success" type="button">Hoàn thành đơn hàng</button>
@@ -50,27 +50,24 @@
                 </tbody>
               </table>
             </div>
-            <div class="row">
-              <div class="col-sm-4"></div>
-              <ul class="pagination col-sm-4">
-                <li class="btn">
-                  <a href="#">{{currentPage}} of {{pageCount}}</a>
-                </li>
-                <li class="btn">
-                  <a href="#" (click)="first()"><i class="fas fa-angle-double-left"></i></a>
-                </li>
-                <li class="btn">
-                  <a href="#" (click)="prev()"><i class="fas fa-angle-left"></i></a>
-                </li>
-                <li class="btn">
-                  <a href="#" (click)="next()"><i class="fas fa-angle-right"></i></a>
-                </li>
-                <li class="btn">
-                  <a href="#" (click)="last()"><i class="fas fa-angle-double-right"></i></a>
-                </li>
-              </ul>
-              <div class="col-sm-4"></div>
-            </div>
+            <ul class="pagination justify-content-center">
+              <li class="btn">
+                <a >{{currentPage}} of {{pageCount}}</a>
+              </li>
+              <li class="btn">
+                <a (click)="first()"><i class="fas fa-angle-double-left"></i></a>
+              </li>
+              <li class="btn">
+                <a (click)="prev()"><i class="fas fa-angle-left"></i></a>
+              </li>
+              <li class="btn">
+                <a (click)="next()"><i class="fas fa-angle-right"></i></a>
+              </li>
+              <li class="btn">
+                <a (click)="last()"><i class="fas fa-angle-double-right"></i></a>
+              </li>
+            </ul>
+           
           </div>
         </div>
       </div>

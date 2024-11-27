@@ -1,23 +1,64 @@
-<div class="container">
-    <h2>Distinctive List</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let distinctive of distinctives">
-          <td>{{ distinctive.id }}</td>
-          <td>{{ distinctive.name }}</td>
-          <td>
-            <button class="btn btn-primary" (click)="editDistinctive(distinctive.id)">Edit</button>
-            <button class="btn btn-danger" (click)="deleteDistinctive(distinctive.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Danh Sách Các Đặc Điểm</h2>
+
+<!-- Hiển thị thông báo nếu không có dữ liệu -->
+<div *ngIf="distinctives.length === 0" class="alert alert-warning">
+  Không có đặc điểm nào để hiển thị.
+</div>
+
+<!-- Hiển thị bảng các đặc điểm -->
+<table *ngIf="distinctives.length > 0" class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên Đặc Điểm</th>
+      <th>Hành Động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let distinctive of displayedDistinctives">
+      <td>{{ distinctive.id }}</td>
+      <td>{{ distinctive.name }}</td>
+      <td>
+        <!-- Nút Sửa -->
+        <button (click)="editDistinctive(distinctive.id)" class="btn btn-warning btn-sm">Sửa</button>
+
+        <!-- Nút Xóa -->
+        <button (click)="deleteDistinctive(distinctive.id)" class="btn btn-danger btn-sm ml-2">Xóa</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Phân trang -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+  <div>
+    Hiển thị {{ startDisplay }} - {{ endDisplay }} trên tổng số {{ totalDistinctives }} đặc điểm
   </div>
-  
+
+  <nav>
+    <ul class="pagination">
+      <!-- Nút Trước -->
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+          Trước
+        </button>
+      </li>
+
+      <!-- Các nút số trang -->
+      <li
+        class="page-item"
+        *ngFor="let page of pages"
+        [class.active]="page === currentPage"
+      >
+        <button class="page-link" (click)="changePage(page)">{{ page }}</button>
+      </li>
+
+      <!-- Nút Sau -->
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <button class="page-link" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          Sau
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>

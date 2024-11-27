@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './edit-category.component.html',
 })
 export class EditCategoryComponent implements OnInit {
-  category: Category = { id: '', name: '', description: '' }; // Khởi tạo dữ liệu mặc định cho Category
+  category: Category = { id: '', name: '', description: '', isHot: false }; // Khởi tạo dữ liệu mặc định cho Category với trường isHot
   errorMessage = ''; // Lưu thông báo lỗi khi có lỗi xảy ra
 
   constructor(
@@ -22,7 +22,7 @@ export class EditCategoryComponent implements OnInit {
     if (categoryId) {
       this.loadCategory(categoryId);
     } else {
-      this.errorMessage = 'Category ID không tồn tại';
+      this.errorMessage = 'ID không tồn tại';
     }
   }
 

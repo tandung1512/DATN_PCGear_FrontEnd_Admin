@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr'; // Import ToastrService
 import { environment } from 'src/environments/environment';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-invoice-delivery',
   templateUrl: './invoice-delivery.component.html',
@@ -18,7 +18,7 @@ export class InvoiceDeliveryComponent implements OnInit {
   userInfo: any;
   host: string = environment.host;  // Sử dụng giá trị host từ environment
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {} // Inject ToastrService
+  constructor(private http: HttpClient, private toastr: ToastrService,private router: Router) {} // Inject ToastrService
 
   ngOnInit(): void {
     this.loadAll();
@@ -49,11 +49,11 @@ export class InvoiceDeliveryComponent implements OnInit {
   }
 
   edit(id: string): void {
-    window.location.href = `/pcgearhub/admin/table-invoice-detailed/${id}`;
+    this.router.navigate([`/detail/${id}`]);
   }
 
   update(id: string, event: Event): void {
-    event.preventDefault();  // Ngừng điều hướng trang khi click vào thẻ <a>
+ 
     
     const urlID = `${this.host}/invoice/${id}`;
     this.http.get(urlID).subscribe(
@@ -68,7 +68,7 @@ export class InvoiceDeliveryComponent implements OnInit {
               this.items.splice(index, 1); // Remove the item
             }
             console.log('Success', updateResp);
-            this.history(`Đã chuyển trạng thái của đơn hàng ${id} sang đã giao hàng`);
+           
             this.showSuccessMessage('Chuyển trạng thái sang đã hoàn thành đơn hàng thành công');
           },
           error => {

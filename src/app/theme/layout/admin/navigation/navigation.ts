@@ -59,13 +59,8 @@ const NavigationItems = [
         title: 'Hoá đơn đã hủy ',
         type: 'item',
         url: '/invoice-cancelled'
-      },
-      {
-        id: 'view-invoice',
-        title: 'Hoá đơn chi tiết ',
-        type: 'item',
-        url: '/invoice-detailed'
       }
+      
     ]
   },
   {

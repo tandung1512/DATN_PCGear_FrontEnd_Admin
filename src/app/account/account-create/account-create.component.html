@@ -1,50 +1,50 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-header text-center">
-      <h2 class="fw-bold">Create Account</h2>
+      <h2 class="fw-bold">Thêm tài khoản</h2>
     </div>
     <div class="card-body">
       <form (ngSubmit)="onSubmit()">
         
         <!-- ID Field -->
         <div class="row mb-3">
-          <label for="id" class="col-sm-3 col-form-label">Custom ID:</label>
+          <label for="id" class="col-sm-3 col-form-label">ID:</label>
           <div class="col-sm-9">
             <input type="text" id="id" class="form-control" [(ngModel)]="id" name="id" (blur)="onIdBlur()" required />            <div *ngIf="!id && idTouched" class="text-danger">
-              <small>ID is required.</small>
+              <small>ID không được để trống.</small>
             </div>
           </div>
         </div>
 
         <!-- Name Field -->
         <div class="row mb-3">
-          <label for="name" class="col-sm-3 col-form-label">Name:</label>
+          <label for="name" class="col-sm-3 col-form-label">Họ và Tên:</label>
           <div class="col-sm-9">
             <input type="text" id="name" class="form-control" [(ngModel)]="name" name="name" (blur)="onNameBlur()" required />
             <div *ngIf="!name && nameTouched" class="text-danger">
-              <small>Name is required.</small>
+              <small>Họ và Tên không được để trống.</small>
             </div>
           </div>
         </div>
 
         <!-- Password Field -->
         <div class="row mb-3">
-          <label for="password" class="col-sm-3 col-form-label">Password:</label>
+          <label for="password" class="col-sm-3 col-form-label">Mật khẩu:</label>
           <div class="col-sm-9">
             <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" (blur)="onPasswordBlur()" required />
             <div *ngIf="(!password || password.length < 6) && passwordTouched" class="text-danger">
-              <small>Password is required and must be at least 6 characters long.</small>
+              <small>Mật khẩu không được để trống và trên 6 kí tự.</small>
             </div>
           </div>
         </div>
 
         <!-- Phone Field -->
         <div class="row mb-3">
-          <label for="phone" class="col-sm-3 col-form-label">Phone:</label>
+          <label for="phone" class="col-sm-3 col-form-label">Số điện thoại:</label>
           <div class="col-sm-9">
             <input type="text" id="phone" class="form-control" [(ngModel)]="phone" name="phone" (blur)="onPhoneBlur()" required />
             <div *ngIf="(!phone || !validatePhone(phone)) && phoneTouched" class="text-danger">
-              <small>Phone is required and must be a valid number with at least 10 digits.</small>
+              <small>Số điện thoại không được để trống và nhập đúng định dạng (10 số).</small>
             </div>
           </div>
         </div>
@@ -55,29 +55,29 @@
           <div class="col-sm-9">
             <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" (blur)="onEmailBlur()" required />
             <div *ngIf="(!email || !validateEmail(email)) && emailTouched" class="text-danger">
-              <small>A valid email is required.</small>
+              <small>Email không được để trống và nhập đúng định dạng.</small>
             </div>
           </div>
         </div>
 
         <!-- Address Field -->
         <div class="row mb-3">
-          <label for="address" class="col-sm-3 col-form-label">Address:</label>
+          <label for="address" class="col-sm-3 col-form-label">Địa chỉ:</label>
           <div class="col-sm-9">
             <input type="text" id="address" class="form-control" [(ngModel)]="address" name="address" (blur)="onAddressBlur()" required />
             <div *ngIf="!address && addressTouched" class="text-danger">
-              <small>Address is required.</small>
+              <small>Địa chỉ không được để trống.</small>
             </div>
           </div>
         </div>
 
         <!-- Image Upload Field -->
         <div class="row mb-3">
-          <label for="image" class="col-sm-3 col-form-label">Image:</label>
+          <label for="image" class="col-sm-3 col-form-label">Hình ảnh:</label>
           <div class="col-sm-9">
             <input type="file" id="image" class="form-control" (change)="onImageSelected($event)" accept="image/*" />
             <div *ngIf="imagePreviewUrl" class="mt-2">
-              <p>Image Preview:</p>
+              <p>Xem trước ảnh:</p>
               <img [src]="imagePreviewUrl" alt="Image Preview" width="100" />
             </div>
           </div>
@@ -92,14 +92,14 @@
         </div>
 
         <div class="row mb-3">
-          <div class="col-sm-3 col-form-label">Status:</div>
+          <div class="col-sm-3 col-form-label">Trạng thái:</div>
           <div class="col-sm-9">
             <input type="checkbox" id="status" [(ngModel)]="status" name="status" />
           </div>
         </div>
 
         <div class="row mb-3">
-          <div class="col-sm-3 col-form-label">Confirm:</div>
+          <div class="col-sm-3 col-form-label">Xác thực:</div>
           <div class="col-sm-9">
             <input type="checkbox" id="confirm" [(ngModel)]="confirm" name="confirm" />
           </div>
@@ -108,7 +108,7 @@
         <!-- Submit Button -->
         <div class="row mb-3 text-center">
           <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary">Create Account</button>
+            <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
           </div>
         </div>
 

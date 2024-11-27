@@ -74,11 +74,6 @@ import { ProductListComponent } from './product/list/product-list.component';
 import { ProductAddComponent } from './product/add/product-add.component';
 import { ProductEditComponent } from './product/edit/product-edit.component';
 
-// Banner components
-import { BannerListComponent } from './banner/list/banner-list.component';
-import { BannerCreateComponent } from './banner/create/banner-create.component';
-import { BannerEditComponent } from './banner/edit/banner-edit.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,13 +113,13 @@ import { BannerEditComponent } from './banner/edit/banner-edit.component';
     AddCategoryComponent,
     ProductEditComponent,
     ProductAddComponent,
-    ProductListComponent,
-    BannerListComponent,
-    BannerCreateComponent,
-    BannerEditComponent
-  
-     ],
+    ProductListComponent
+    
+
+    
+  ],
   imports: [
+    
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -135,6 +130,8 @@ import { BannerEditComponent } from './banner/edit/banner-edit.component';
     BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
+    CKEditorModule,
+    MatPaginatorModule
   ],
   providers: [
     

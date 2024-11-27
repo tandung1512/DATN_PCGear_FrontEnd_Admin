@@ -4,12 +4,57 @@ import { CategoryService } from 'src/app/category/category.service';
 import { DistinctiveService } from 'src/app/distinctive/distinctive.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../product.model';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html'
 })
 export class ProductEditComponent implements OnInit {
+  // Khai báo CKEditor với các tính năng mở rộng
+  public Editor = ClassicEditor;
+
+  // Cấu hình CKEditor
+  public editorConfig = {
+    toolbar: [
+      'bold',              // In đậm
+      'italic',            // In nghiêng
+      'underline',         // Gạch chân
+      'strikethrough',     // Gạch bỏ
+      'link',              // Thêm liên kết
+      'bulletedList',      // Danh sách có dấu chấm
+      'numberedList',      // Danh sách có số
+      'blockQuote',        // Trích dẫn
+      'imageUpload',       // Tải lên hình ảnh
+      'insertTable',       // Chèn bảng
+      'mediaEmbed',        // Nhúng video (YouTube, Vimeo, ...)
+      'code',              // Chèn mã nguồn
+      'fontSize',          // Kích thước chữ
+      'fontColor',         // Màu chữ
+      'fontBackgroundColor', // Màu nền chữ
+      'alignment',         // Căn chỉnh (trái, phải, giữa)
+      'indent',            // Thụt lề
+      'outdent'            // Giảm thụt lề
+    ],
+    // Cấu hình các đặc điểm khác cho CKEditor (nếu cần)
+    language: 'en',      // Ngôn ngữ mặc định
+    image: {
+      toolbar: [
+        'imageTextAlternative', // Chỉnh sửa mô tả alt của hình ảnh
+        'imageStyle:full',      // Kiểu hình ảnh đầy đủ
+        'imageStyle:side',      // Hình ảnh ở bên cạnh
+        'linkImage'             // Chèn liên kết cho hình ảnh
+      ]
+    },
+    table: {
+      contentToolbar: [
+        'tableColumn',  // Chỉnh sửa cột
+        'tableRow',     // Chỉnh sửa dòng
+        'mergeTableCells' // Hợp nhất các ô trong bảng
+      ]
+    },
+    removePlugins: ['ImageResize', 'EasyImage'], // Loại bỏ một số plugin không cần thiết (nếu muốn)
+  };
   product: Product = {
     id: '',
     name: '',
@@ -17,10 +62,11 @@ export class ProductEditComponent implements OnInit {
     price: 0,
     description: '',
     status: '',
+    isHot: false,
     image1: null, // Dùng null để chỉ ra khi không có file
     image2: null,
     category: '',
-    distinctiveIds: '' ,
+    distinctiveIds: '',
   };
 
   categories: { id: string, name: string }[] = [];
@@ -32,7 +78,7 @@ export class ProductEditComponent implements OnInit {
     private distinctiveService: DistinctiveService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const productId = this.route.snapshot.paramMap.get('id');
@@ -108,6 +154,8 @@ export class ProductEditComponent implements OnInit {
     formData.append('price', this.product.price.toString());
     formData.append('description', this.product.description);
     formData.append('status', this.product.status);
+    // Convert boolean to string for FormData
+    formData.append('isHot', this.product.isHot ? 'true' : 'false');
     formData.append('categoryId', this.product.category);
     formData.append('distinctiveIds', this.product.distinctiveIds); // Use distinctiveIds (single ID)
 

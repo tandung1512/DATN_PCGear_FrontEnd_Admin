@@ -70,7 +70,7 @@ const routes: Routes = [
       { path: 'invoice-delivery', component: InvoiceDeliveryComponent },
       { path: 'invoice-complete', component: InvoiceCompleteComponent },
       { path: 'invoice-cancelled', component: InvoiceCancelledComponent },
-      { path: 'invoice-detailed', component: InvoiceDetailedComponent },
+      { path: 'detail/:id', component: InvoiceDetailedComponent },
 
       // Brand routes
       { path: 'brands', component: BrandListComponent },

@@ -21,10 +21,17 @@
     <input id="price" [(ngModel)]="product.price" name="price" type="number" class="form-control" required />
   </div>
 
-  <div class="mb-3">
-    <label for="description" class="form-label">Mô tả:</label>
-    <textarea id="description" [(ngModel)]="product.description" name="description" class="form-control"></textarea>
-  </div>
+     <!-- Description Field (CKEditor) -->
+     <div class="mb-3">
+      <label for="description" class="form-label">Mô tả:</label>
+      <ckeditor
+        [(ngModel)]="product.description"
+        name="description"
+        class="form-control"
+        [editor]="Editor"
+        [config]="editorConfig">
+      </ckeditor>
+    </div>
 
 
   <div class="mb-3">
@@ -47,6 +54,16 @@
       <option [value]="1">Còn hàng</option>
       <option [value]="0">Hết hàng</option>
     </select>
+  </div>
+  <div class="form-group form-check">
+    <input 
+      type="checkbox" 
+      id="ishot" 
+      [(ngModel)]="product.isHot" 
+      name="isHot" 
+      class="form-check-input" 
+    />
+    <label for="ishot" class="form-check-label">Sản phẩm nổi bật (Hot Product)</label>
   </div>
 
   <div class="mb-3">

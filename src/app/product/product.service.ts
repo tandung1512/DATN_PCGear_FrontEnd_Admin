@@ -31,7 +31,7 @@ export class ProductService {
 
   // Lấy sản phẩm theo ID
   getProductById(id: string): Observable<Product> {
-    const url = `${this.apiService.apiUrl(this.endpoint)}/${id}`; // Đảm bảo URL chính xác
+    const url = `${this.apiService.apiUrl(this.endpoint)}/get/${id}`; // Đảm bảo URL chính xác
     return this.http.get<Product>(url).pipe(
       catchError(this.handleError<Product>(`getProductById id=${id}`))
     );
@@ -52,6 +52,14 @@ export class ProductService {
       map(() => true) // Chuyển đổi từ void thành true (để xác nhận đã xóa)
     );
   }
+    // Lấy các sản phẩm nổi bật
+    getHotProducts(): Observable<Product[]> {
+      const url = this.apiService.apiUrl(`${this.endpoint}/hot`); // API mới cho sản phẩm nổi bật
+      return this.http.get<Product[]>(url).pipe(
+        catchError(this.handleError<Product[]>('getHotProducts', []))
+      );
+    }
+  
 
   // Hàm xử lý lỗi chung
   private handleError<T>(operation = 'operation', result?: T): (error: any) => Observable<T> {

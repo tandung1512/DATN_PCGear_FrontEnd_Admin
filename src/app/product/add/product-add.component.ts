@@ -4,12 +4,33 @@ import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { CategoryService } from 'src/app/category/category.service';
 import { DistinctiveService } from 'src/app/distinctive/distinctive.service';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-product-add',
   templateUrl: './product-add.component.html',
 })
 export class ProductAddComponent implements OnInit {
+  public Editor = ClassicEditor;  // CKEditor instance
+
+  // CKEditor configuration
+  public editorConfig = {
+    toolbar: [
+      'bold', 'italic', 'underline', 'strikethrough', 'link', 
+      'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', 
+      'insertTable', 'mediaEmbed', 'code', 'fontSize', 'fontColor', 
+      'fontBackgroundColor', 'alignment', 'indent', 'outdent'
+    ],
+    language: 'en',
+    image: {
+      toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side', 'linkImage']
+    },
+    table: {
+      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+    },
+    removePlugins: ['ImageResize', 'EasyImage']
+  };
+
   newProduct: Product = {
     id: '',
     name: '',
@@ -17,10 +38,11 @@ export class ProductAddComponent implements OnInit {
     price: 0,
     description: '',
     status: '',
-    image1: '',  // Dự định lưu trữ dưới dạng string (base64) hoặc File sau này
-    image2: '',  // Dự định lưu trữ dưới dạng string (base64) hoặc File sau này
-    category: '', // ID của danh mục (string)
-    distinctiveIds: '' // ID của distinctive (string)
+    isHot: false,
+    image1: '',
+    image2: '',
+    category: '',
+    distinctiveIds: ''
   };
 
   categories: { id: string, name: string }[] = [];
@@ -41,7 +63,7 @@ export class ProductAddComponent implements OnInit {
         this.categories = data;
       },
       error: () => {
-        alert('Failed to load categories.');
+        alert('Lỗi khi tải danh mục.');
       }
     });
 
@@ -51,7 +73,7 @@ export class ProductAddComponent implements OnInit {
         this.distinctives = data;
       },
       error: () => {
-        alert('Failed to load distinctives.');
+        alert('Lỗi khi tải đặc trưng.');
       }
     });
   }
@@ -63,14 +85,13 @@ export class ProductAddComponent implements OnInit {
 
   // Add product using FormData and handle asynchronous operations
   async addProduct(): Promise<void> {
-    this.isSubmitted = true; 
-    if (!this.newProduct.name || !this.newProduct.price || !this.newProduct.quantity || !this.newProduct.category || !this.newProduct.id) {
-      alert('Please fill in all required fields, including category and ID!');
-      return;
+    this.isSubmitted = true;
+
+    if (!this.validateProduct()) {
+      return;  // Exit if validation fails
     }
 
     try {
-      // Create FormData object to send product data
       const formData = new FormData();
       formData.append('id', this.newProduct.id);
       formData.append('name', this.newProduct.name);
@@ -78,11 +99,10 @@ export class ProductAddComponent implements OnInit {
       formData.append('price', this.newProduct.price.toString());
       formData.append('description', this.newProduct.description);
       formData.append('status', this.newProduct.status);
-      // Trước khi gửi request, chắc chắn rằng categoryId được append vào FormData
-      formData.append('categoryId', this.newProduct.category); // category là ID của category đã chọn
+      formData.append('isHot', this.newProduct.isHot ? 'true' : 'false');
+      formData.append('categoryId', this.newProduct.category);
 
-
-      // Append images to FormData if they are File objects
+      // Append images if they are files
       if (this.isFile(this.newProduct.image1)) {
         formData.append('image1', this.newProduct.image1);
       }
@@ -91,55 +111,55 @@ export class ProductAddComponent implements OnInit {
         formData.append('image2', this.newProduct.image2);
       }
 
-      // Append the single distinctive ID (not an array anymore)
+      // Append the distinctive ID (single)
       if (this.newProduct.distinctiveIds) {
-        formData.append('distinctiveIds', this.newProduct.distinctiveIds); // Single distinctive ID
+        formData.append('distinctiveIds', this.newProduct.distinctiveIds);
       }
 
       // Send the FormData to create the product
       await this.productService.createProduct(formData).toPromise();
-      alert('Product added successfully!');
+      alert('Thêm sản phẩm thành công!');
       this.router.navigate(['/products']);
     } catch (error) {
-      alert('An error occurred while adding the product.');
+      alert('Đã xảy ra lỗi khi thêm sản phẩm.');
       console.error(error);
     }
   }
 
-    // Validation method
-    validateProduct(): boolean {
-      if (!this.newProduct.id || this.newProduct.id.trim().length === 0) {
-        alert('Product ID is required.');
-        return false;
-      }
-      if (!this.newProduct.name || this.newProduct.name.trim().length < 3) {
-        alert('Product name must be at least 3 characters long.');
-        return false;
-      }
-      if (this.newProduct.quantity <= 0) {
-        alert('Quantity must be greater than 0.');
-        return false;
-      }
-      if (this.newProduct.price <= 0) {
-        alert('Price must be greater than 0.');
-        return false;
-      }
-      if (!this.newProduct.category) {
-        alert('Category is required.');
-        return false;
-      }
-      return true;
+  // Validation method for product fields
+  validateProduct(): boolean {
+    if (!this.newProduct.id || this.newProduct.id.trim().length === 0) {
+      alert('ID không được để trống.');
+      return false;
     }
+    if (!this.newProduct.name || this.newProduct.name.trim().length < 3) {
+      alert('Tên sản phẩm không được để trống và phải trên 3 kí tự.');
+      return false;
+    }
+    if (this.newProduct.quantity <= 0) {
+      alert('Số lượng phải lớn hơn 0.');
+      return false;
+    }
+    if (this.newProduct.price <= 0) {
+      alert('Giá phải lớn hơn 0.');
+      return false;
+    }
+    if (!this.newProduct.category) {
+      alert('Danh mục không được để trống.');
+      return false;
+    }
+    return true;
+  }
 
-  // Handle file change event for image1 and image2
+  // Handle file change for images
   onFileChange(event: any, imageField: 'image1' | 'image2'): void {
     const file = event.target.files[0];
     if (file) {
-      this.newProduct[imageField] = file;  // Store the file in image1 or image2
+      this.newProduct[imageField] = file; // Store the file in image1 or image2
     }
   }
 
-  // Handle change of distinctive selection (single distinctive)
+  // Handle distinctive change (single selection)
   onDistinctiveChange(event: any): void {
     this.newProduct.distinctiveIds = event.target.value; // Update with selected distinctive ID
   }

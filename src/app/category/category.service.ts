@@ -22,14 +22,14 @@ export class CategoryService {
 
   // Lấy tất cả category
   getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiService.apiUrl(this.endpoint)).pipe(
+    return this.http.get<Category[]>(this.apiService.apiUrl(this.endpoint +'/get/all')).pipe(
       catchError(this.handleError<Category[]>('getAllCategories', []))
     );
   }
 
   // Lấy category theo ID
   getCategoryById(id: string): Observable<Category> {
-    const url = `${this.apiService.apiUrl(this.endpoint)}/${id}`;
+    const url = `${this.apiService.apiUrl(this.endpoint +'/get')}/${id}`;
     return this.http.get<Category>(url).pipe(
       catchError(this.handleError<Category>(`getCategoryById id=${id}`))
     );
@@ -49,6 +49,14 @@ export class CategoryService {
     return this.http.delete<void>(url).pipe(
       catchError(this.handleError<boolean>('deleteCategory', false)),
       map(() => true) // Trả về true nếu thành công
+    );
+  }
+
+  // Lấy danh sách các category hot
+  getHotCategories(): Observable<Category[]> {
+    const url = `${this.apiService.apiUrl(this.endpoint)}/hot`; // Endpoint API cho category hot
+    return this.http.get<Category[]>(url).pipe(
+      catchError(this.handleError<Category[]>('getHotCategories', []))
     );
   }
 

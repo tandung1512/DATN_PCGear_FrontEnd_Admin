@@ -7,6 +7,7 @@ export class Product {
   status: string;
   image1: string ;  // Có thể là chuỗi hoặc tệp nếu bạn đang upload file
   image2: string ;
+  isHot?: boolean;
   category: string; // ID của category
   distinctiveIds: string; // Mảng ID của distinctives
 }

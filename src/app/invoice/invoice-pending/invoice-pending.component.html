@@ -35,24 +35,36 @@
                     <td>{{ item.id }}</td>
                     <td>{{ item.orderDate | date: 'dd-MM-yyyy HH:mm:ss' }}</td>
                     <td [ngClass]="{'text-warning': item.status === 'pending'}">
-                      <span *ngIf="item.status === 'pending'">Còn hoạt động</span>
+                      <span *ngIf="item.status === 'pending'">Chưa xác nhận</span>
                     </td>
                     <td>{{ item.user.name }}</td>
                     <td><button (click)="edit(item.id)" class="btn btn-info">Xem chi tiết</button></td>
-                    <td><button (click)="update(item.id)" class="btn btn-success">Giao hàng</button></td>
+                    <td><button (click)="update(item.id,$event)" class="btn btn-success">Giao hàng</button></td>
                     <td><button (click)="openCancelModal(item.id)" class="btn btn-danger">Hủy đơn</button></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div class="d-flex justify-content-center align-items-center">
-              <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#" (click)="first()">Đầu</a></li>
-                <li class="page-item"><a class="page-link" href="#" (click)="prev()">Trước</a></li>
-                <li class="page-item"><a class="page-link" href="#" (click)="next()">Tiếp theo</a></li>
-                <li class="page-item"><a class="page-link" href="#" (click)="last()">Cuối</a></li>
+             
+              <ul class="pagination justify-content-center">
+                <li class="btn">
+                  <a >{{currentPage}} of {{pageCount}}</a>
+                </li>
+                <li class="btn">
+                  <a (click)="first()"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li class="btn">
+                  <a (click)="prev()"><i class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="btn">
+                  <a (click)="next()"><i class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="btn">
+                  <a (click)="last()"><i class="fas fa-angle-double-right"></i></a>
+                </li>
               </ul>
-            </div>
+             
+            
           </div>
         </div>
       </div>
