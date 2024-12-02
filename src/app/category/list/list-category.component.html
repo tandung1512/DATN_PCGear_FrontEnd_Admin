@@ -1,5 +1,11 @@
 <div class="container mt-4">
   <h2>Danh sách danh mục</h2>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/categories">Quản Lý Danh Mục</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Danh Sách</li>
+    </ol>
+  </nav>
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
@@ -31,6 +37,16 @@
       </tr>
     </tbody>
   </table>
+  <!-- Nút xuất Excel và PDF nằm ngang -->
+<div class="d-flex justify-content-start mt-4">
+  <button 
+    class="btn btn-primary me-3" 
+    (click)="exportToExcel()">Xuất Excel</button>
+
+  <button 
+    class="btn btn-danger" 
+    (click)="exportToPDF()">Xuất PDF</button>
+</div>
   <!-- Phân trang -->
 <div class="d-flex justify-content-between align-items-center mt-3">
   <div>

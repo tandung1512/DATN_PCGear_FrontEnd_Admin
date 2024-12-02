@@ -1,6 +1,11 @@
 <form>
   <h2>Thêm sản phẩm</h2>
-  
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/products">Quản Lý Sản Phẩm</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Thêm Sản Phẩm</li>
+    </ol>
+  </nav>
   <div class="mb-3">
     <label for="id" class="form-label">ID:</label>
     <input id="id" [(ngModel)]="newProduct.id" name="id" class="form-control" required />

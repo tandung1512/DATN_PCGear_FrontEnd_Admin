@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../category.model';
 import { CategoryService } from '../category.service';
 import { Router } from '@angular/router';
+import * as ExcelJS from 'exceljs';  // Import thư viện ExcelJS
+import { saveAs } from 'file-saver';   // Import thư viện FileSaver để lưu file
+import { jsPDF } from 'jspdf';         // Import thư viện jsPDF để tạo PDF
 
 @Component({
   selector: 'app-category-list',
@@ -59,7 +62,6 @@ export class ListCategoryComponent implements OnInit {
     this.endDisplay = endIndex;
   }
   
-
   changePage(page: number): void {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
@@ -88,5 +90,60 @@ export class ListCategoryComponent implements OnInit {
 
   addNewCategory(): void {
     this.router.navigate(['/categories/create']); // Chuyển hướng tới trang tạo category
+  }
+
+  // Xuất danh mục ra Excel
+  exportToExcel(): void {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Categories');
+    
+    // Đặt tiêu đề cho bảng
+    worksheet.columns = [
+      { header: 'ID', key: 'id', width: 20 },
+      { header: 'Tên Danh Mục', key: 'name', width: 30 },
+      { header: 'Mô Tả', key: 'description', width: 50 }
+    ];
+
+    // Thêm dữ liệu vào bảng
+    this.displayedCategories.forEach(category => {
+      worksheet.addRow({
+        id: category.id,
+        name: category.name,
+        description: category.description
+      });
+    });
+
+    // Lưu file Excel
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      saveAs(new Blob([buffer]), 'Categories.xlsx');
+    });
+  }
+
+  // Xuất danh mục ra PDF
+  exportToPDF(): void {
+    const doc = new jsPDF();
+
+    // Lấy dữ liệu của danh mục (category)
+    const tableData = this.categories.map((category) => [
+      category.id,
+      category.name,
+      category.description, // Bạn có thể thêm thuộc tính khác nếu cần
+    ]);
+
+    // Header của bảng
+    const headers = [['ID', 'Name', 'Description']]; // Các cột trong bảng
+
+    // Thêm tiêu đề cho bảng
+    doc.text('Category List', 10, 10);
+
+    // Xuất bảng vào PDF
+    (doc as any).autoTable({
+      head: headers,
+      body: tableData,
+      startY: 20, // Định vị trí bắt đầu của bảng
+    });
+
+    // Lưu file PDF
+    doc.save('Categories.pdf');
   }
 }

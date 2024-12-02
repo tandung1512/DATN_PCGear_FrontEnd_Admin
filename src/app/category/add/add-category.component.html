@@ -1,5 +1,11 @@
 <div class="container mt-4">
   <h2>Thêm danh mục</h2>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/categories">Quản Lý Danh Mục</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Thêm Danh Mục</li>
+    </ol>
+  </nav>
   <form (ngSubmit)="addCategory()" #categoryForm="ngForm">
     <div class="form-group">
       <label for="id">ID:</label>

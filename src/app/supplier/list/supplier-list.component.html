@@ -1,5 +1,10 @@
 <h2>Danh Sách Nhà Cung Cấp</h2>
-
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/suppliers">Quản Lý Nhà Cung Cấp</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Danh Sách</li>
+  </ol>
+</nav>
 <!-- Hiển thị thông báo lỗi nếu có -->
 <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
   {{ errorMessage }}

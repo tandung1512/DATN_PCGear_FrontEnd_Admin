@@ -2,7 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Account } from '../account.model';
 import { AccountService } from '../account.service';
 import { Router } from '@angular/router';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
+
+import * as ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-account-list',
@@ -10,19 +15,20 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 })
 export class AccountListComponent implements OnInit {
   accounts: Account[] = [];
-  displayedAccounts: Account[] = []; // Danh sách tài khoản hiển thị trên trang hiện tại
+  displayedAccounts: Account[] = [];
   errorMessage: string | null = null;
 
-  totalAccounts: number = 0; // Tổng số tài khoản
-  pageSize: number = 10; // Số tài khoản hiển thị mỗi trang
-  currentPage: number = 0; // Trang hiện tại (bắt đầu từ 0)
-  pageSizeOptions: number[] = [5, 10, 20]; // Các tuỳ chọn kích thước trang
+  totalAccounts: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 0;
+  pageSizeOptions: number[] = [5, 10, 20];
   totalPages: number = 1;
   pages: number[] = [];
   startDisplay: number = 0;
   endDisplay: number = 0;
 
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
@@ -44,15 +50,13 @@ export class AccountListComponent implements OnInit {
       }
     );
   }
+
   updateDisplayedAccounts(): void {
-    const startIndex = (this.currentPage ) * this.pageSize;
+    const startIndex = this.currentPage * this.pageSize;
     const endIndex = Math.min(startIndex + this.pageSize, this.totalAccounts);
     this.displayedAccounts = this.accounts.slice(startIndex, endIndex);
 
-    // Cập nhật lại số trang
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-
-    // Cập nhật start và end để hiển thị đúng số lượng
     this.startDisplay = startIndex + 1;
     this.endDisplay = endIndex;
   }
@@ -83,8 +87,59 @@ export class AccountListComponent implements OnInit {
     }
   }
 
-  // New method for adding an account
   addNewAccount(): void {
-    this.router.navigate(['/accounts/create']); // Navigate to the create account page
+    this.router.navigate(['/accounts/create']);
+  }
+
+  exportToExcel(): void {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Accounts');
+
+    worksheet.columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'Name', key: 'name', width: 30 },
+      { header: 'Email', key: 'email', width: 30 },
+      { header: 'Phone', key: 'phone', width: 15 },
+      // { header: 'Address', key: 'address', width: 30 },
+    ];
+
+    this.accounts.forEach((account) => {
+      worksheet.addRow({
+        id: account.id,
+        name: account.name,
+        email: account.email,
+        phone: account.phone,
+        // address: account.address,
+      });
+    });
+
+    workbook.xlsx.writeBuffer().then((buffer) => {
+      const blob = new Blob([buffer], { type: 'application/octet-stream' });
+      saveAs(blob, 'Accounts.xlsx');
+    });
+  }
+
+  exportToPDF(): void {
+    const doc = new jsPDF();
+    const tableData = this.accounts.map((account) => [
+      account.id,
+      account.name,
+      account.email,
+      account.phone,
+      // account.address,
+    ]);
+
+    const headers = [['ID', 'Name', 'Email', 'Phone', 
+      // 'Address'
+    ]];
+
+    doc.text('Account List', 10, 10);
+    (doc as any).autoTable({
+      head: headers,
+      body: tableData,
+      startY: 20,
+    });
+
+    doc.save('Accounts.pdf');
   }
 }
