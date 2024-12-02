@@ -1,5 +1,8 @@
 // Angular imports
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { StatisticsService } from './dashboar.service';
+
 
 // Project imports
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -30,12 +33,9 @@ import mapColor from 'src/fake-data/map-color-data.json';
   styleUrls: ['./dashboard.component.scss']
 })
 export default class DashboardComponent implements OnInit {
-  // Sales data for display
-  sales = [
-    { title: 'Daily Sales', icon: 'icon-arrow-up text-c-green', amount: '$249.95', percentage: '67%', progress: 50, design: 'col-md-6' },
-    { title: 'Monthly Sales', icon: 'icon-arrow-down text-c-red', amount: '$2,942.32', percentage: '36%', progress: 35, design: 'col-md-6' },
-    { title: 'Yearly Sales', icon: 'icon-arrow-up text-c-green', amount: '$8,638.32', percentage: '80%', progress: 70, design: 'col-md-12' }
-  ];
+
+  sales: any[] = []; // Lưu dữ liệu trả về từ API
+  constructor(private statisticsService: StatisticsService) { }
 
   // Card data for display
   card = [
@@ -73,6 +73,27 @@ export default class DashboardComponent implements OnInit {
       this.initMapChart();
       this.initLineChart();
     }, 500);
+
+    this.statisticsService.getDailySales().subscribe(data => {
+      if (data && data.length > 0) {
+        this.sales = data; // Lấy chỉ phần tử đầu tiên trong mảng
+
+        // Tính tỷ lệ tăng trưởng cho mỗi ngày, bắt đầu từ ngày thứ 2 trở đi
+        for (let i = 1; i < this.sales.length; i++) {
+          const previousDaySales = this.sales[i - 1].tongtiendaban;
+          const currentDaySales = this.sales[i].tongtiendaban;
+
+          // Tính tỷ lệ tăng trưởng
+          const growthRate = ((currentDaySales - previousDaySales) / previousDaySales) * 100;
+
+          // Gán tỷ lệ tăng trưởng vào mỗi ngày
+          this.sales[i].growthRate = growthRate.toFixed(2); // Làm tròn đến 2 chữ số thập phân
+        }
+
+        console.log(this.sales);  // Kiểm tra dữ liệu chỉ chứa ngày đầu tiên
+      }
+    });
+
   }
 
   private initMapChart() {
