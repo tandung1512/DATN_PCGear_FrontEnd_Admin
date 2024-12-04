@@ -1,65 +1,39 @@
 <div class="row">
 
-	<div class="col-xl-4">
-		<app-card [hidHeader]="true">
-			<h6 class="mb-4"></h6>
-			<div *ngFor="let s of sales" class="row d-flex align-items-center">
-				<div  class="col-9">
-					<h3 class="f-w-300 d-flex align-items-center m-b-0">
-						<i class="feather f-30 m-r-10"></i> Ngày {{s.ngay}} <br> {{ s.tongtiendaban | currency
-						}}
-					</h3>
-				</div>
-				<div class="col-3 text-end">
-					<p class="m-b-0">({{ s.growthRate }}%)</p>
-				</div>
-			</div>
-			<div class="m-t-30">
-				<ngb-progressbar type="text-primary" height="7px" [value]=""></ngb-progressbar>
-			</div>
-		</app-card>
-	</div>
+	<div>
+		<ngx-charts-bar-vertical
+		  [view]="view"
+		  [scheme]="colorScheme"
+		  [results]="salesData"
+		  [gradient]="gradient"
+		  [xAxis]="showXAxis"
+		  [yAxis]="showYAxis"
+		  [legend]="showLegend"
+		  [showXAxisLabel]="showXAxisLabel"
+		  [xAxisLabel]="xAxisLabel"
+		  [showYAxisLabel]="showYAxisLabel"
+		  [yAxisLabel]="yAxisLabel">
+		</ngx-charts-bar-vertical>
+	  </div>
+	  
 
-	<div class="col-xl-4">
-		<app-card [hidHeader]="true">
-			<h6 class="mb-4"></h6>
-			<div *ngFor="let s of sales" class="row d-flex align-items-center">
-				<div  class="col-9">
-					<h3 class="f-w-300 d-flex align-items-center m-b-0">
-						<i class="feather f-30 m-r-10"></i> {{ s.tongtiendaban | currency
-						}}
-					</h3>
-				</div>
-				<div class="col-3 text-end">
-					<p class="m-b-0">({{ s.growthRate }}%)</p>
-				</div>
-			</div>
-			<div class="m-t-30">
-				<ngb-progressbar type="text-primary" height="7px" [value]=""></ngb-progressbar>
-			</div>
-		</app-card>
-	</div>
+	  <div>
+		<ngx-charts-bar-vertical
+		  [view]="view1"
+		  [scheme]="colorScheme1"
+		  [results]="salesData1"
+		  [gradient]="gradient1"
+		  [xAxis]="showXAxis1"
+		  [yAxis]="showYAxis1"
+		  [legend]="showLegend1"
+		  [showXAxisLabel]="showXAxisLabel1"
+		  [xAxisLabel]="xAxisLabel1"
+		  [showYAxisLabel]="showYAxisLabel1"
+		  [yAxisLabel]="yAxisLabel1">
+		</ngx-charts-bar-vertical>
+	  </div>
+	  
 
-	<div class="col-xl-4">
-		<app-card [hidHeader]="true">
-			<h6 class="mb-4"></h6>
-			<div *ngFor="let s of sales" class="row d-flex align-items-center">
-				<div  class="col-9">
-					<h3 class="f-w-300 d-flex align-items-center m-b-0">
-						<i class="feather f-30 m-r-10">{{s.ngay}}</i> {{ s.tongtiendaban | currency
-						}}
-					</h3>
-				</div>
-				<div class="col-3 text-end">
-					<p class="m-b-0">({{ s.growthRate }}%)</p>
-				</div>
-			</div>
-			<div class="m-t-30">
-				<ngb-progressbar type="text-primary" height="7px" [value]=""></ngb-progressbar>
-			</div>
-		</app-card>
-	</div>
-	
 	<div class="col-xl-8 col-md-6">
 		<app-card cardTitle="Users From United States">
 			<div id="world-low" style="height: 450px"></div>

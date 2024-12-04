@@ -7,11 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class StatisticsService {
 
-  private apiUrl = 'http://localhost:8080/api/statistics/daily-sales'; // URL API
 
   constructor(private http: HttpClient) {}
 
-  getDailySales(): Observable<any> {
-    return this.http.get(this.apiUrl); // Gửi HTTP GET request đến API
+
+  getMonthlySales(month: number): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:8080/api/statistics/monthly?month=${month}`);
+  }
+
+  getYearlySales(): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:8080/api/statistics/yearly`);
   }
 }
