@@ -18,4 +18,7 @@ export class StatisticsService {
   getYearlySales(): Observable<any[]> {
     return this.http.get<any[]>(`http://localhost:8080/api/statistics/yearly`);
   }
+  getProductsSold(): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:8080/api/statistics/products-sold`);
+  }
 }
