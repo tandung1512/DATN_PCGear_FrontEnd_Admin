@@ -1,6 +1,11 @@
 <div class="container mt-4">
   <h2>Chỉnh sửa danh mục</h2>
-  
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="/categories">Quản Lý Danh Mục</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Sửa Thông Tin</li>
+    </ol>
+  </nav>
   <!-- Hiển thị lỗi nếu có -->
   <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 

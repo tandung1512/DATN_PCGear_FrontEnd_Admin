@@ -1,6 +1,11 @@
 <div class="container">
     <h2>Thêm mới thương hiệu</h2>
-    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/banners">Quản Lý Banner</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Thêm Banner</li>
+      </ol>
+    </nav>
     <form [formGroup]="bannerForm" (ngSubmit)="onSubmit()">
   
       <div class="form-group">
