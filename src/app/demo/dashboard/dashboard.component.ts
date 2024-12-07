@@ -2,6 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { StatisticsService } from './dashboar.service';
+import { CustomCurrencyPipe } from './custom-currency.pipe';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ColorHelper } from '@swimlane/ngx-charts';
 
 
 // Project imports
@@ -28,14 +31,75 @@ import mapColor from 'src/fake-data/map-color-data.json';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, CustomCurrencyPipe, NgxChartsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
+
 export default class DashboardComponent implements OnInit {
 
   sales: any[] = []; // Lưu dữ liệu trả về từ API
-  constructor(private statisticsService: StatisticsService) { }
+  constructor(private statisticsService: StatisticsService, private http: HttpClient) { }
+  selectedMonth: number = new Date().getMonth() + 1; // Mặc định là tháng hiện tại
+  selectedYear: number = new Date().getFullYear();   // Mặc định là năm hiện tại
+  monthlySales: any[] = [];
+  chartData: any[] = [];
+  
+
+
+  salesData: any[] = [];
+  view: [number, number] = [700, 400]; // Kích thước biểu đồ
+
+  // Cấu hình biểu đồ doanh thu theo tháng
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  xAxisLabel = 'Ngày';
+  showYAxisLabel = true;
+  yAxisLabel = 'Doanh thu';
+  colorScheme = 'cool';
+
+  // Cấu hình biểu đồ doanh thu theo năm
+  salesData1: any[] = [];
+  view1: [number, number] = [700, 400]; // Kích thước biểu đồ
+
+  
+  showXAxis1 = true;
+  showYAxis1 = true;
+  gradient1 = false;
+  showLegend1 = false;
+  showXAxisLabel1 = true;
+  xAxisLabel1 = 'Tháng';
+  showYAxisLabel1 = true;
+  yAxisLabel1 = 'Doanh thu';
+  colorScheme1 = 'vivid';
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.initMapChart();
+      this.initLineChart();
+    }, 500);
+
+    const currentMonth = new Date().getMonth() ;
+
+    this.statisticsService.getMonthlySales(currentMonth).subscribe((data) => {
+      this.salesData = data.map((item) => ({
+        name: item.ngay, // Ngày
+        value: item.tongtiendaban, // Tổng tiền bán
+      }));
+    });
+
+    this.statisticsService.getYearlySales().subscribe((data) => {
+      console.log(data)
+      this.salesData1 = data.map((item) => ({
+        name: `Tháng ${item.thang}`, // Tháng
+        value: item.tongtiendaban, // Tổng tiền bán
+      }));
+    });
+  }
 
   // Card data for display
   card = [
@@ -68,32 +132,19 @@ export default class DashboardComponent implements OnInit {
     { src: 'assets/images/user/avatar-2.jpg', title: 'Albert Andersen', text: 'Lorem Ipsum is', time: '21 July 12:56', color: 'text-c-green' }
   ];
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.initMapChart();
-      this.initLineChart();
-    }, 500);
+  
 
-    this.statisticsService.getDailySales().subscribe(data => {
-      if (data && data.length > 0) {
-        this.sales = data; // Lấy chỉ phần tử đầu tiên trong mảng
+  onDateChange(event: any) {
+    const selectedDate = event.value; // Ngày người dùng chọn
+    this.getSalesByDate(selectedDate);
+  }
 
-        // Tính tỷ lệ tăng trưởng cho mỗi ngày, bắt đầu từ ngày thứ 2 trở đi
-        for (let i = 1; i < this.sales.length; i++) {
-          const previousDaySales = this.sales[i - 1].tongtiendaban;
-          const currentDaySales = this.sales[i].tongtiendaban;
-
-          // Tính tỷ lệ tăng trưởng
-          const growthRate = ((currentDaySales - previousDaySales) / previousDaySales) * 100;
-
-          // Gán tỷ lệ tăng trưởng vào mỗi ngày
-          this.sales[i].growthRate = growthRate.toFixed(2); // Làm tròn đến 2 chữ số thập phân
-        }
-
-        console.log(this.sales);  // Kiểm tra dữ liệu chỉ chứa ngày đầu tiên
-      }
-    });
-
+  getSalesByDate(date: Date): void {
+    const formattedDate = date.toISOString().split('T')[0]; // Định dạng YYYY-MM-DD
+    this.http.get(`http://localhost:8080/api/statistics/sales-by-date?date=${formattedDate}`)
+      .subscribe(data => {
+        console.log(data); // Hiển thị dữ liệu trả về
+      });
   }
 
   private initMapChart() {

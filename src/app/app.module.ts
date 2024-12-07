@@ -9,6 +9,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -86,6 +88,8 @@ import { BannerListComponent } from './banner/list/banner-list.component';
 import { BannerCreateComponent } from './banner/create/banner-create.component';
 import { BannerEditComponent } from './banner/edit/banner-edit.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -129,7 +133,8 @@ import { BannerEditComponent } from './banner/edit/banner-edit.component';
     BannerListComponent,
     BannerCreateComponent,
     BannerEditComponent,
-    CustomCurrencyPipe
+    CustomCurrencyPipe,
+    
   
      ],
   imports: [
@@ -144,7 +149,9 @@ import { BannerEditComponent } from './banner/edit/banner-edit.component';
     CommonModule,
     HttpClientModule,
     CKEditorModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     
