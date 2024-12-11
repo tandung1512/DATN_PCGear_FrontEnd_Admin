@@ -31,7 +31,7 @@ import mapColor from 'src/fake-data/map-color-data.json';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [SharedModule, CustomCurrencyPipe, NgxChartsModule],
+  imports: [SharedModule, NgxChartsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -45,7 +45,11 @@ export default class DashboardComponent implements OnInit {
   selectedYear: number = new Date().getFullYear();   // Mặc định là năm hiện tại
   monthlySales: any[] = [];
   chartData: any[] = [];
-  
+  stats = {
+    productCount: 0,
+    userCount: 0,
+    categoryCount: 0,
+  };
 
 
   salesData: any[] = [];
@@ -59,7 +63,7 @@ export default class DashboardComponent implements OnInit {
   showXAxisLabel = true;
   xAxisLabel = 'Ngày';
   showYAxisLabel = true;
-  yAxisLabel = 'Doanh thu';
+  yAxisLabel = 'Doanh thu theo ngày';
   colorScheme = 'cool';
 
   // Cấu hình biểu đồ doanh thu theo năm
@@ -74,7 +78,7 @@ export default class DashboardComponent implements OnInit {
   showXAxisLabel1 = true;
   xAxisLabel1 = 'Tháng';
   showYAxisLabel1 = true;
-  yAxisLabel1 = 'Doanh thu';
+  yAxisLabel1 = 'Doanh thu theo tháng';
   colorScheme1 = 'vivid';
 
   ngOnInit() {
@@ -98,6 +102,10 @@ export default class DashboardComponent implements OnInit {
         name: `Tháng ${item.thang}`, // Tháng
         value: item.tongtiendaban, // Tổng tiền bán
       }));
+    });
+
+    this.statisticsService.getStatistics().subscribe((data) => {
+      this.stats = data;
     });
   }
 

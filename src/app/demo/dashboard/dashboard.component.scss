@@ -1,0 +1,117 @@
+.card-stat {
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-stat .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .card-stat .btn-detail {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .card-stat .body {
+    margin-top: 20px;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .bg-blue {
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+  }
+  
+  .bg-orange {
+    background: linear-gradient(135deg, #ff7f50, #ffa500);
+  }
+  
+  .bg-green {
+    background: linear-gradient(135deg, #32cd32, #00fa9a);
+  }
+  
+  .card-stat::after {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    bottom: -50px;
+    right: -50px;
+  }
+  
+  .card-stat {
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Thêm viền mờ */
+  }
+
+  .card-stat:hover {
+    border: 2px solid rgba(255, 255, 255, 0.5); /* Viền sáng hơn khi hover */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Tăng bóng khi hover */
+    transform: scale(1.02); /* Hiệu ứng phóng to nhẹ */
+    transition: all 0.3s ease-in-out;
+  }
+
+  .bg-blue {
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    border: 2px solid rgba(30, 144, 255, 0.7); /* Viền xanh đậm hơn */
+  }
+  
+  .bg-orange {
+    background: linear-gradient(135deg, #ff7f50, #ffa500);
+    border: 2px solid rgba(255, 165, 0, 0.7); /* Viền cam đậm hơn */
+  }
+  
+  .bg-green {
+    background: linear-gradient(135deg, #32cd32, #00fa9a);
+    border: 2px solid rgba(50, 205, 50, 0.7); /* Viền xanh lá đậm hơn */
+  }
+
+  .card-stat:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.5); /* Làm viền sáng hơn */
+  }
+
+  .chart-card {
+    border: 2px solid rgba(0, 0, 0, 0.1); /* Viền mỏng */
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bóng mờ */
+    padding: 20px; /* Khoảng cách bên trong */
+    margin-bottom: 20px; /* Khoảng cách giữa các thẻ */
+    background-color: #fff; /* Màu nền trắng */
+    transition: all 0.3s ease-in-out; /* Hiệu ứng hover */
+  }
+  
+  .chart-card:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Bóng đậm hơn khi hover */
+    transform: scale(1.02); /* Phóng to nhẹ khi hover */
+  }
+  
+  .chart-card ngx-charts-bar-vertical {
+    display: block;
+    margin: auto;
+  }
+  
+  
