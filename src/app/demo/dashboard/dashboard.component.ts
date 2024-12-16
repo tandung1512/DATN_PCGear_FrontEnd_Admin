@@ -1,7 +1,7 @@
 // Angular imports
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StatisticsService } from './dashboar.service';
+import { StatisticsService } from './dashboard.service';
 import { CustomCurrencyPipe } from './custom-currency.pipe';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ColorHelper } from '@swimlane/ngx-charts';
@@ -32,7 +32,6 @@ export default class DashboardComponent implements OnInit {
     userCount: 0,
     categoryCount: 0,
   };
-
 
   salesData: any[] = [];
   view: [number, number] = [700, 400]; // Kích thước biểu đồ
