@@ -5,7 +5,7 @@ export interface Account {
   password: string;
   phone: string;
   email: string;
-  address: string;
+  // address: string;
   image: string;
   admin: boolean;
   status: boolean;

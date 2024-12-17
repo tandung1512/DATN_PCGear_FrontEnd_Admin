@@ -13,7 +13,7 @@ export class AccountCreateComponent implements OnInit {
   password: string = '';
   phone: string = '';
   email: string = '';
-  address: string = '';
+  // address: string = '';
   admin: boolean = false;
   status: boolean = true;
   confirm: boolean = true;
@@ -27,7 +27,7 @@ export class AccountCreateComponent implements OnInit {
   passwordTouched: boolean = false;
   phoneTouched: boolean = false;
   emailTouched: boolean = false;
-  addressTouched: boolean = false;
+  // addressTouched: boolean = false;
 
   constructor(
     private accountService: AccountService,
@@ -67,7 +67,7 @@ export class AccountCreateComponent implements OnInit {
   }
 
   private validateForm(): boolean {
-    if (!this.id || !this.name || !this.password || !this.phone || !this.email || !this.address) {
+    if (!this.id || !this.name || !this.password || !this.phone || !this.email ) {
       this.errorMessage = 'Vui lòng điền đầy đủ thông tin.';
       return false;
     }
@@ -116,7 +116,7 @@ export class AccountCreateComponent implements OnInit {
     formData.append('password', hashedPassword);
     formData.append('phone', this.phone);
     formData.append('email', this.email);
-    formData.append('address', this.address);
+    // formData.append('address', this.address);
     formData.append('admin', this.admin.toString());
     formData.append('status', this.status.toString());
     formData.append('confirm', this.confirm.toString());
@@ -158,7 +158,7 @@ export class AccountCreateComponent implements OnInit {
     this.emailTouched = true;
   }
 
-  onAddressBlur() {
-    this.addressTouched = true;
-  }
+  // onAddressBlur() {
+  //   this.addressTouched = true;
+  // }
 }

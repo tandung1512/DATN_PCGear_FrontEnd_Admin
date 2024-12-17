@@ -62,7 +62,7 @@ export class AccountService {
     formData.append('password', account.password || ''); // Thêm mật khẩu
     formData.append('phone', account.phone || ''); // Thêm số điện thoại
     formData.append('email', account.email || ''); // Thêm email
-    formData.append('address', account.address || ''); // Thêm địa chỉ
+    // formData.append('address', account.address || '');
     formData.append('admin', account.admin ? 'true' : 'false'); // Thêm quyền admin
     formData.append('status', account.status ? 'true' : 'false'); // Thêm trạng thái
     formData.append('confirm', account.confirm ? 'true' : 'false'); // Thêm xác nhận
